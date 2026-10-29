@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://dooyfcl0ynb8p"]
+
+[ext_resource type="ArrayMesh" uid="uid://ds4psg7p5vebl" path="res://Models/Items/aluminum_foil.obj" id="1_546j7"]
+[ext_resource type="Material" uid="uid://lqqwtc627s3k" path="res://AmbientCG/Extracted/Metal055A_1K-JPG.tres" id="2_eqneq"]
+[ext_resource type="Material" uid="uid://c7k1e56dqlxq6" path="res://AmbientCG/Extracted/Paper005_2K-JPG.tres" id="3_tm3ep"]
+
+[node name="Plank1" type="Node3D" unique_id=6968137]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=358444271]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+mesh = ExtResource("1_546j7")
+surface_material_override/0 = ExtResource("2_eqneq")
+surface_material_override/1 = ExtResource("3_tm3ep")

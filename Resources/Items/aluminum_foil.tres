@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://c2a7xbs5mox5y"]
+
+[ext_resource type="Script" uid="uid://co4wi7ebsf67k" path="res://Scripts/Resources/ItemData.cs" id="1_jf2ku"]
+[ext_resource type="Texture2D" uid="uid://bukcx8i5c3xau" path="res://Sprites/Items/aluminum_foil.png" id="1_x87sr"]
+[ext_resource type="PackedScene" uid="uid://dooyfcl0ynb8p" path="res://Scenes/Items/Models/aluminum_foil.tscn" id="2_p6c2u"]
+
+[resource]
+script = ExtResource("1_jf2ku")
+Id = "aluminum_foil"
+Name = "Aluminum Foil"
+Icon = ExtResource("1_x87sr")
+WorldModel = ExtResource("2_p6c2u")
+MaxStack = 20
+Category = 5
+metadata/_custom_type_script = "uid://co4wi7ebsf67k"

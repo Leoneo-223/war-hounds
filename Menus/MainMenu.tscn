@@ -1,0 +1,133 @@
+[gd_scene format=3 uid="uid://bxissr54a0blg"]
+
+[ext_resource type="FontFile" uid="uid://gmtxr84omygs" path="res://Fonts/GLF-Alofon-Bold.otf" id="1_3g7qx"]
+[ext_resource type="FontFile" uid="uid://dq1aty4xq8pah" path="res://Fonts/GLF-Alofon-UltraBold.otf" id="2_7ihqj"]
+[ext_resource type="FontFile" uid="uid://cojqfrxxcj051" path="res://Fonts/GLF-Alofon-Light.ttf" id="3_n6o36"]
+
+[sub_resource type="Theme" id="Theme_fvkn2"]
+default_font = ExtResource("1_3g7qx")
+
+[sub_resource type="LabelSettings" id="LabelSettings_r8dbq"]
+font = ExtResource("2_7ihqj")
+font_size = 128
+shadow_size = 20
+shadow_color = Color(0, 0, 0, 0.4509804)
+
+[sub_resource type="Theme" id="Theme_5ncg0"]
+default_font = ExtResource("3_n6o36")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0xbyl"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.101960786, 0.101960786, 0.101960786, 0.11764706)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 0.39215687)
+corner_radius_top_left = 4
+corner_detail = 1
+expand_margin_left = 32.0
+expand_margin_right = 32.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1txdl"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 4
+corner_detail = 1
+expand_margin_left = 32.0
+expand_margin_right = 32.0
+
+[node name="MainMenu" type="Control" unique_id=95161889]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1288431573]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 64
+theme_override_constants/margin_top = 64
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="MarginContainer" unique_id=753583331]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer3" unique_id=1367605025]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer3/VBoxContainer2" unique_id=1213890852]
+layout_mode = 2
+size_flags_horizontal = 4
+theme = SubResource("Theme_fvkn2")
+theme_override_font_sizes/font_size = 128
+text = "WAR HOUNDS"
+label_settings = SubResource("LabelSettings_r8dbq")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer3" unique_id=332332906]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+alignment = 1
+
+[node name="Play" type="Button" parent="MarginContainer/VBoxContainer3/VBoxContainer" unique_id=1870957621]
+layout_mode = 2
+offset_transform_enabled = true
+theme = SubResource("Theme_5ncg0")
+theme_override_constants/outline_size = 0
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_0xbyl")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_1txdl")
+theme_override_styles/hover = SubResource("StyleBoxFlat_1txdl")
+text = "PLAY"
+
+[node name="Options" type="Button" parent="MarginContainer/VBoxContainer3/VBoxContainer" unique_id=2023983933]
+layout_mode = 2
+offset_transform_enabled = true
+theme = SubResource("Theme_5ncg0")
+theme_override_constants/outline_size = 0
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_0xbyl")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_1txdl")
+theme_override_styles/hover = SubResource("StyleBoxFlat_1txdl")
+text = "OPTIONS"
+
+[node name="Credits" type="Button" parent="MarginContainer/VBoxContainer3/VBoxContainer" unique_id=1710112333]
+layout_mode = 2
+offset_transform_enabled = true
+theme = SubResource("Theme_5ncg0")
+theme_override_constants/outline_size = 0
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_0xbyl")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_1txdl")
+theme_override_styles/hover = SubResource("StyleBoxFlat_1txdl")
+text = "CREDITS"
+
+[node name="Exit" type="Button" parent="MarginContainer/VBoxContainer3/VBoxContainer" unique_id=610595383]
+layout_mode = 2
+offset_transform_enabled = true
+theme = SubResource("Theme_5ncg0")
+theme_override_constants/outline_size = 0
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_0xbyl")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_1txdl")
+theme_override_styles/hover = SubResource("StyleBoxFlat_1txdl")
+text = "EXIT"

@@ -16,6 +16,12 @@ public partial class ItemPickup : RigidBody3D, IInteractable
         // We spawn the item's model as a child so the same scene works for all items.
         if (Item?.WorldModel != null)
             AddChild(Item.WorldModel.Instantiate());
+            
+        // Pickups live on layer 2 (bit value 2), so the player (which only collides with layer 1) walks through them.
+        CollisionLayer = 1u << 1;
+        // They still collide with layer 1 (the floor and walls), so they land on surfaces,
+        // but not with each other or with other pickups.
+        CollisionMask = 1u;
     }
 
     // Shown by the HUD when the player looks at this.

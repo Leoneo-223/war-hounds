@@ -7,6 +7,9 @@ public partial class Hud : CanvasLayer
 {
     // Label that shows "[E] Pick up Metal Pipe". Drag it in via the Inspector.
     [Export] public Label Prompt;
+    // If off, the Prompt label keeps the text you typed in the editor
+    // and is only shown/hidden. If on, the text comes from the item.
+    [Export] public bool UseItemName = false;
 
     // Your crosshair node (the TextureRect with the PNG). Drag it in.
     [Export] public Control Crosshair;
@@ -25,7 +28,7 @@ public partial class Hud : CanvasLayer
 
         if (Prompt != null)
         {
-            Prompt.Text = text;
+            if (UseItemName) Prompt.Text = text;
             Prompt.Visible = _hovering;
         }
     }

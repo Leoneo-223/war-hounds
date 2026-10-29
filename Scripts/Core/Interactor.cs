@@ -12,6 +12,7 @@ public partial class Interactor : RayCast3D
 
     public override void _Ready()
     {
+        CollisionMask |= 1u << 1;   // keep layer 1 and add layer 2
         // The ray starts inside the player's capsule, so make sure it can never
         // hit the player itself. Walk up the tree to find the player body.
         Node n = GetParent();

@@ -1,8 +1,6 @@
 [gd_scene format=3 uid="uid://dy0bj13vvtdef"]
 
 [ext_resource type="PackedScene" uid="uid://bsgk4kmypw01i" path="res://Player/Player.tscn" id="1_jjgbg"]
-[ext_resource type="PackedScene" uid="uid://d3q0ikgu5ji7w" path="res://Scenes/Core/ItemPickup.tscn" id="2_8gbba"]
-[ext_resource type="Resource" uid="uid://chyeae3gjfogo" path="res://Resources/Items/plank.tres" id="3_jjvhh"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_jjgbg"]
 sky_top_color = Color(0.3052531, 0.5396909, 0.92787695, 1)
@@ -54,7 +52,3 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.06585, 2.2687078, -8.45995)
 use_collision = true
 size = Vector3(5.975342, 5.282715, 5.2373047)
 material = SubResource("StandardMaterial3D_jjgbg")
-
-[node name="ItemPickup" parent="." unique_id=1009425510 instance=ExtResource("2_8gbba")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.3018875, 1.6562569, 4.2665024)
-Item = ExtResource("3_jjvhh")
