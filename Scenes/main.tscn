@@ -2,11 +2,13 @@
 
 [ext_resource type="PackedScene" uid="uid://bsgk4kmypw01i" path="res://Player/Player.tscn" id="1_jjgbg"]
 [ext_resource type="PackedScene" uid="uid://d3q0ikgu5ji7w" path="res://Scenes/Core/item_pickup.tscn" id="2_8gbba"]
-[ext_resource type="Resource" uid="uid://chyeae3gjfogo" path="res://Resources/Items/plank.tres" id="3_jjvhh"]
-[ext_resource type="Resource" uid="uid://c2a7xbs5mox5y" path="res://Resources/Items/aluminum_foil.tres" id="4_6bp64"]
+[ext_resource type="Resource" uid="uid://c2a7xbs5mox5y" path="res://Resources/Items/Materials/aluminum_foil.tres" id="4_6bp64"]
 [ext_resource type="PackedScene" uid="uid://o5j0rd456dw1" path="res://Scenes/Storage/large_storage_rack.tscn" id="4_21xkr"]
+[ext_resource type="Resource" uid="uid://dvj8j7qyost0m" path="res://Resources/Items/Consumables/popane_tank.tres" id="4_ynf5e"]
 [ext_resource type="PackedScene" uid="uid://b7bww3jo2mrxy" path="res://Scenes/Storage/medium_storage_rack.tscn" id="5_6bp64"]
 [ext_resource type="PackedScene" uid="uid://bt280t8i0vfkd" path="res://Scenes/Storage/small_storage_rack.tscn" id="6_344ge"]
+[ext_resource type="PackedScene" uid="uid://0c1udupnlsxf" path="res://Scenes/Stations/smelting_station.tscn" id="8_ynf5e"]
+[ext_resource type="PackedScene" uid="uid://bkj8fvb2ya558" path="res://Scenes/Stations/propane_tank.tscn" id="9_hptm8"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_jjgbg"]
 sky_top_color = Color(0.3052531, 0.5396909, 0.92787695, 1)
@@ -61,151 +63,12 @@ material = SubResource("StandardMaterial3D_jjgbg")
 
 [node name="ItemPickup" parent="CSGBox3D" unique_id=1009425510 instance=ExtResource("2_8gbba")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3067954, 6.7146378)
-Item = ExtResource("3_jjvhh")
-
-[node name="ItemPickup2" parent="CSGBox3D" unique_id=745101806 instance=ExtResource("2_8gbba")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3067954, 6.7146378)
-Item = ExtResource("3_jjvhh")
-
-[node name="ItemPickup3" parent="CSGBox3D" unique_id=573788562 instance=ExtResource("2_8gbba")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3067954, 6.7146378)
-Item = ExtResource("3_jjvhh")
-
-[node name="ItemPickup4" parent="CSGBox3D" unique_id=2128277236 instance=ExtResource("2_8gbba")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3067954, 6.7146378)
-Item = ExtResource("3_jjvhh")
-
-[node name="ItemPickup5" parent="CSGBox3D" unique_id=1684182855 instance=ExtResource("2_8gbba")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3067954, 6.7146378)
-Item = ExtResource("3_jjvhh")
-
-[node name="ItemPickup6" parent="CSGBox3D" unique_id=584069392 instance=ExtResource("2_8gbba")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3067954, 6.7146378)
-Item = ExtResource("3_jjvhh")
-
-[node name="ItemPickup7" parent="CSGBox3D" unique_id=71878532 instance=ExtResource("2_8gbba")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3067954, 6.7146378)
-Item = ExtResource("3_jjvhh")
-
-[node name="ItemPickup8" parent="CSGBox3D" unique_id=1826102385 instance=ExtResource("2_8gbba")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3067954, 6.7146378)
-Item = ExtResource("3_jjvhh")
-
-[node name="ItemPickup9" parent="CSGBox3D" unique_id=83048730 instance=ExtResource("2_8gbba")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3067954, 6.7146378)
-Item = ExtResource("3_jjvhh")
-
-[node name="ItemPickup10" parent="CSGBox3D" unique_id=258989273 instance=ExtResource("2_8gbba")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3067954, 6.7146378)
-Item = ExtResource("3_jjvhh")
-
-[node name="ItemPickup11" parent="CSGBox3D" unique_id=1228418157 instance=ExtResource("2_8gbba")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3067954, 6.7146378)
-Item = ExtResource("3_jjvhh")
-
-[node name="ItemPickup12" parent="CSGBox3D" unique_id=874166236 instance=ExtResource("2_8gbba")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3067954, 6.7146378)
-Item = ExtResource("3_jjvhh")
-
-[node name="ItemPickup13" parent="CSGBox3D" unique_id=1861695441 instance=ExtResource("2_8gbba")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3067954, 6.7146378)
-Item = ExtResource("3_jjvhh")
-
-[node name="ItemPickup14" parent="CSGBox3D" unique_id=694305566 instance=ExtResource("2_8gbba")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3067954, 6.7146378)
-Item = ExtResource("3_jjvhh")
-
-[node name="ItemPickup15" parent="CSGBox3D" unique_id=1394141644 instance=ExtResource("2_8gbba")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3067954, 6.7146378)
-Item = ExtResource("3_jjvhh")
-
-[node name="ItemPickup16" parent="CSGBox3D" unique_id=1355487217 instance=ExtResource("2_8gbba")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3067954, 6.7146378)
-Item = ExtResource("3_jjvhh")
-
-[node name="ItemPickup17" parent="CSGBox3D" unique_id=1114181480 instance=ExtResource("2_8gbba")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3067954, 6.7146378)
-Item = ExtResource("3_jjvhh")
-
-[node name="ItemPickup18" parent="CSGBox3D" unique_id=1657327221 instance=ExtResource("2_8gbba")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3067954, 6.7146378)
-Item = ExtResource("3_jjvhh")
-
-[node name="ItemPickup19" parent="CSGBox3D" unique_id=1631474896 instance=ExtResource("2_8gbba")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3067954, 6.7146378)
-Item = ExtResource("3_jjvhh")
-
-[node name="ItemPickup20" parent="CSGBox3D" unique_id=322127508 instance=ExtResource("2_8gbba")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3067954, 6.7146378)
-Item = ExtResource("3_jjvhh")
-
-[node name="ItemPickup21" parent="CSGBox3D" unique_id=2053331922 instance=ExtResource("2_8gbba")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3067954, 6.7146378)
-Item = ExtResource("3_jjvhh")
-
-[node name="ItemPickup22" parent="CSGBox3D" unique_id=532147922 instance=ExtResource("2_8gbba")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3067954, 6.7146378)
-Item = ExtResource("3_jjvhh")
-
-[node name="ItemPickup23" parent="CSGBox3D" unique_id=1179495310 instance=ExtResource("2_8gbba")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3067954, 6.7146378)
-Item = ExtResource("3_jjvhh")
-
-[node name="ItemPickup24" parent="CSGBox3D" unique_id=1921922860 instance=ExtResource("2_8gbba")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3067954, 6.7146378)
-Item = ExtResource("3_jjvhh")
-
-[node name="ItemPickup25" parent="CSGBox3D" unique_id=1402364885 instance=ExtResource("2_8gbba")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3067954, 6.7146378)
-Item = ExtResource("3_jjvhh")
-
-[node name="ItemPickup26" parent="CSGBox3D" unique_id=1612921004 instance=ExtResource("2_8gbba")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3067954, 6.7146378)
 Item = ExtResource("4_6bp64")
+Count = 10
 
-[node name="ItemPickup27" parent="CSGBox3D" unique_id=1718902520 instance=ExtResource("2_8gbba")]
+[node name="ItemPickup2" parent="CSGBox3D" unique_id=1300578253 instance=ExtResource("2_8gbba")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3067954, 6.7146378)
-Item = ExtResource("4_6bp64")
-
-[node name="ItemPickup28" parent="CSGBox3D" unique_id=575558580 instance=ExtResource("2_8gbba")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3067954, 6.7146378)
-Item = ExtResource("4_6bp64")
-
-[node name="ItemPickup29" parent="CSGBox3D" unique_id=683429535 instance=ExtResource("2_8gbba")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3067954, 6.7146378)
-Item = ExtResource("4_6bp64")
-
-[node name="ItemPickup30" parent="CSGBox3D" unique_id=1358453094 instance=ExtResource("2_8gbba")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3067954, 6.7146378)
-Item = ExtResource("4_6bp64")
-
-[node name="ItemPickup31" parent="CSGBox3D" unique_id=1781742769 instance=ExtResource("2_8gbba")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3067954, 6.7146378)
-Item = ExtResource("4_6bp64")
-
-[node name="ItemPickup32" parent="CSGBox3D" unique_id=1154972108 instance=ExtResource("2_8gbba")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3067954, 6.7146378)
-Item = ExtResource("4_6bp64")
-
-[node name="ItemPickup33" parent="CSGBox3D" unique_id=1807142257 instance=ExtResource("2_8gbba")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3067954, 6.7146378)
-Item = ExtResource("4_6bp64")
-
-[node name="ItemPickup34" parent="CSGBox3D" unique_id=1947152927 instance=ExtResource("2_8gbba")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3067954, 6.7146378)
-Item = ExtResource("4_6bp64")
-
-[node name="ItemPickup35" parent="CSGBox3D" unique_id=546495498 instance=ExtResource("2_8gbba")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3067954, 6.7146378)
-Item = ExtResource("4_6bp64")
-
-[node name="ItemPickup36" parent="CSGBox3D" unique_id=1339522828 instance=ExtResource("2_8gbba")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3067954, 6.7146378)
-Item = ExtResource("4_6bp64")
-
-[node name="ItemPickup37" parent="CSGBox3D" unique_id=1347337856 instance=ExtResource("2_8gbba")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3067954, 6.7146378)
-Item = ExtResource("4_6bp64")
+Item = ExtResource("4_ynf5e")
 
 [node name="Storage" parent="CSGBox3D" unique_id=1898311747 instance=ExtResource("4_21xkr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.8683867, 1.4567132, 12.396257)
@@ -215,3 +78,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5546831, 1.4567132, 12.350
 
 [node name="Storage3" parent="CSGBox3D" unique_id=139368097 instance=ExtResource("6_344ge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.780025, 1.4880261, 12.446819)
+
+[node name="SmeltingCrucible" parent="CSGBox3D" unique_id=659818339 instance=ExtResource("8_ynf5e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.693371, 1.580374, 1.7339187)
+
+[node name="PropaneTank" parent="." unique_id=970793741 instance=ExtResource("9_hptm8")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 8.756698, 1.0697818, 4.785325)

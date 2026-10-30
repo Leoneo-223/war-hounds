@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://7a1mutllbtxc" path="res://Sprites/Items/plank_1_icon.png" id="1_a80c1"]
 [ext_resource type="Script" uid="uid://co4wi7ebsf67k" path="res://Scripts/Resources/ItemData.cs" id="1_w4lim"]
-[ext_resource type="PackedScene" uid="uid://c25ngc1f1u736" path="res://Scenes/Items/Models/plank_1.tscn" id="2_wllx2"]
+[ext_resource type="PackedScene" uid="uid://c25ngc1f1u736" path="res://Scenes/Items/Materials/plank_1.tscn" id="2_wllx2"]
 
 [resource]
 script = ExtResource("1_w4lim")

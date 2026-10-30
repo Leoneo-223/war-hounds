@@ -2,16 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://d004eirx2mc5i" path="res://Scenes/Core/storage.tscn" id="1_h1dub"]
 [ext_resource type="ArrayMesh" uid="uid://cjxdv5dbfj8fn" path="res://Models/Storage/medium_storage_rack.obj" id="2_h1dub"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h1dub"]
-albedo_color = Color(0.41215247, 0.41215247, 0.41215247, 1)
-metallic = 1.0
-metallic_specular = 1.0
-roughness = 0.5
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ee1kt"]
-albedo_color = Color(0.50361395, 0.30998927, 1.92523e-07, 1)
-metallic_specular = 0.0
+[ext_resource type="Material" uid="uid://bgoyjfvpvylwl" path="res://Materials/dark_metal.tres" id="3_6xpt7"]
+[ext_resource type="Material" uid="uid://drqrrlqmspvt" path="res://Materials/lightbrown_wood.tres" id="4_xo7e1"]
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_h1dub"]
 points = PackedVector3Array(0.98968256, 1.5949275, 0.55, -0.98115075, -1.3378316, -0.55, 0.98115075, -1.3378316, -0.55, -0.98968256, -1.3505275, 0.55, -0.98115075, 1.5822316, -0.55, 0.98968256, -1.3505275, 0.55, -0.98968256, 1.5949275, 0.55, 0.98115075, 1.5822316, -0.55)
@@ -22,8 +14,8 @@ CrateName = "Medium Storage Rack"
 [node name="MeshInstance3D" parent="." index="0" unique_id=2096477433]
 transform = Transform3D(0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, 0, 0, 0)
 mesh = ExtResource("2_h1dub")
-surface_material_override/0 = SubResource("StandardMaterial3D_h1dub")
-surface_material_override/1 = SubResource("StandardMaterial3D_ee1kt")
+surface_material_override/0 = ExtResource("3_6xpt7")
+surface_material_override/1 = ExtResource("4_xo7e1")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." index="1" unique_id=1705881842]
 transform = Transform3D(0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, 0, 0, 0)

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://dvj8j7qyost0m"]
+
+[ext_resource type="Texture2D" uid="uid://bxmoekjhdbo2c" path="res://icon.svg" id="1_lbw60"]
+[ext_resource type="Script" uid="uid://co4wi7ebsf67k" path="res://Scripts/Resources/ItemData.cs" id="1_mv8at"]
+
+[resource]
+script = ExtResource("1_mv8at")
+Id = "propane_canister"
+Name = "Popane Canister"
+Icon = ExtResource("1_lbw60")
+metadata/_custom_type_script = "uid://co4wi7ebsf67k"

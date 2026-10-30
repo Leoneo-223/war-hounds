@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://w4sfyd16uljj"]
+
+[ext_resource type="ArrayMesh" uid="uid://b6ckrkd4ytf6r" path="res://Models/Items/popane_tank.obj" id="1_mqqwe"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fvkn2"]
+albedo_color = Color(0.29643834, 0.26377755, 0.23698804, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jaywg"]
+albedo_color = Color(0.9282368, 0, 0.18045533, 1)
+metallic = 0.3
+roughness = 0.5
+
+[node name="PopaneCanister" type="Node3D" unique_id=631030193]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=2093344717]
+mesh = ExtResource("1_mqqwe")
+surface_material_override/0 = SubResource("StandardMaterial3D_fvkn2")
+surface_material_override/1 = SubResource("StandardMaterial3D_jaywg")

@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://bkj8fvb2ya558"]
+
+[ext_resource type="Script" uid="uid://di7djb3jedu0p" path="res://Scripts/Stations/PropaneTank.cs" id="1_uap25"]
+[ext_resource type="Resource" uid="uid://dvj8j7qyost0m" path="res://Resources/Items/Consumables/popane_tank.tres" id="2_hkkb8"]
+[ext_resource type="ArrayMesh" uid="uid://be0mtvu13pfdv" path="res://Models/Stations/propane_tank_big.obj" id="3_fq85n"]
+[ext_resource type="Material" uid="uid://bgoyjfvpvylwl" path="res://Materials/dark_metal.tres" id="4_ilydr"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jaywg"]
+metallic = 0.5
+roughness = 0.75
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_t7bx7"]
+points = PackedVector3Array(-0.09581644, -0.18260431, -0.32209998, -0.16250113, -0.058345553, -0.29563504, -0.13765824, -0.01934882, 0.4182364, 0.09450405, -0.18260431, 0.32209998, 0.20828578, 0.09602292, -0.37462053, -0.15053958, 0.26749873, -0.35688958, -0.16411242, 0.25266784, 0.35540846, 0.0064237593, 0.41016483, -0.15690863, 0.20856217, 0.11041638, 0.37511602, 0.09450405, -0.18260431, -0.32209998, 0.0066229743, 0.15422346, -0.4694991, -0.21982765, 0.09648987, 0.31098706, -0.09581644, -0.18260431, 0.32209998, 0.006489607, 0.26882192, 0.43204784, 0.1606855, 0.26494697, -0.33683437, -0.19576447, 0.09601944, -0.39017588, -0.0077577215, 0.40922305, 0.15640354, 0.109237745, -0.02159857, 0.43970898, 0.0066249147, -0.021755096, -0.45491365, 0.18934818, -0.0019927546, 0.16886637, 0.006497278, 0.26898375, -0.4325102, -0.22034925, 0.110602364, -0.31172726, 0.16068546, 0.2649469, 0.33683428, -0.12496125, 0.12487531, 0.45326287, 0.21626315, 0.13855049, -0.20982486, 0.16479366, 0.09611173, -0.43169466, -0.12543176, 0.09568509, -0.45497882, 0.12342841, 0.124867596, 0.45278263, -0.007977872, -0.021681303, 0.45467275, 0.21653304, 0.0826161, -0.2801438, -0.1895991, -0.001323501, 0.19589365, -0.049999997, 0.37858462, -0.15512583)
+
+[node name="PropaneTank" type="StaticBody3D" unique_id=107666529]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+script = ExtResource("1_uap25")
+RefillItem = ExtResource("2_hkkb8")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=808449481]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00030720234, -0.002875924, -3.8594007e-05)
+mesh = ExtResource("3_fq85n")
+surface_material_override/0 = SubResource("StandardMaterial3D_jaywg")
+surface_material_override/1 = ExtResource("4_ilydr")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=626462016]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00030720234, -0.002875924, -3.8594007e-05)
+shape = SubResource("ConvexPolygonShape3D_t7bx7")

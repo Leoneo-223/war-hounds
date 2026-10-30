@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://b6ckrkd4ytf6r"
+path="res://.godot/imported/popane_tank.obj-9177553b4de52811de299566bcd0010e.mesh"
+
+[deps]
+
+files=["res://.godot/imported/popane_tank.obj-9177553b4de52811de299566bcd0010e.mesh"]
+
+source_file="res://Models/Items/popane_tank.obj"
+dest_files=["res://.godot/imported/popane_tank.obj-9177553b4de52811de299566bcd0010e.mesh", "res://.godot/imported/popane_tank.obj-9177553b4de52811de299566bcd0010e.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

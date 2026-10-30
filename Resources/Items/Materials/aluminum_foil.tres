@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://co4wi7ebsf67k" path="res://Scripts/Resources/ItemData.cs" id="1_jf2ku"]
 [ext_resource type="Texture2D" uid="uid://bukcx8i5c3xau" path="res://Sprites/Items/aluminum_foil.png" id="1_x87sr"]
-[ext_resource type="PackedScene" uid="uid://dooyfcl0ynb8p" path="res://Scenes/Items/Models/aluminum_foil.tscn" id="2_p6c2u"]
+[ext_resource type="PackedScene" uid="uid://dooyfcl0ynb8p" path="res://Scenes/Items/Materials/aluminum_foil.tscn" id="2_p6c2u"]
 
 [resource]
 script = ExtResource("1_jf2ku")
