@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bkj8fvb2ya558"]
 
 [ext_resource type="Script" uid="uid://di7djb3jedu0p" path="res://Scripts/Stations/PropaneTank.cs" id="1_uap25"]
-[ext_resource type="Resource" uid="uid://dvj8j7qyost0m" path="res://Resources/Items/Consumables/popane_tank.tres" id="2_hkkb8"]
+[ext_resource type="Resource" uid="uid://dvj8j7qyost0m" path="res://Resources/Items/Consumables/popane_canister.tres" id="2_uap25"]
 [ext_resource type="ArrayMesh" uid="uid://be0mtvu13pfdv" path="res://Models/Stations/propane_tank_big.obj" id="3_fq85n"]
 [ext_resource type="Material" uid="uid://bgoyjfvpvylwl" path="res://Materials/dark_metal.tres" id="4_ilydr"]
 
@@ -15,7 +15,7 @@ points = PackedVector3Array(-0.09581644, -0.18260431, -0.32209998, -0.16250113, 
 [node name="PropaneTank" type="StaticBody3D" unique_id=107666529]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
 script = ExtResource("1_uap25")
-RefillItem = ExtResource("2_hkkb8")
+RefillItem = ExtResource("2_uap25")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=808449481]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00030720234, -0.002875924, -3.8594007e-05)

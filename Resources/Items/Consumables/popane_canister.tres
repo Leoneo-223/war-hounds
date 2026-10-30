@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://dvj8j7qyost0m"]
+
+[ext_resource type="Texture2D" uid="uid://bxmoekjhdbo2c" path="res://icon.svg" id="1_upa76"]
+[ext_resource type="PackedScene" uid="uid://w4sfyd16uljj" path="res://Scenes/Items/Consumables/popane_canister.tscn" id="2_upa76"]
+[ext_resource type="Script" uid="uid://co4wi7ebsf67k" path="res://Scripts/Resources/ItemData.cs" id="3_nk5wq"]
+
+[resource]
+script = ExtResource("3_nk5wq")
+Id = "propane_canister"
+Name = "Popane Canister"
+Icon = ExtResource("1_upa76")
+WorldModel = ExtResource("2_upa76")
+metadata/_custom_type_script = "uid://co4wi7ebsf67k"
