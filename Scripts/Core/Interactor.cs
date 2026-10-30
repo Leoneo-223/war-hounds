@@ -34,6 +34,9 @@ public partial class Interactor : RayCast3D
 
     public override void _UnhandledInput(InputEvent e)
     {
+        // THE EXACT SAME, as PlayerController.cs
+        if (GameState.UiOpen) return;
+
         if (e is InputEventKey { Pressed: true, Echo: false, PhysicalKeycode: Key.E })
             _current?.Interact();
     }

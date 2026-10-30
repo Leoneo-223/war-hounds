@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://bt280t8i0vfkd"]
+
+[ext_resource type="PackedScene" uid="uid://d004eirx2mc5i" path="res://Scenes/Core/storage.tscn" id="1_387dt"]
+[ext_resource type="ArrayMesh" uid="uid://bcp81eep5jvgr" path="res://Models/Storage/small_storage_rack.obj" id="2_kejuk"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kejuk"]
+albedo_color = Color(0.41215247, 0.41215247, 0.41215247, 1)
+metallic = 1.0
+metallic_specular = 1.0
+roughness = 0.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ffow0"]
+albedo_color = Color(0.50361395, 0.30998927, 1.92523e-07, 1)
+metallic_specular = 0.0
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_kejuk"]
+points = PackedVector3Array(-0.5, -1.3633605, -0.5477287, 0.5, 1.5451604, 0.54296666, -0.5, 1.5451604, 0.54296666, 0.5, -1.3633605, 0.54296666, 0.5, 1.5451604, -0.5477287, -0.5, 1.5451604, -0.5477287, -0.5, -1.3633605, 0.54296666, 0.5, -1.3633605, -0.5477287)
+
+[node name="Storage" unique_id=1898311747 instance=ExtResource("1_387dt")]
+CrateName = "Small Storage Rack"
+
+[node name="MeshInstance3D" parent="." index="0" unique_id=2096477433]
+transform = Transform3D(0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, 0, 0, 0)
+mesh = ExtResource("2_kejuk")
+surface_material_override/0 = SubResource("StandardMaterial3D_kejuk")
+surface_material_override/1 = SubResource("StandardMaterial3D_ffow0")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="1" unique_id=1105669044]
+transform = Transform3D(0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, 0, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_kejuk")
+
+[node name="Contents" parent="." index="2" unique_id=1013211452]
+SlotCount = 4

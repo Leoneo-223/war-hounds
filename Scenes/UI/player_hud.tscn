@@ -14,7 +14,7 @@ default_font_size = 8
 
 [node name="PlayerHud" type="CanvasLayer" unique_id=854820583 node_paths=PackedStringArray("Prompt", "Crosshair")]
 script = ExtResource("1_ttxwg")
-Prompt = NodePath("CenterContainer/VBoxContainer/Prompt")
+Prompt = NodePath("CenterContainer2/Prompt")
 UseItemName = true
 Crosshair = NodePath("CenterContainer/VBoxContainer/TextureRect")
 
@@ -499,6 +499,15 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = ExtResource("3_jh2mb")
 
-[node name="Prompt" type="Label" parent="CenterContainer/VBoxContainer" unique_id=2130149512]
+[node name="CenterContainer2" type="CenterContainer" parent="." unique_id=431358576]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Prompt" type="Label" parent="CenterContainer2" unique_id=2130149512]
 layout_mode = 2
+offset_transform_enabled = true
+offset_transform_position = Vector2(0, 16)
 text = "Prompt Label"

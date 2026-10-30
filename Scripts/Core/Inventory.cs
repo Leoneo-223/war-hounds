@@ -1,17 +1,13 @@
 using Godot;
 
-// Lives as a plain Node on the Player. Holds the items, handles selection,
-// dropping, and shows the selected item's model at HoldPoint.
-public partial class Inventory : Node
+// The player's inventory. It is a Storage (arrays, Add, Remove...) plus
+// slot selection, dropping, and showing the held item's model.
+// Lives as a plain Node on the Player.
+public partial class Inventory : Storage
 {
-    // Global access so pickups and stations can reach the player's inventory
+    // Global access so pickups, crates and stations can reach the player's inventory
     // without needing node paths. Fine for a single-player game.
     public static Inventory Instance { get; private set; }
-
-    // Fired whenever contents or selection change. The hotbar listens to this.
-    [Signal] public delegate void ChangedEventHandler();
-
-    [Export] public int SlotCount = 10;
 
     // Marker3D under the camera where the held item appears.
     [Export] public Marker3D HoldPoint;
@@ -19,60 +15,13 @@ public partial class Inventory : Node
     // Pickup.tscn, spawned when you drop something.
     [Export] public PackedScene PickupScene;
 
-    // Parallel arrays: slot i holds Items[i] with Counts[i] of them.
-    // A null item means the slot is empty.
-    public ItemData[] Items;
-    public int[] Counts;
-
     public int Selected { get; private set; }
     public ItemData SelectedItem => Items[Selected];
 
     public override void _Ready()
     {
+        base._Ready();   // creates the Items/Counts arrays
         Instance = this;
-        Items = new ItemData[SlotCount];
-        Counts = new int[SlotCount];
-        Refresh();
-    }
-
-    // Tries to add items. Returns how many did NOT fit (0 = all added).
-    public int Add(ItemData item, int count)
-    {
-        // Pass 1: top up existing stacks of the same item.
-        for (int i = 0; i < SlotCount && count > 0; i++)
-        {
-            if (Items[i] != item) continue;
-            int moved = Mathf.Min(item.MaxStack - Counts[i], count);
-            Counts[i] += moved;
-            count -= moved;
-        }
-
-        // Pass 2: fill empty slots with new stacks.
-        for (int i = 0; i < SlotCount && count > 0; i++)
-        {
-            if (Items[i] != null) continue;
-            int moved = Mathf.Min(item.MaxStack, count);
-            Items[i] = item;
-            Counts[i] = moved;
-            count -= moved;
-        }
-
-        Refresh();
-        return count;
-    }
-
-    // Removes items from one slot and clears it when it reaches zero.
-    // Stations will call this to consume ingredients.
-    public void RemoveFromSlot(int slot, int count = 1)
-    {
-        if (Items[slot] == null) return;
-
-        Counts[slot] -= count;
-        if (Counts[slot] <= 0)
-        {
-            Items[slot] = null;
-            Counts[slot] = 0;
-        }
         Refresh();
     }
 
@@ -102,12 +51,16 @@ public partial class Inventory : Node
         // Camera forward is -Z. Spawn slightly ahead and toss it.
         pickup.GlobalPosition = cam.GlobalPosition - cam.GlobalBasis.Z * 0.8f;
         pickup.LinearVelocity = -cam.GlobalBasis.Z * 3f;
+        pickup.GlobalRotation = new Vector3(0, cam.GlobalRotation.Y, 0);
 
         RemoveFromSlot(Selected);
     }
 
     public override void _UnhandledInput(InputEvent e)
     {
+        // Same as in PlayerController.cs, if an UI is open, return
+        if (GameState.UiOpen) return;
+
         if (e is InputEventKey { Pressed: true, Echo: false } key)
         {
             // Number keys: 1-9 select slots 0-8, key 0 selects slot 9.
@@ -128,11 +81,11 @@ public partial class Inventory : Node
         }
     }
 
-    // Single place that updates everything after a change.
-    private void Refresh()
+    // Extends Storage's Refresh: also update the held model, then emit Changed.
+    protected override void Refresh()
     {
         UpdateHeldModel();
-        EmitSignal(SignalName.Changed);
+        base.Refresh();
     }
 
     // Swaps the model in the player's hand to match the selected slot.

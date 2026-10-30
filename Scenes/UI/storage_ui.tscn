@@ -1,0 +1,96 @@
+[gd_scene format=3 uid="uid://ddtvyayly1brx"]
+
+[ext_resource type="Script" uid="uid://c0hfr1t271a8l" path="res://Scripts/UI/StorageUI.cs" id="1_gylgm"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gylgm"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.101960786, 0.101960786, 0.101960786, 0)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[node name="StorageUi" type="CanvasLayer" unique_id=492877642 node_paths=PackedStringArray("Root", "ContainerTitle", "ContainerGrid", "InventoryGrid")]
+script = ExtResource("1_gylgm")
+Root = NodePath("Root")
+ContainerTitle = NodePath("Root/Center/PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ContainerSide/ContainerName")
+ContainerGrid = NodePath("Root/Center/PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ContainerSide/GridContainer")
+InventoryGrid = NodePath("Root/Center/PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/InvSide/GridContainer")
+
+[node name="Root" type="Control" parent="." unique_id=1548625885]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Dim" type="ColorRect" parent="Root" unique_id=2019914060]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.19607843)
+
+[node name="Center" type="CenterContainer" parent="Root" unique_id=1283682393]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+accessibility_region = true
+
+[node name="PanelContainer" type="PanelContainer" parent="Root/Center" unique_id=2109069301]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_gylgm")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Root/Center/PanelContainer" unique_id=1443415038]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Root/Center/PanelContainer/VBoxContainer" unique_id=916768613]
+layout_mode = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Root/Center/PanelContainer/VBoxContainer/MarginContainer" unique_id=1751774568]
+layout_mode = 2
+theme_override_constants/separation = 64
+
+[node name="InvSide" type="VBoxContainer" parent="Root/Center/PanelContainer/VBoxContainer/MarginContainer/HBoxContainer" unique_id=1442215427]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="Root/Center/PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/InvSide" unique_id=903851355]
+layout_mode = 2
+offset_transform_position = Vector2(0, -96)
+text = "Inventory"
+
+[node name="GridContainer" type="GridContainer" parent="Root/Center/PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/InvSide" unique_id=1907035549]
+layout_mode = 2
+columns = 4
+
+[node name="ContainerSide" type="VBoxContainer" parent="Root/Center/PanelContainer/VBoxContainer/MarginContainer/HBoxContainer" unique_id=1090564281]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="ContainerName" type="Label" parent="Root/Center/PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ContainerSide" unique_id=407757996]
+layout_mode = 2
+offset_transform_position = Vector2(0, -96)
+text = "Container"
+
+[node name="GridContainer" type="GridContainer" parent="Root/Center/PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ContainerSide" unique_id=2147165052]
+layout_mode = 2
+theme_override_constants/h_separation = 4
+theme_override_constants/v_separation = 4
+columns = 4

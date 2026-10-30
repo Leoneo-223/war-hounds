@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://ci8tdfdwseum3"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fvkn2"]
+
+[node name="StorageExtra" type="Node3D" unique_id=1899122118]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=217404890]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1703749370]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+shape = SubResource("BoxShape3D_fvkn2")

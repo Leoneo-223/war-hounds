@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://d004eirx2mc5i"]
+
+[ext_resource type="Script" uid="uid://bpqu2x8r2t5ds" path="res://Scripts/Core/StorageCrate.cs" id="1_desf2"]
+[ext_resource type="Script" uid="uid://bwpl8tfw3jgvr" path="res://Scripts/Core/Storage.cs" id="2_cpn7m"]
+[ext_resource type="PackedScene" uid="uid://ddtvyayly1brx" path="res://Scenes/UI/storage_ui.tscn" id="3_cpn7m"]
+
+[node name="Storage" type="StaticBody3D" unique_id=1898311747 node_paths=PackedStringArray("Contents")]
+script = ExtResource("1_desf2")
+Contents = NodePath("Contents")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=2096477433]
+
+[node name="Contents" type="Node" parent="." unique_id=1013211452]
+script = ExtResource("2_cpn7m")
+
+[node name="StorageUi" parent="." unique_id=492877642 instance=ExtResource("3_cpn7m")]
+
+[node name="Extras" type="Node3D" parent="." unique_id=1669334419]

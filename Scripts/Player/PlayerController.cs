@@ -46,6 +46,8 @@ public partial class PlayerController : CharacterBody3D
     private Node3D _pivot;
     private Camera3D _camera;
 
+    private static bool KeyDown(Key key) => Input.IsPhysicalKeyPressed(key);
+
     public override void _Ready()
     {
         _collision = GetNode<CollisionShape3D>("CollisionShape3D");
@@ -70,6 +72,9 @@ public partial class PlayerController : CharacterBody3D
 
     public override void _Input(InputEvent e)
     {
+        // If an UI is open then don't do anything
+        if (GameState.UiOpen) return;
+
         if (e is InputEventMouseMotion motion)
         {
             // Turn the body left/right
@@ -83,8 +88,6 @@ public partial class PlayerController : CharacterBody3D
             _pivot.RotationDegrees = pivot;
         }
     }
-
-    private static bool KeyDown(Key key) => Input.IsPhysicalKeyPressed(key);
 
     public override void _PhysicsProcess(double delta)
     {
