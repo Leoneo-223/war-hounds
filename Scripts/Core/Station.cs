@@ -195,10 +195,10 @@ public abstract partial class Station : StaticBody3D, IInteractable
         pickup.Count = count;
         GetTree().CurrentScene.AddChild(pickup);
 
-        Node3D at = this;                            // default: the station itself
-        if (OutputPoint != null) at = OutputPoint;   // or the marker, if assigned
+        Node3D at = this; // default: the station itself
+        if (OutputPoint != null) at = OutputPoint; // or the marker, if assigned
         pickup.GlobalPosition = at.GlobalPosition;
-        pickup.LinearVelocity = -at.GlobalBasis.Z * 1.5f;
+        pickup.LinearVelocity = -at.GlobalBasis.Z * 2.5f; // How fast it pops out
     }
 
     // Extra conditions to start (fuel, power, heat...). Return false to refuse.

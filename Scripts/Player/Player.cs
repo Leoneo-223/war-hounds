@@ -1,6 +1,6 @@
 using Godot;
 
-public partial class PlayerController : CharacterBody3D
+public partial class Player : CharacterBody3D
 {
     [ExportGroup("Speed")]
     [Export] public float CrouchSpeed = 1.8f;
@@ -31,6 +31,16 @@ public partial class PlayerController : CharacterBody3D
     [Export] public float SprintFovBoost = 9f;       // degrees added when sprinting
     [Export] public float FovSmoothing = 6f;         // how fast the FOV changes
 
+    [ExportGroup("Health")]
+    [Export] public int MaxHealth = 100;
+
+    // A health bar (or anything else) can connect to these.
+    [Signal] public delegate void HealthChangedEventHandler(int current, int max);
+    [Signal] public delegate void DiedEventHandler();
+
+    public int Health { get; private set; }
+    public bool IsDead { get; private set; }
+
     private float _speed;
     private float _landingVelocity;
     private bool _jumpWasDown;
@@ -50,6 +60,9 @@ public partial class PlayerController : CharacterBody3D
 
     public override void _Ready()
     {
+        Health = MaxHealth;
+        EmitSignal(SignalName.HealthChanged, Health, MaxHealth);
+
         _collision = GetNode<CollisionShape3D>("CollisionShape3D");
         _mesh = GetNode<MeshInstance3D>("MeshInstance3D");
         _pivot = GetNode<Node3D>("Pivot");
@@ -86,6 +99,16 @@ public partial class PlayerController : CharacterBody3D
             Vector3 pivot = _pivot.RotationDegrees;
             pivot.X = Mathf.Clamp(pivot.X - motion.Relative.Y * MouseSensitivity, -90f, 90f);
             _pivot.RotationDegrees = pivot;
+        }
+    }
+
+    //TEST FUCKING ONLY!!!
+    public override void _UnhandledInput(InputEvent e)
+    {
+        if (e is InputEventKey { Pressed: true, Echo: false } k)
+        {
+            if (k.PhysicalKeycode == Key.H) Damage(25);
+            if (k.PhysicalKeycode == Key.J) Heal(25);
         }
     }
 
@@ -180,7 +203,6 @@ public partial class PlayerController : CharacterBody3D
         Vector3 real = GetRealVelocity();
         float horizontalSpeed = new Vector2(real.X, real.Z).Length();
 
-        // ---- Head bob ----
         Vector3 targetBob = Vector3.Zero;
 
         if (BobEnabled && IsOnFloor() && horizontalSpeed > 0.1f)
@@ -200,8 +222,6 @@ public partial class PlayerController : CharacterBody3D
         // Landing dip eases back to zero
         _landingDip = Mathf.Lerp(_landingDip, 0f, 1f - Mathf.Exp(-8f * d));
 
-        // ---- Speed FOV ----
-        // Stages: standing/crouching = base, walking = tiny boost, running = slight boost, sprinting = most
         float targetFov = _baseFov;
         if (FovEffectEnabled)
         {
@@ -226,5 +246,37 @@ public partial class PlayerController : CharacterBody3D
     {
         float amplitude = Mathf.Clamp(landingVelocity / 100f, 0f, 0.3f);
         _landingDip = -amplitude;
+    }
+
+    public void Heal(int amount)
+    {
+        if (IsDead || amount <= 0) return;
+        SetHealth(Health + amount);
+    }
+
+    public void Damage(int amount)
+    {
+        if (IsDead || amount <= 0) return;
+        SetHealth(Health - amount);
+        if (Health <= 0) Die();
+    }
+
+    public void Die()
+    {
+        if (IsDead) return;
+        IsDead = true;
+        SetHealth(0);
+
+        GameState.UiOpen = true;            
+        SetPhysicsProcess(false);              
+        Input.MouseMode = Input.MouseModeEnum.Visible;
+
+        EmitSignal(SignalName.Died);
+    }
+
+    private void SetHealth(int value)
+    {
+        Health = Mathf.Clamp(value, 0, MaxHealth);
+        EmitSignal(SignalName.HealthChanged, Health, MaxHealth);
     }
 }

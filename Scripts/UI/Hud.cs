@@ -24,6 +24,8 @@ public partial class Hud : CanvasLayer
     // Called by the Interactor every frame with the current prompt text.
     public void SetPrompt(string text)
     {
+        if (GameState.UiOpen) text = "";  
+
         _hovering = text != "";
 
         if (Prompt != null)

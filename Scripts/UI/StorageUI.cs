@@ -7,8 +7,9 @@ public partial class StorageUI : CanvasLayer
 {
     public static StorageUI Instance { get; private set; }
 
-    [Export] public Control Root;              // everything that gets shown/hidden
-    [Export] public Label ContainerTitle;      // "Crate", "Barrel"...
+    [Export] public Control Root;              
+    [Export] public Label ContainerTitle;      
+    [Export] public Texture2D SlotTexture; 
     [Export] public GridContainer ContainerGrid;
     [Export] public GridContainer InventoryGrid;
 
@@ -82,7 +83,7 @@ public partial class StorageUI : CanvasLayer
     {
         for (int i = 0; i < storage.SlotCount; i++)
         {
-            var slot = new SlotUI { Source = storage, Index = i };
+            var slot = new SlotUI { Source = storage, Index = i, Background = SlotTexture };
             grid.AddChild(slot);    // _Ready runs here and builds the slot visuals
             _slotUIs.Add(slot);
         }

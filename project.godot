@@ -43,6 +43,11 @@ project/assembly_name="War Hounds"
 
 enabled=PackedStringArray("res://addons/ambientcg/plugin.cfg")
 
+[gui]
+
+timers/tooltip_delay_sec=0.1
+timers/tooltip_delay_sec.editor_hint=0.1
+
 [physics]
 
 3d/physics_engine="Jolt Physics"

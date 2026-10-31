@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://ddtvyayly1brx"]
 
 [ext_resource type="Script" uid="uid://c0hfr1t271a8l" path="res://Scripts/UI/StorageUI.cs" id="1_gylgm"]
+[ext_resource type="Texture2D" uid="uid://xtv7y0umamu8" path="res://Textures/UI/HUDBOX.png" id="2_li0dy"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gylgm"]
 content_margin_left = 0.0
@@ -18,6 +19,7 @@ corner_detail = 5
 script = ExtResource("1_gylgm")
 Root = NodePath("Root")
 ContainerTitle = NodePath("Root/Center/PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ContainerSide/ContainerName")
+SlotTexture = ExtResource("2_li0dy")
 ContainerGrid = NodePath("Root/Center/PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ContainerSide/GridContainer")
 InventoryGrid = NodePath("Root/Center/PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/InvSide/GridContainer")
 

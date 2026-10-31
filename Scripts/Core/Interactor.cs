@@ -39,5 +39,8 @@ public partial class Interactor : RayCast3D
 
         if (e is InputEventKey { Pressed: true, Echo: false, PhysicalKeycode: Key.E })
             _current?.Interact();
+
+        if (e is InputEventKey { Pressed: true, Echo: false, PhysicalKeycode: Key.F })
+            (_current as ISecondaryInteractable)?.InteractSecondary();
     }
 }

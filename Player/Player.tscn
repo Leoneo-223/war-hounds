@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bsgk4kmypw01i"]
 
-[ext_resource type="Script" uid="uid://s15m3xk05pfn" path="res://Scripts/Player/PlayerController.cs" id="1_3qydi"]
+[ext_resource type="Script" uid="uid://bfcf1p8hdd4ww" path="res://Scripts/Player/Player.cs" id="1_8g4oa"]
 [ext_resource type="PackedScene" uid="uid://dqwwq31gnlt6p" path="res://Scenes/UI/player_hud.tscn" id="2_q3lat"]
 [ext_resource type="Script" uid="uid://ta64ygdq1jc8" path="res://Scripts/Core/Interactor.cs" id="3_ddoul"]
 [ext_resource type="PackedScene" uid="uid://d3q0ikgu5ji7w" path="res://Scenes/Core/item_pickup.tscn" id="4_6ysni"]
@@ -11,10 +11,11 @@
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_q3lat"]
 
 [node name="Player" type="CharacterBody3D" unique_id=993695542]
-script = ExtResource("1_3qydi")
+script = ExtResource("1_8g4oa")
+RunSpeed = 4.5
+SprintSpeed = 6.0
 BobFrequency = 1.2
 BobAmplitudeY = 0.1
-BobAmplitudeX = 0.04
 
 [node name="PlayerHud" parent="." unique_id=854820583 instance=ExtResource("2_q3lat")]
 

@@ -8,6 +8,7 @@
 script = ExtResource("1_jf2ku")
 Id = "aluminum_foil"
 Name = "Aluminum Foil"
+Desc = "Aluminum foil used for wrapping sandwiches"
 Icon = ExtResource("1_x87sr")
 WorldModel = ExtResource("2_p6c2u")
 MaxStack = 20

@@ -7,7 +7,7 @@
 [ext_resource type="Resource" uid="uid://dvj8j7qyost0m" path="res://Resources/Items/Consumables/popane_canister.tres" id="4_ynf5e"]
 [ext_resource type="PackedScene" uid="uid://b7bww3jo2mrxy" path="res://Scenes/Storage/medium_storage_rack.tscn" id="5_6bp64"]
 [ext_resource type="PackedScene" uid="uid://bt280t8i0vfkd" path="res://Scenes/Storage/small_storage_rack.tscn" id="6_344ge"]
-[ext_resource type="PackedScene" uid="uid://0c1udupnlsxf" path="res://Scenes/Stations/smelting_station.tscn" id="8_ynf5e"]
+[ext_resource type="PackedScene" uid="uid://0c1udupnlsxf" path="res://Scenes/Stations/smelting_crucible.tscn" id="8_ynf5e"]
 [ext_resource type="PackedScene" uid="uid://bkj8fvb2ya558" path="res://Scenes/Stations/propane_tank.tscn" id="9_hptm8"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_jjgbg"]
@@ -79,8 +79,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5546831, 1.4567132, 12.350
 [node name="Storage3" parent="CSGBox3D" unique_id=139368097 instance=ExtResource("6_344ge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.780025, 1.4880261, 12.446819)
 
-[node name="SmeltingCrucible" parent="CSGBox3D" unique_id=659818339 instance=ExtResource("8_ynf5e")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.693371, 1.580374, 1.7339187)
+[node name="SmeltingCrucible" parent="CSGBox3D" unique_id=659818339 node_paths=PackedStringArray("Tank") instance=ExtResource("8_ynf5e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.693371, 1.2943075, 1.7339187)
+Tank = NodePath("PropaneTank")
 
-[node name="PropaneTank" parent="." unique_id=970793741 instance=ExtResource("9_hptm8")]
-transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 8.756698, 1.0697818, 4.785325)
+[node name="PropaneTank" parent="CSGBox3D/SmeltingCrucible" unique_id=970793741 instance=ExtResource("9_hptm8")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0.063326836, -0.24850965, 2.5764775)
+RefillAmount = 20.0

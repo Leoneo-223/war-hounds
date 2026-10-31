@@ -8,6 +8,7 @@
 script = ExtResource("3_nk5wq")
 Id = "propane_canister"
 Name = "Popane Canister"
+Desc = "A small popane canister used to fill up big tanks "
 Icon = ExtResource("1_upa76")
 WorldModel = ExtResource("2_upa76")
 metadata/_custom_type_script = "uid://co4wi7ebsf67k"

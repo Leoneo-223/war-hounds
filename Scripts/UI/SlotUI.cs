@@ -3,12 +3,14 @@ using Godot;
 // One draggable slot. Created from code by StorageUI, so it needs no scene.
 // It draws itself (background, icon, count) and handles drag and drop
 // using Godot's built-in _GetDragData / _CanDropData / _DropData.
+// Hovering an item shows a tooltip with its name, category and description.
 public partial class SlotUI : Control
 {
     public Storage Source;   // which storage this slot shows
     public int Index;        // which slot of that storage
 
     [Export] public TextureRect _icon;
+    public Texture2D Background;   // set by StorageUI; null = plain dark square
     private Label _count;
     private Label _nameFallback;   // shown if the item has no icon yet
 
@@ -17,11 +19,20 @@ public partial class SlotUI : Control
         CustomMinimumSize = new Vector2(64, 64);
         MouseFilter = MouseFilterEnum.Stop;   // this node must receive the mouse
 
-        // Children ignore the mouse, otherwise they would steal drags and drops.
-        var bg = new ColorRect { Color = new Color(0.12f, 0.12f, 0.12f, 0.9f), MouseFilter = MouseFilterEnum.Ignore };
+        Control bg;
+        if (Background != null)
+            bg = new TextureRect
+            {
+                Texture = Background,
+                ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize,
+                StretchMode = TextureRect.StretchModeEnum.Scale,
+                MouseFilter = MouseFilterEnum.Ignore
+            };
+        else
+            bg = new ColorRect { Color = new Color(0.12f, 0.12f, 0.12f, 0.9f), MouseFilter = MouseFilterEnum.Ignore };
+
         bg.SetAnchorsPreset(LayoutPreset.FullRect);
         AddChild(bg);
-
         _icon = new TextureRect
         {
             ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize,
@@ -67,7 +78,51 @@ public partial class SlotUI : Control
         _nameFallback.Visible = item != null && item.Icon == null;
 
         _count.Text = (item != null && count > 1) ? count.ToString() : "";
+
+        // Must be non-empty for the tooltip to show at all. The text itself is only
+        // used as a fallback, because _MakeCustomTooltip below builds the real one.
         TooltipText = item?.Name ?? "";
+    }
+
+    // Builds the hover tooltip from the item in this slot. Godot calls this
+    // each time the cursor rests on the slot, so it is always up to date.
+    public override GodotObject _MakeCustomTooltip(string forText)
+    {
+        ItemData item = Source?.Items[Index];
+        if (item == null) return null;
+
+        var box = new VBoxContainer { CustomMinimumSize = new Vector2(220, 0) };
+
+        var name = new Label { Text = item.Name };
+        name.AddThemeFontSizeOverride("font_size", 16);
+        box.AddChild(name);
+
+        var category = new Label
+        {
+            Text = item.Category.ToString(),
+            Modulate = new Color(1, 1, 1, 0.6f)
+        };
+        category.AddThemeFontSizeOverride("font_size", 11);
+        box.AddChild(category);
+
+        if (!string.IsNullOrEmpty(item.Desc))
+        {
+            box.AddChild(new Label
+            {
+                Text = item.Desc,
+                AutowrapMode = TextServer.AutowrapMode.WordSmart,
+                CustomMinimumSize = new Vector2(220, 0)
+            });
+        }
+
+        var margin = new MarginContainer();
+        foreach (string side in new[] { "left", "right", "top", "bottom" })
+            margin.AddThemeConstantOverride($"margin_{side}", 8);
+        margin.AddChild(box);
+
+        var panel = new PanelContainer();
+        panel.AddChild(margin);
+        return panel;
     }
 
     // Called by Godot when the player starts dragging from this slot.

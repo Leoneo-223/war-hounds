@@ -8,6 +8,7 @@
 script = ExtResource("1_w4lim")
 Id = "plank"
 Name = "Plank"
+Desc = "Wooden plank used for manufacturing weapons, building stations or as a weapon"
 Icon = ExtResource("1_a80c1")
 WorldModel = ExtResource("2_wllx2")
 MaxStack = 20
