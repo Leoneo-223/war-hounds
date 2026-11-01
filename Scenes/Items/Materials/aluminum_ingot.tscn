@@ -1,18 +1,18 @@
 [gd_scene format=3 uid="uid://qam5h3hsmic"]
 
-[ext_resource type="ArrayMesh" uid="uid://c7splujmum4es" path="res://Models/Items/aluminium_ingot.obj" id="1_yuwl7"]
-[ext_resource type="Texture2D" uid="uid://djgiluxpfarc7" path="res://AmbientCG/Extracted/Metal055A_1K-JPG_Color.jpg" id="2_7g8am"]
+[ext_resource type="ArrayMesh" uid="uid://c7splujmum4es" path="res://Models/Items/aluminium_ingot.obj" id="1_rm3gd"]
+[ext_resource type="Texture2D" uid="uid://djgiluxpfarc7" path="res://AmbientCG/Extracted/Metal055A_1K-JPG_Color.jpg" id="2_jwety"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fvkn2"]
 albedo_color = Color(0.7581918, 0.7581918, 0.7581917, 1)
 metallic = 0.5
 metallic_specular = 0.15
 roughness = 0.6
-roughness_texture = ExtResource("2_7g8am")
+roughness_texture = ExtResource("2_jwety")
 
 [node name="AluminumIngot" type="Node3D" unique_id=1198795017]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1743608830]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
-mesh = ExtResource("1_yuwl7")
+mesh = ExtResource("1_rm3gd")
 surface_material_override/0 = SubResource("StandardMaterial3D_fvkn2")

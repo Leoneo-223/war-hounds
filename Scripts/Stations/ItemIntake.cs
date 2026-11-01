@@ -22,13 +22,21 @@ public partial class ItemIntake : Area3D
     private float _damageTimer;
     private Player _player;   // null while the player is outside the area
 
-    public bool PlayerInside => _player != null;
+    public bool PlayerInside
+    {
+        get
+        {
+            return _player != null;
+        }
+    }
 
     public override void _Ready()
     {
         _station = GetParentOrNull<Station>();
         if (_station == null)
+        {
             GD.PushError("ItemIntake must be a direct child of a Station node.");
+        }
 
         BodyEntered += OnBodyEntered;
         BodyExited += OnBodyExited;
@@ -36,7 +44,8 @@ public partial class ItemIntake : Area3D
 
     private void OnBodyEntered(Node3D body)
     {
-        if (body is Player p)
+        Player p = body as Player;
+        if (p != null)
         {
             _player = p;
             _damageTimer = 0f;   // first hit lands right after TickInterval
@@ -46,41 +55,73 @@ public partial class ItemIntake : Area3D
     private void OnBodyExited(Node3D body)
     {
         if (body == _player)
+        {
             _player = null;
+        }
     }
 
     public override void _PhysicsProcess(double delta)
     {
-        if (_station == null) return;
+        if (_station == null)
+        {
+            return;
+        }
 
         HurtPlayer((float)delta);
 
         // Check a few times per second, not every frame. Polling (instead of BodyEntered)
         // also catches items that were refused earlier and are still sitting here.
         _timer += (float)delta;
-        if (_timer < 0.2f) return;
+        if (_timer < 0.2f)
+        {
+            return;
+        }
         _timer = 0f;
 
         foreach (Node3D body in GetOverlappingBodies())
         {
-            if (body is not ItemPickup pickup) continue;
-            if (pickup.IsQueuedForDeletion() || pickup.Item == null) continue;
+            ItemPickup pickup = body as ItemPickup;
+            if (pickup == null)
+            {
+                continue;
+            }
+
+            if (pickup.IsQueuedForDeletion() || pickup.Item == null)
+            {
+                continue;
+            }
 
             int taken = _station.Accept(pickup.Item, pickup.Count);
-            if (taken <= 0) continue;
+            if (taken <= 0)
+            {
+                continue;
+            }
 
             pickup.Count -= taken;
-            if (pickup.Count <= 0) pickup.QueueFree();
+            if (pickup.Count <= 0)
+            {
+                pickup.QueueFree();
+            }
         }
     }
 
     private void HurtPlayer(float delta)
     {
-        if (!HurtsPlayer || _player == null || _player.IsDead) return;
-        if (OnlyWhileWorking && _station.State != StationState.Working) return;
+        if (!HurtsPlayer || _player == null || _player.IsDead)
+        {
+            return;
+        }
+
+        if (OnlyWhileWorking && _station.State != StationState.Working)
+        {
+            return;
+        }
 
         _damageTimer += delta;
-        if (_damageTimer < TickInterval) return;
+        if (_damageTimer < TickInterval)
+        {
+            return;
+        }
         _damageTimer = 0f;
 
         _player.Damage(DamagePerTick);

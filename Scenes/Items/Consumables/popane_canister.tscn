@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://w4sfyd16uljj"]
 
 [ext_resource type="ArrayMesh" uid="uid://b6ckrkd4ytf6r" path="res://Models/Items/popane_tank.obj" id="1_mqqwe"]
+[ext_resource type="Script" uid="uid://f8py4e21smn5" path="res://Scripts/ItemFunctions/PropaneCanister.cs" id="1_ogd8q"]
+[ext_resource type="PackedScene" uid="uid://wo0r0pxmp1ed" path="res://Scenes/World/explosion.tscn" id="2_ji71l"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fvkn2"]
 albedo_color = Color(0.29643834, 0.26377755, 0.23698804, 1)
@@ -10,8 +12,11 @@ albedo_color = Color(0.9282368, 0, 0.18045533, 1)
 metallic = 0.3
 roughness = 0.5
 
-[node name="PopaneCanister" type="Node3D" unique_id=631030193]
+[node name="PopaneCanister" type="Node3D" unique_id=653928704]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+script = ExtResource("1_ogd8q")
+ExplosionScene = ExtResource("2_ji71l")
+ImpactSpeed = 8.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=2093344717]
 mesh = ExtResource("1_mqqwe")

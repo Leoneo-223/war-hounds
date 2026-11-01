@@ -7,14 +7,14 @@ public partial class StorageUI : CanvasLayer
 {
     public static StorageUI Instance { get; private set; }
 
-    [Export] public Control Root;              
-    [Export] public Label ContainerTitle;      
-    [Export] public Texture2D SlotTexture; 
+    [Export] public Control Root;
+    [Export] public Label ContainerTitle;
+    [Export] public Texture2D SlotTexture;
     [Export] public GridContainer ContainerGrid;
     [Export] public GridContainer InventoryGrid;
 
     private Storage _container;
-    private readonly List<SlotUI> _slotUIs = new();
+    private readonly List<SlotUI> _slotUIs = new List<SlotUI>();
 
     public override void _Ready()
     {
@@ -25,12 +25,19 @@ public partial class StorageUI : CanvasLayer
     public override void _ExitTree()
     {
         // Make sure a closed scene never leaves the game stuck in "menu open" mode.
-        if (Instance == this) GameState.UiOpen = false;
+        if (Instance == this)
+        {
+            GameState.UiOpen = false;
+        }
     }
 
     public void Open(Storage container, string title)
     {
-        if (Root.Visible || container == null) return;
+        if (Root.Visible || container == null)
+        {
+            return;
+        }
+
         _container = container;
         ContainerTitle.Text = title;
 
@@ -49,7 +56,10 @@ public partial class StorageUI : CanvasLayer
 
     public void Close()
     {
-        if (!Root.Visible) return;
+        if (!Root.Visible)
+        {
+            return;
+        }
 
         GetViewport().GuiCancelDrag();   // drop any drag still in progress
 
@@ -69,13 +79,19 @@ public partial class StorageUI : CanvasLayer
     // E, Tab or Escape close the window.
     public override void _Input(InputEvent e)
     {
-        if (!Root.Visible) return;
-
-        if (e is InputEventKey { Pressed: true, Echo: false } k &&
-            (k.PhysicalKeycode == Key.E || k.PhysicalKeycode == Key.Tab || k.PhysicalKeycode == Key.Escape))
+        if (!Root.Visible)
         {
-            Close();
-            GetViewport().SetInputAsHandled();
+            return;
+        }
+
+        InputEventKey k = e as InputEventKey;
+        if (k != null && k.Pressed && !k.Echo)
+        {
+            if (k.PhysicalKeycode == Key.E || k.PhysicalKeycode == Key.Tab || k.PhysicalKeycode == Key.Escape)
+            {
+                Close();
+                GetViewport().SetInputAsHandled();
+            }
         }
     }
 
@@ -83,7 +99,11 @@ public partial class StorageUI : CanvasLayer
     {
         for (int i = 0; i < storage.SlotCount; i++)
         {
-            var slot = new SlotUI { Source = storage, Index = i, Background = SlotTexture };
+            SlotUI slot = new SlotUI();
+            slot.Source = storage;
+            slot.Index = i;
+            slot.Background = SlotTexture;
+
             grid.AddChild(slot);    // _Ready runs here and builds the slot visuals
             _slotUIs.Add(slot);
         }
@@ -100,6 +120,9 @@ public partial class StorageUI : CanvasLayer
 
     private void RefreshAll()
     {
-        foreach (var slot in _slotUIs) slot.Refresh();
+        foreach (SlotUI slot in _slotUIs)
+        {
+            slot.Refresh();
+        }
     }
 }

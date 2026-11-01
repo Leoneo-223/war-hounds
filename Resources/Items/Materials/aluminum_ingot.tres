@@ -1,14 +1,14 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://8q6w6xhusytm"]
 
 [ext_resource type="Texture2D" uid="uid://bxmoekjhdbo2c" path="res://icon.svg" id="1_hvo2m"]
-[ext_resource type="PackedScene" uid="uid://qam5h3hsmic" path="res://Scenes/Items/Materials/aluminum_ingot_50.tscn" id="2_nsphf"]
+[ext_resource type="PackedScene" uid="uid://qam5h3hsmic" path="res://Scenes/Items/Materials/aluminum_ingot.tscn" id="2_nsphf"]
 [ext_resource type="Script" uid="uid://co4wi7ebsf67k" path="res://Scripts/Resources/ItemData.cs" id="3_ispjc"]
 
 [resource]
 script = ExtResource("3_ispjc")
-Id = "aluminum_ingot_50"
+Id = "aluminum_ingot"
 Name = "Aluminum Ingot"
-Desc = "An Aluminum ingot 50% pure, made from smelting aluminum foil in a crucible"
+Desc = "An Aluminum ingot made from smelting aluminum foil in a crucible"
 Icon = ExtResource("1_hvo2m")
 WorldModel = ExtResource("2_nsphf")
 MaxStack = 20

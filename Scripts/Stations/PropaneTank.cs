@@ -19,23 +19,66 @@ public partial class PropaneTank : StaticBody3D, IInteractable
     // How much fuel one refill item adds.
     [Export] public float RefillAmount = 50f;
 
-    public bool HasFuel => Fuel > 0f;
-    private int FuelPercent => Mathf.RoundToInt(Fuel / MaxFuel * 100f);
+    public bool HasFuel
+    {
+        get
+        {
+            return Fuel > 0f;
+        }
+    }
+
+    private int FuelPercent
+    {
+        get
+        {
+            return Mathf.RoundToInt(Fuel / MaxFuel * 100f);
+        }
+    }
 
     // True when the player is holding the refill item and there is room for fuel.
-    private bool CanRefill =>
-        RefillItem != null
-        && Inventory.Instance?.SelectedItem == RefillItem
-        && Fuel < MaxFuel;
+    private bool CanRefill
+    {
+        get
+        {
+            if (RefillItem == null)
+            {
+                return false;
+            }
+
+            if (Inventory.Instance == null)
+            {
+                return false;
+            }
+
+            if (Inventory.Instance.SelectedItem != RefillItem)
+            {
+                return false;
+            }
+
+            if (Fuel >= MaxFuel)
+            {
+                return false;
+            }
+
+            return true;
+        }
+    }
 
     public string GetPrompt()
     {
         if (CanRefill)
+        {
             return $"[E] Refill with {RefillItem.Name} ({FuelPercent}%)";
+        }
 
-        return ValveOpen
-            ? $"[E] Close valve ({FuelPercent}%)"
-            : $"[E] Open valve ({FuelPercent}%)";
+        if (ValveOpen)
+        {
+            return $"[E] Close valve ({FuelPercent}%)";
+        }
+        else
+        {
+            return $"[E] Open valve ({FuelPercent}%)";
+        }
     }
 
     public void Interact()
@@ -43,7 +86,7 @@ public partial class PropaneTank : StaticBody3D, IInteractable
         if (CanRefill)
         {
             // Use up one item from the held slot, then add its fuel (capped at MaxFuel).
-            var inv = Inventory.Instance;
+            Inventory inv = Inventory.Instance;
             inv.RemoveFromSlot(inv.Selected, 1);
             Fuel = Mathf.Min(MaxFuel, Fuel + RefillAmount);
             return;
@@ -56,7 +99,10 @@ public partial class PropaneTank : StaticBody3D, IInteractable
     // Gives nothing while the valve is closed, and less than asked when the tank runs dry.
     public float Consume(float amount)
     {
-        if (!ValveOpen || Fuel <= 0f || amount <= 0f) return 0f;
+        if (!ValveOpen || Fuel <= 0f || amount <= 0f)
+        {
+            return 0f;
+        }
 
         float given = Mathf.Min(amount, Fuel);
         Fuel -= given;

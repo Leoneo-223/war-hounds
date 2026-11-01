@@ -1,4 +1,5 @@
 using Godot;
+using Godot.Collections;
 
 // Data for one thing a station can make. Create these as .tres files and add them
 // to a station's Recipes list. No logic here, stations read it.
@@ -8,7 +9,7 @@ public partial class Recipe : Resource
     [Export] public string Name = "Recipe";
 
     // Everything that has to be loaded into the station to start.
-    [Export] public Godot.Collections.Array<RecipeIngredient> Inputs = new();
+    [Export] public Array<RecipeIngredient> Inputs = new Array<RecipeIngredient>();
 
     [Export] public ItemData Output;
     [Export] public int OutputCount = 1;

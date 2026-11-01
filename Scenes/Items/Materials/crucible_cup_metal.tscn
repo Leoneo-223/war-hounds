@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://b5yfip4m4kcta"]
+
+[ext_resource type="ArrayMesh" uid="uid://pspa67tqh8y" path="res://Models/Items/crucible_cup.obj" id="1_fk705"]
+[ext_resource type="Material" uid="uid://bgoyjfvpvylwl" path="res://Materials/dark_metal.tres" id="2_ecfox"]
+[ext_resource type="Material" uid="uid://cg8byp5hc8alx" path="res://Materials/molten_metal.tres" id="3_hgoop"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_fvkn2"]
+top_radius = 0.08886719
+bottom_radius = 0.08886719
+height = 0.007751465
+
+[node name="CrucibleCupEmpty" type="Node3D" unique_id=1258626624]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1669683482]
+transform = Transform3D(-0.1, 0, -8.742278e-09, 0, 0.1, 0, 8.742278e-09, 0, -0.1, 0, 0, 0)
+mesh = ExtResource("1_fk705")
+surface_material_override/0 = ExtResource("2_ecfox")
+surface_material_override/1 = ExtResource("2_ecfox")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=1142967032]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.057807766, 0.0011001006)
+mesh = SubResource("CylinderMesh_fvkn2")
+surface_material_override/0 = ExtResource("3_hgoop")

@@ -6,7 +6,7 @@ public interface IInteractable
     // Text shown under the crosshair while the player looks at this object.
     // Return "" to show nothing.
     string GetPrompt();
- 
+
     // Called when the player presses E while looking at this object.
     void Interact();
 }

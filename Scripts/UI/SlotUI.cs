@@ -19,46 +19,48 @@ public partial class SlotUI : Control
         CustomMinimumSize = new Vector2(64, 64);
         MouseFilter = MouseFilterEnum.Stop;   // this node must receive the mouse
 
+        // Children ignore the mouse, otherwise they would steal drags and drops.
         Control bg;
         if (Background != null)
-            bg = new TextureRect
-            {
-                Texture = Background,
-                ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize,
-                StretchMode = TextureRect.StretchModeEnum.Scale,
-                MouseFilter = MouseFilterEnum.Ignore
-            };
+        {
+            TextureRect backgroundImage = new TextureRect();
+            backgroundImage.Texture = Background;
+            backgroundImage.ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize;
+            backgroundImage.StretchMode = TextureRect.StretchModeEnum.Scale;
+            backgroundImage.MouseFilter = MouseFilterEnum.Ignore;
+            bg = backgroundImage;
+        }
         else
-            bg = new ColorRect { Color = new Color(0.12f, 0.12f, 0.12f, 0.9f), MouseFilter = MouseFilterEnum.Ignore };
+        {
+            ColorRect backgroundColor = new ColorRect();
+            backgroundColor.Color = new Color(0.12f, 0.12f, 0.12f, 0.9f);
+            backgroundColor.MouseFilter = MouseFilterEnum.Ignore;
+            bg = backgroundColor;
+        }
 
         bg.SetAnchorsPreset(LayoutPreset.FullRect);
         AddChild(bg);
-        _icon = new TextureRect
-        {
-            ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize,
-            StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered,
-            MouseFilter = MouseFilterEnum.Ignore
-        };
+
+        _icon = new TextureRect();
+        _icon.ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize;
+        _icon.StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered;
+        _icon.MouseFilter = MouseFilterEnum.Ignore;
         _icon.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect, LayoutPresetMode.Minsize, 6);
         AddChild(_icon);
 
-        _nameFallback = new Label
-        {
-            AutowrapMode = TextServer.AutowrapMode.WordSmart,
-            HorizontalAlignment = HorizontalAlignment.Center,
-            VerticalAlignment = VerticalAlignment.Center,
-            MouseFilter = MouseFilterEnum.Ignore
-        };
+        _nameFallback = new Label();
+        _nameFallback.AutowrapMode = TextServer.AutowrapMode.WordSmart;
+        _nameFallback.HorizontalAlignment = HorizontalAlignment.Center;
+        _nameFallback.VerticalAlignment = VerticalAlignment.Center;
+        _nameFallback.MouseFilter = MouseFilterEnum.Ignore;
         _nameFallback.AddThemeFontSizeOverride("font_size", 11);
         _nameFallback.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect, LayoutPresetMode.Minsize, 4);
         AddChild(_nameFallback);
 
-        _count = new Label
-        {
-            HorizontalAlignment = HorizontalAlignment.Right,
-            VerticalAlignment = VerticalAlignment.Bottom,
-            MouseFilter = MouseFilterEnum.Ignore
-        };
+        _count = new Label();
+        _count.HorizontalAlignment = HorizontalAlignment.Right;
+        _count.VerticalAlignment = VerticalAlignment.Bottom;
+        _count.MouseFilter = MouseFilterEnum.Ignore;
         _count.AddThemeColorOverride("font_outline_color", Colors.Black);
         _count.AddThemeConstantOverride("outline_size", 4);
         _count.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect, LayoutPresetMode.Minsize, 4);
@@ -71,56 +73,90 @@ public partial class SlotUI : Control
         ItemData item = Source.Items[Index];
         int count = Source.Counts[Index];
 
-        _icon.Texture = item?.Icon;
-        _icon.Visible = item?.Icon != null;
+        // Name of the item, or "" when the slot is empty.
+        string itemName = "";
+        if (item != null && item.Name != null)
+        {
+            itemName = item.Name;
+        }
 
-        _nameFallback.Text = item?.Name ?? "";
+        // Icon
+        if (item != null)
+        {
+            _icon.Texture = item.Icon;
+        }
+        else
+        {
+            _icon.Texture = null;
+        }
+        _icon.Visible = item != null && item.Icon != null;
+
+        // Name shown on the slot only when the item has no icon
+        _nameFallback.Text = itemName;
         _nameFallback.Visible = item != null && item.Icon == null;
 
-        _count.Text = (item != null && count > 1) ? count.ToString() : "";
+        // Stack number
+        if (item != null && count > 1)
+        {
+            _count.Text = count.ToString();
+        }
+        else
+        {
+            _count.Text = "";
+        }
 
         // Must be non-empty for the tooltip to show at all. The text itself is only
         // used as a fallback, because _MakeCustomTooltip below builds the real one.
-        TooltipText = item?.Name ?? "";
+        TooltipText = itemName;
     }
 
     // Builds the hover tooltip from the item in this slot. Godot calls this
     // each time the cursor rests on the slot, so it is always up to date.
     public override GodotObject _MakeCustomTooltip(string forText)
     {
-        ItemData item = Source?.Items[Index];
-        if (item == null) return null;
-
-        var box = new VBoxContainer { CustomMinimumSize = new Vector2(220, 0) };
-
-        var name = new Label { Text = item.Name };
-        name.AddThemeFontSizeOverride("font_size", 16);
-        box.AddChild(name);
-
-        var category = new Label
+        if (Source == null)
         {
-            Text = item.Category.ToString(),
-            Modulate = new Color(1, 1, 1, 0.6f)
-        };
+            return null;
+        }
+
+        ItemData item = Source.Items[Index];
+        if (item == null)
+        {
+            return null;
+        }
+
+        VBoxContainer box = new VBoxContainer();
+        box.CustomMinimumSize = new Vector2(220, 0);
+
+        Label nameLabel = new Label();
+        nameLabel.Text = item.Name;
+        nameLabel.AddThemeFontSizeOverride("font_size", 16);
+        box.AddChild(nameLabel);
+
+        Label category = new Label();
+        category.Text = item.Category.ToString();
+        category.Modulate = new Color(1, 1, 1, 0.6f);
         category.AddThemeFontSizeOverride("font_size", 11);
         box.AddChild(category);
 
         if (!string.IsNullOrEmpty(item.Desc))
         {
-            box.AddChild(new Label
-            {
-                Text = item.Desc,
-                AutowrapMode = TextServer.AutowrapMode.WordSmart,
-                CustomMinimumSize = new Vector2(220, 0)
-            });
+            Label description = new Label();
+            description.Text = item.Desc;
+            description.AutowrapMode = TextServer.AutowrapMode.WordSmart;
+            description.CustomMinimumSize = new Vector2(220, 0);
+            box.AddChild(description);
         }
 
-        var margin = new MarginContainer();
-        foreach (string side in new[] { "left", "right", "top", "bottom" })
+        MarginContainer margin = new MarginContainer();
+        string[] sides = new string[] { "left", "right", "top", "bottom" };
+        foreach (string side in sides)
+        {
             margin.AddThemeConstantOverride($"margin_{side}", 8);
+        }
         margin.AddChild(box);
 
-        var panel = new PanelContainer();
+        PanelContainer panel = new PanelContainer();
         panel.AddChild(margin);
         return panel;
     }
@@ -130,45 +166,74 @@ public partial class SlotUI : Control
     public override Variant _GetDragData(Vector2 atPosition)
     {
         ItemData item = Source.Items[Index];
-        if (item == null) return default;
+        if (item == null)
+        {
+            return default;
+        }
 
         // Hold Shift while dragging to pick up a single item instead of the whole stack.
-        int amount = Input.IsPhysicalKeyPressed(Key.Shift) ? 1 : Source.Counts[Index];
+        int amount = Source.Counts[Index];
+        if (Input.IsPhysicalKeyPressed(Key.Shift))
+        {
+            amount = 1;
+        }
 
         // The preview that follows the cursor, centered on it.
         Control visual;
         if (item.Icon != null)
-            visual = new TextureRect
-            {
-                Texture = item.Icon,
-                ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize,
-                StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered,
-                Size = new Vector2(48, 48),
-                Position = new Vector2(-24, -24),
-                Modulate = new Color(1, 1, 1, 0.8f)
-            };
+        {
+            TextureRect iconPreview = new TextureRect();
+            iconPreview.Texture = item.Icon;
+            iconPreview.ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize;
+            iconPreview.StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered;
+            iconPreview.Size = new Vector2(48, 48);
+            iconPreview.Position = new Vector2(-24, -24);
+            iconPreview.Modulate = new Color(1, 1, 1, 0.8f);
+            visual = iconPreview;
+        }
         else
-            visual = new Label { Text = item.Name, Position = new Vector2(-24, -10) };
+        {
+            Label namePreview = new Label();
+            namePreview.Text = item.Name;
+            namePreview.Position = new Vector2(-24, -10);
+            visual = namePreview;
+        }
 
-        var preview = new Control();
+        Control preview = new Control();
         preview.AddChild(visual);
         SetDragPreview(preview);
 
-        return Variant.From(new SlotDragData { From = Source, FromSlot = Index, Amount = amount });
+        SlotDragData dragData = new SlotDragData();
+        dragData.From = Source;
+        dragData.FromSlot = Index;
+        dragData.Amount = amount;
+        return Variant.From(dragData);
     }
 
     // Called constantly while hovering with a drag. Decides if the slot highlights as a valid target.
     public override bool _CanDropData(Vector2 atPosition, Variant data)
     {
-        if (data.VariantType != Variant.Type.Object) return false;
-        return data.AsGodotObject() is SlotDragData d
-            && Storage.Transfer(d.From, d.FromSlot, Source, Index, d.Amount, dryRun: true);
+        if (data.VariantType != Variant.Type.Object)
+        {
+            return false;
+        }
+
+        SlotDragData d = data.AsGodotObject() as SlotDragData;
+        if (d == null)
+        {
+            return false;
+        }
+
+        return Storage.Transfer(d.From, d.FromSlot, Source, Index, d.Amount, true);
     }
 
     // Called when the mouse is released over this slot.
     public override void _DropData(Vector2 atPosition, Variant data)
     {
-        if (data.AsGodotObject() is SlotDragData d)
+        SlotDragData d = data.AsGodotObject() as SlotDragData;
+        if (d != null)
+        {
             Storage.Transfer(d.From, d.FromSlot, Source, Index, d.Amount);
+        }
     }
 }

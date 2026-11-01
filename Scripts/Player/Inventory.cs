@@ -16,7 +16,14 @@ public partial class Inventory : Storage
     [Export] public PackedScene PickupScene;
 
     public int Selected { get; private set; }
-    public ItemData SelectedItem => Items[Selected];
+
+    public ItemData SelectedItem
+    {
+        get
+        {
+            return Items[Selected];
+        }
+    }
 
     public override void _Ready()
     {
@@ -35,14 +42,17 @@ public partial class Inventory : Storage
     // Throws one item of the selected slot out in front of the camera.
     public void DropSelected()
     {
-        var item = Items[Selected];
-        if (item == null || PickupScene == null) return;
+        ItemData item = Items[Selected];
+        if (item == null || PickupScene == null)
+        {
+            return;
+        }
 
-        var cam = GetViewport().GetCamera3D();
+        Camera3D cam = GetViewport().GetCamera3D();
 
         // Set Item/Count BEFORE adding to the tree, because the pickup
         // reads Item in _Ready to spawn its model.
-        var pickup = PickupScene.Instantiate<ItemPickup>();
+        ItemPickup pickup = PickupScene.Instantiate<ItemPickup>();
         pickup.Item = item;
         pickup.Count = 1;
 
@@ -56,28 +66,81 @@ public partial class Inventory : Storage
         RemoveFromSlot(Selected);
     }
 
+    // Swaps the item in the selected slot for another one (for example empty cup -> full cup).
+    public bool ReplaceSelected(ItemData newItem)
+    {
+        if (Items[Selected] == null || newItem == null)
+        {
+            return false;
+        }
+
+        if (Counts[Selected] == 1)
+        {
+            Items[Selected] = newItem;
+            Refresh();   // also swaps the model in your hand
+            return true;
+        }
+
+        // A stack of cups: put the new item in another slot, then use up one cup.
+        if (Add(newItem, 1) > 0)
+        {
+            return false;   // no room
+        }
+
+        RemoveFromSlot(Selected, 1);
+        return true;
+    }
+
     public override void _UnhandledInput(InputEvent e)
     {
-        // Same as in PlayerController.cs, if an UI is open, return
-        if (GameState.UiOpen) return;
+        // Same as in Player.cs: if a UI is open, do nothing
+        if (GameState.UiOpen)
+        {
+            return;
+        }
 
-        if (e is InputEventKey { Pressed: true, Echo: false } key)
+        InputEventKey key = e as InputEventKey;
+        if (key != null && key.Pressed && !key.Echo)
         {
             // Number keys: 1-9 select slots 0-8, key 0 selects slot 9.
             for (int i = 0; i < SlotCount; i++)
             {
-                Key k = i < 9 ? (Key)((int)Key.Key1 + i) : Key.Key0;
-                if (key.PhysicalKeycode == k) { Select(i); return; }
+                Key k;
+                if (i < 9)
+                {
+                    k = (Key)((int)Key.Key1 + i);
+                }
+                else
+                {
+                    k = Key.Key0;
+                }
+
+                if (key.PhysicalKeycode == k)
+                {
+                    Select(i);
+                    return;
+                }
             }
 
-            if (key.PhysicalKeycode == Key.Q) DropSelected();
+            if (key.PhysicalKeycode == Key.Q)
+            {
+                DropSelected();
+            }
         }
 
         // Scroll wheel cycles through slots.
-        if (e is InputEventMouseButton { Pressed: true } mb)
+        InputEventMouseButton mb = e as InputEventMouseButton;
+        if (mb != null && mb.Pressed)
         {
-            if (mb.ButtonIndex == MouseButton.WheelUp) Select(Selected - 1);
-            if (mb.ButtonIndex == MouseButton.WheelDown) Select(Selected + 1);
+            if (mb.ButtonIndex == MouseButton.WheelUp)
+            {
+                Select(Selected - 1);
+            }
+
+            if (mb.ButtonIndex == MouseButton.WheelDown)
+            {
+                Select(Selected + 1);
+            }
         }
     }
 
@@ -91,12 +154,19 @@ public partial class Inventory : Storage
     // Swaps the model in the player's hand to match the selected slot.
     private void UpdateHeldModel()
     {
-        if (HoldPoint == null) return;
+        if (HoldPoint == null)
+        {
+            return;
+        }
 
         foreach (Node child in HoldPoint.GetChildren())
+        {
             child.QueueFree();
+        }
 
-        if (SelectedItem?.WorldModel != null)
+        if (SelectedItem != null && SelectedItem.WorldModel != null)
+        {
             HoldPoint.AddChild(SelectedItem.WorldModel.Instantiate());
+        }
     }
 }

@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="Recipe" format=3 uid="uid://dqpdyols2eotf"]
+
+[ext_resource type="Script" uid="uid://io3v3j7etrao" path="res://Scripts/Stations/RecipeIngredient.cs" id="1_fdmf1"]
+[ext_resource type="Resource" uid="uid://c2a7xbs5mox5y" path="res://Resources/Items/Materials/aluminum_foil.tres" id="2_66g7t"]
+[ext_resource type="Script" uid="uid://ccfl0377o24u7" path="res://Scripts/Stations/Recipe.cs" id="2_wmtn7"]
+[ext_resource type="Resource" uid="uid://c27nioj12ufng" path="res://Resources/Items/Materials/Melts/crucible_cup_aluminum.tres" id="3_o8tva"]
+
+[sub_resource type="Resource" id="Resource_lc1lo"]
+script = ExtResource("1_fdmf1")
+Item = ExtResource("2_66g7t")
+Count = 5
+metadata/_custom_type_script = "uid://io3v3j7etrao"
+
+[resource]
+script = ExtResource("2_wmtn7")
+Name = "Molten Aluminum"
+Inputs = Array[ExtResource("1_fdmf1")]([SubResource("Resource_lc1lo")])
+Output = ExtResource("3_o8tva")
+OutputCount = 5
+Time = 20.0
+metadata/_custom_type_script = "uid://ccfl0377o24u7"

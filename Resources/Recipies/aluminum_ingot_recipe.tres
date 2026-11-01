@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://io3v3j7etrao" path="res://Scripts/Stations/RecipeIngredient.cs" id="1_b4y0x"]
 [ext_resource type="Script" uid="uid://ccfl0377o24u7" path="res://Scripts/Stations/Recipe.cs" id="2_8jyjd"]
 [ext_resource type="Resource" uid="uid://c2a7xbs5mox5y" path="res://Resources/Items/Materials/aluminum_foil.tres" id="2_ucslj"]
-[ext_resource type="Resource" uid="uid://8q6w6xhusytm" path="res://Resources/Items/Materials/aluminum_ingot_50.tres" id="3_a7btg"]
+[ext_resource type="Resource" uid="uid://8q6w6xhusytm" path="res://Resources/Items/Materials/aluminum_ingot.tres" id="3_a7btg"]
 
 [sub_resource type="Resource" id="Resource_ucslj"]
 script = ExtResource("1_b4y0x")

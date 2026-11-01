@@ -1,5 +1,4 @@
 using Godot;
-using System.Linq;
 
 // Attach to VBoxContainer (or any node above the slots).
 // Mirrors the Inventory into your Slot1..Slot10 nodes and shows
@@ -18,7 +17,12 @@ public partial class Hotbar : Node
     {
         // Find every node named Slot* anywhere below this one.
         // Tree order is preserved, so Slot1 is index 0, and so on.
-        _slots = FindChildren("Slot*", "", true, false).ToArray();
+        Godot.Collections.Array<Node> found = FindChildren("Slot*", "", true, false);
+        _slots = new Node[found.Count];
+        for (int i = 0; i < found.Count; i++)
+        {
+            _slots[i] = found[i];
+        }
 
         // The Inventory may not exist yet (the Player might load after the HUD),
         // so wait one frame before connecting to it.
@@ -34,30 +38,56 @@ public partial class Hotbar : Node
     public override void _ExitTree()
     {
         if (Inventory.Instance != null)
+        {
             Inventory.Instance.Changed -= Refresh;
+        }
     }
 
     private void Refresh()
     {
-        var inv = Inventory.Instance;
+        Inventory inv = Inventory.Instance;
 
         for (int i = 0; i < _slots.Length && i < inv.SlotCount; i++)
         {
             ItemData item = inv.Items[i];
 
             // Show the item's icon, or hide the icon when the slot is empty.
-            var icon = _slots[i].GetNode<TextureRect>("Icon");
-            icon.Texture = item?.Icon;
-            icon.Visible = item != null;
+            TextureRect icon = _slots[i].GetNode<TextureRect>("Icon");
+            if (item != null)
+            {
+                icon.Texture = item.Icon;
+                icon.Visible = true;
+            }
+            else
+            {
+                icon.Texture = null;
+                icon.Visible = false;
+            }
 
             // Stack number: only shown when there's more than one item.
-            var count = _slots[i].GetNodeOrNull<Label>("Count");
+            Label count = _slots[i].GetNodeOrNull<Label>("Count");
             if (count != null)
-                count.Text = inv.Counts[i] > 1 ? inv.Counts[i].ToString() : "";
+            {
+                if (inv.Counts[i] > 1)
+                {
+                    count.Text = inv.Counts[i].ToString();
+                }
+                else
+                {
+                    count.Text = "";
+                }
+            }
 
             // Highlight the selected slot by tinting its background.
-            _slots[i].GetNode<CanvasItem>("Background").SelfModulate =
-                i == inv.Selected ? SelectedColor : Colors.White;
+            CanvasItem background = _slots[i].GetNode<CanvasItem>("Background");
+            if (i == inv.Selected)
+            {
+                background.SelfModulate = SelectedColor;
+            }
+            else
+            {
+                background.SelfModulate = Colors.White;
+            }
         }
 
         UpdateSelectedLabel(inv);
@@ -66,7 +96,10 @@ public partial class Hotbar : Node
     // Shows "Planks" or "Planks x5" for the held item, and hides the label when the slot is empty.
     private void UpdateSelectedLabel(Inventory inv)
     {
-        if (SelectedItemLabel == null) return;
+        if (SelectedItemLabel == null)
+        {
+            return;
+        }
 
         ItemData held = inv.SelectedItem;
         if (held == null)
@@ -76,7 +109,14 @@ public partial class Hotbar : Node
         }
 
         int count = inv.Counts[inv.Selected];
-        SelectedItemLabel.Text = count > 1 ? $"{held.Name} x{count}" : held.Name;
+        if (count > 1)
+        {
+            SelectedItemLabel.Text = $"{held.Name} x{count}";
+        }
+        else
+        {
+            SelectedItemLabel.Text = held.Name;
+        }
         SelectedItemLabel.Visible = true;
     }
 }

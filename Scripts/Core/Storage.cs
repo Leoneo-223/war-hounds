@@ -23,18 +23,37 @@ public partial class Storage : Node
         Counts = new int[SlotCount];
     }
 
-    public bool CanAccept(ItemData item) =>
-        item != null && (!RestrictCategory || item.Category == AllowedCategory);
+    public bool CanAccept(ItemData item)
+    {
+        if (item == null)
+        {
+            return false;
+        }
+
+        if (RestrictCategory && item.Category != AllowedCategory)
+        {
+            return false;
+        }
+
+        return true;
+    }
 
     // Tries to add items. Returns how many did NOT fit (0 = all added).
     public int Add(ItemData item, int count)
     {
-        if (!CanAccept(item)) return count;
+        if (!CanAccept(item))
+        {
+            return count;
+        }
 
         // Pass 1: top up existing stacks of the same item.
         for (int i = 0; i < SlotCount && count > 0; i++)
         {
-            if (Items[i] != item) continue;
+            if (Items[i] != item)
+            {
+                continue;
+            }
+
             int moved = Mathf.Min(item.MaxStack - Counts[i], count);
             Counts[i] += moved;
             count -= moved;
@@ -43,7 +62,11 @@ public partial class Storage : Node
         // Pass 2: fill empty slots with new stacks.
         for (int i = 0; i < SlotCount && count > 0; i++)
         {
-            if (Items[i] != null) continue;
+            if (Items[i] != null)
+            {
+                continue;
+            }
+
             int moved = Mathf.Min(item.MaxStack, count);
             Items[i] = item;
             Counts[i] = moved;
@@ -57,7 +80,10 @@ public partial class Storage : Node
     // Removes items from one slot and clears it when it reaches zero.
     public void RemoveFromSlot(int slot, int count = 1)
     {
-        if (Items[slot] == null) return;
+        if (Items[slot] == null)
+        {
+            return;
+        }
 
         Counts[slot] -= count;
         if (Counts[slot] <= 0)
@@ -65,6 +91,7 @@ public partial class Storage : Node
             Items[slot] = null;
             Counts[slot] = 0;
         }
+
         Refresh();
     }
 
@@ -73,7 +100,12 @@ public partial class Storage : Node
     {
         int total = 0;
         for (int i = 0; i < SlotCount; i++)
-            if (Items[i] == item) total += Counts[i];
+        {
+            if (Items[i] == item)
+            {
+                total += Counts[i];
+            }
+        }
         return total;
     }
 
@@ -81,11 +113,18 @@ public partial class Storage : Node
     // Returns false (and removes nothing) if there isn't enough.
     public bool Remove(ItemData item, int count)
     {
-        if (CountOf(item) < count) return false;
+        if (CountOf(item) < count)
+        {
+            return false;
+        }
 
         for (int i = 0; i < SlotCount && count > 0; i++)
         {
-            if (Items[i] != item) continue;
+            if (Items[i] != item)
+            {
+                continue;
+            }
+
             int taken = Mathf.Min(Counts[i], count);
             RemoveFromSlot(i, taken);
             count -= taken;
@@ -97,7 +136,12 @@ public partial class Storage : Node
     public int FirstFilledSlot()
     {
         for (int i = 0; i < SlotCount; i++)
-            if (Items[i] != null) return i;
+        {
+            if (Items[i] != null)
+            {
+                return i;
+            }
+        }
         return -1;
     }
 
@@ -109,12 +153,26 @@ public partial class Storage : Node
     // The UI uses that to decide if a slot accepts the item you are dragging.
     public static bool Transfer(Storage src, int srcSlot, Storage dst, int dstSlot, int amount, bool dryRun = false)
     {
-        if (src == null || dst == null) return false;
-        if (src == dst && srcSlot == dstSlot) return false;
+        if (src == null || dst == null)
+        {
+            return false;
+        }
+
+        if (src == dst && srcSlot == dstSlot)
+        {
+            return false;
+        }
 
         ItemData item = src.Items[srcSlot];
-        if (item == null) return false;
-        if (!dst.CanAccept(item)) return false;
+        if (item == null)
+        {
+            return false;
+        }
+
+        if (!dst.CanAccept(item))
+        {
+            return false;
+        }
 
         amount = Mathf.Clamp(amount, 1, src.Counts[srcSlot]);
         ItemData target = dst.Items[dstSlot];
@@ -122,10 +180,23 @@ public partial class Storage : Node
         if (target == null || target == item)
         {
             // Move into an empty slot or stack onto the same item.
-            int space = item.MaxStack - (target == null ? 0 : dst.Counts[dstSlot]);
+            int alreadyThere = 0;
+            if (target != null)
+            {
+                alreadyThere = dst.Counts[dstSlot];
+            }
+
+            int space = item.MaxStack - alreadyThere;
             int moved = Mathf.Min(space, amount);
-            if (moved <= 0) return false;
-            if (dryRun) return true;
+            if (moved <= 0)
+            {
+                return false;
+            }
+
+            if (dryRun)
+            {
+                return true;
+            }
 
             dst.Items[dstSlot] = item;
             dst.Counts[dstSlot] += moved;
@@ -141,9 +212,20 @@ public partial class Storage : Node
         {
             // Different item: swap, but only if the whole stack is being moved
             // and the source container is allowed to hold the other item.
-            if (amount != src.Counts[srcSlot]) return false;
-            if (!src.CanAccept(target)) return false;
-            if (dryRun) return true;
+            if (amount != src.Counts[srcSlot])
+            {
+                return false;
+            }
+
+            if (!src.CanAccept(target))
+            {
+                return false;
+            }
+
+            if (dryRun)
+            {
+                return true;
+            }
 
             int dstCount = dst.Counts[dstSlot];
             dst.Items[dstSlot] = item;
@@ -153,10 +235,16 @@ public partial class Storage : Node
         }
 
         src.Refresh();
-        if (dst != src) dst.Refresh();
+        if (dst != src)
+        {
+            dst.Refresh();
+        }
         return true;
     }
 
     // Called after every change. Subclasses (like Inventory) can extend it.
-    protected virtual void Refresh() => EmitSignal(SignalName.Changed);
+    protected virtual void Refresh()
+    {
+        EmitSignal(SignalName.Changed);
+    }
 }

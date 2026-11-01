@@ -13,12 +13,18 @@ public partial class Interactor : RayCast3D
     public override void _Ready()
     {
         CollisionMask |= 1u << 1;   // keep layer 1 and add layer 2
+
         // The ray starts inside the player's capsule, so make sure it can never
         // hit the player itself. Walk up the tree to find the player body.
         Node n = GetParent();
         while (n != null)
         {
-            if (n is CollisionObject3D body) { AddException(body); break; }
+            CollisionObject3D body = n as CollisionObject3D;
+            if (body != null)
+            {
+                AddException(body);
+                break;
+            }
             n = n.GetParent();
         }
     }
@@ -27,20 +33,55 @@ public partial class Interactor : RayCast3D
     {
         // GetCollider() returns whatever the ray hit (or null).
         // "as IInteractable" gives null for walls, floors and anything not interactable.
-        _current = IsColliding() ? GetCollider() as IInteractable : null;
+        _current = null;
+        if (IsColliding())
+        {
+            _current = GetCollider() as IInteractable;
+        }
 
-        Hud?.SetPrompt(_current?.GetPrompt() ?? "");
+        string prompt = "";
+        if (_current != null)
+        {
+            prompt = _current.GetPrompt();
+            if (prompt == null)
+            {
+                prompt = "";
+            }
+        }
+
+        if (Hud != null)
+        {
+            Hud.SetPrompt(prompt);
+        }
     }
 
     public override void _UnhandledInput(InputEvent e)
     {
-        // THE EXACT SAME, as PlayerController.cs
-        if (GameState.UiOpen) return;
+        // Same as in Player.cs if a UI is open, do nothing
+        if (GameState.UiOpen)
+        {
+            return;
+        }
 
-        if (e is InputEventKey { Pressed: true, Echo: false, PhysicalKeycode: Key.E })
-            _current?.Interact();
+        InputEventKey keyEvent = e as InputEventKey;
+        if (keyEvent != null && keyEvent.Pressed && !keyEvent.Echo)
+        {
+            if (keyEvent.PhysicalKeycode == Key.E)
+            {
+                if (_current != null)
+                {
+                    _current.Interact();
+                }
+            }
 
-        if (e is InputEventKey { Pressed: true, Echo: false, PhysicalKeycode: Key.F })
-            (_current as ISecondaryInteractable)?.InteractSecondary();
+            if (keyEvent.PhysicalKeycode == Key.F)
+            {
+                ISecondaryInteractable secondary = _current as ISecondaryInteractable;
+                if (secondary != null)
+                {
+                    secondary.InteractSecondary();
+                }
+            }
+        }
     }
 }

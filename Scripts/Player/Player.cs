@@ -56,7 +56,10 @@ public partial class Player : CharacterBody3D
     private Node3D _pivot;
     private Camera3D _camera;
 
-    private static bool KeyDown(Key key) => Input.IsPhysicalKeyPressed(key);
+    private static bool KeyDown(Key key)
+    {
+        return Input.IsPhysicalKeyPressed(key);
+    }
 
     public override void _Ready()
     {
@@ -85,10 +88,14 @@ public partial class Player : CharacterBody3D
 
     public override void _Input(InputEvent e)
     {
-        // If an UI is open then don't do anything
-        if (GameState.UiOpen) return;
+        // If a UI is open then don't do anything
+        if (GameState.UiOpen)
+        {
+            return;
+        }
 
-        if (e is InputEventMouseMotion motion)
+        InputEventMouseMotion motion = e as InputEventMouseMotion;
+        if (motion != null)
         {
             // Turn the body left/right
             Vector3 body = RotationDegrees;
@@ -102,20 +109,28 @@ public partial class Player : CharacterBody3D
         }
     }
 
-    //TEST FUCKING ONLY!!!
+    // TEST ONLY: H = take 25 damage, J = heal 25. Delete when done.
     public override void _UnhandledInput(InputEvent e)
     {
-        if (e is InputEventKey { Pressed: true, Echo: false } k)
+        InputEventKey k = e as InputEventKey;
+        if (k != null && k.Pressed && !k.Echo)
         {
-            if (k.PhysicalKeycode == Key.H) Damage(25);
-            if (k.PhysicalKeycode == Key.J) Heal(25);
+            if (k.PhysicalKeycode == Key.H)
+            {
+                Damage(25);
+            }
+
+            if (k.PhysicalKeycode == Key.J)
+            {
+                Heal(25);
+            }
         }
     }
 
     public override void _PhysicsProcess(double delta)
     {
         float d = (float)delta;
-        var shape = _shape;
+        CapsuleShape3D shape = _shape;
 
         Vector3 velocity = Velocity;
 
@@ -129,7 +144,9 @@ public partial class Player : CharacterBody3D
         // Jump (Space), only on the frame it is pressed
         bool jumpDown = KeyDown(Key.Space);
         if (jumpDown && !_jumpWasDown && IsOnFloor())
+        {
             velocity.Y = JumpVelocity;
+        }
         _jumpWasDown = jumpDown;
 
         bool crouching = KeyDown(Key.Ctrl) || KeyDown(Key.C);
@@ -142,10 +159,17 @@ public partial class Player : CharacterBody3D
         {
             float needed = StandHeight - shape.Height + 0.05f;
             if (TestMove(GlobalTransform, Vector3.Up * needed))
+            {
                 wantCrouch = true;
+            }
         }
 
-        shape.Height = Mathf.Lerp(shape.Height, wantCrouch ? CrouchHeight : StandHeight, 0.1f);
+        float targetHeight = StandHeight;
+        if (wantCrouch)
+        {
+            targetHeight = CrouchHeight;
+        }
+        shape.Height = Mathf.Lerp(shape.Height, targetHeight, 0.1f);
 
         // Keep the capsule's bottom at the player's feet so it only grows upward
         _collision.Position = new Vector3(_collision.Position.X, shape.Height / 2f, _collision.Position.Z);
@@ -160,22 +184,46 @@ public partial class Player : CharacterBody3D
             }
 
             _speed = RunSpeed;
-            if (crouching) _speed = CrouchSpeed;
-            else if (walking) _speed = WalkSpeed;
-            else if (sprinting) _speed = SprintSpeed;
+            if (crouching)
+            {
+                _speed = CrouchSpeed;
+            }
+            else if (walking)
+            {
+                _speed = WalkSpeed;
+            }
+            else if (sprinting)
+            {
+                _speed = SprintSpeed;
+            }
         }
 
         // Keep the mesh and head matched to the shape
-        if (_mesh.Mesh is CapsuleMesh capsule)
+        CapsuleMesh capsule = _mesh.Mesh as CapsuleMesh;
+        if (capsule != null)
+        {
             capsule.Height = shape.Height;
+        }
         _pivot.Position = new Vector3(_pivot.Position.X, shape.Height - HeadOffset, _pivot.Position.Z);
 
         // Movement
         Vector2 input = Vector2.Zero;
-        if (KeyDown(Key.D)) input.X += 1;
-        if (KeyDown(Key.A)) input.X -= 1;
-        if (KeyDown(Key.S)) input.Y += 1;
-        if (KeyDown(Key.W)) input.Y -= 1;
+        if (KeyDown(Key.D))
+        {
+            input.X += 1;
+        }
+        if (KeyDown(Key.A))
+        {
+            input.X -= 1;
+        }
+        if (KeyDown(Key.S))
+        {
+            input.Y += 1;
+        }
+        if (KeyDown(Key.W))
+        {
+            input.Y -= 1;
+        }
         input = input.LimitLength(1f);
 
         Vector3 direction = (Transform.Basis * new Vector3(input.X, 0, input.Y)).Normalized();
@@ -222,18 +270,28 @@ public partial class Player : CharacterBody3D
         // Landing dip eases back to zero
         _landingDip = Mathf.Lerp(_landingDip, 0f, 1f - Mathf.Exp(-8f * d));
 
+        // ---- Speed FOV ----
+        // Stages: standing/crouching = base, walking = tiny boost, running = slight boost, sprinting = most
         float targetFov = _baseFov;
         if (FovEffectEnabled)
         {
             float boost;
             if (horizontalSpeed <= CrouchSpeed)
+            {
                 boost = 0f;
+            }
             else if (horizontalSpeed <= WalkSpeed)
+            {
                 boost = Mathf.Lerp(0f, WalkFovBoost, Mathf.InverseLerp(CrouchSpeed, WalkSpeed, horizontalSpeed));
+            }
             else if (horizontalSpeed <= RunSpeed)
+            {
                 boost = Mathf.Lerp(WalkFovBoost, RunFovBoost, Mathf.InverseLerp(WalkSpeed, RunSpeed, horizontalSpeed));
+            }
             else
+            {
                 boost = Mathf.Lerp(RunFovBoost, SprintFovBoost, Mathf.Clamp(Mathf.InverseLerp(RunSpeed, SprintSpeed, horizontalSpeed), 0f, 1f));
+            }
 
             targetFov = _baseFov + boost;
         }
@@ -250,25 +308,40 @@ public partial class Player : CharacterBody3D
 
     public void Heal(int amount)
     {
-        if (IsDead || amount <= 0) return;
+        if (IsDead || amount <= 0)
+        {
+            return;
+        }
+
         SetHealth(Health + amount);
     }
 
     public void Damage(int amount)
     {
-        if (IsDead || amount <= 0) return;
+        if (IsDead || amount <= 0)
+        {
+            return;
+        }
+
         SetHealth(Health - amount);
-        if (Health <= 0) Die();
+        if (Health <= 0)
+        {
+            Die();
+        }
     }
 
     public void Die()
     {
-        if (IsDead) return;
+        if (IsDead)
+        {
+            return;
+        }
+
         IsDead = true;
         SetHealth(0);
 
-        GameState.UiOpen = true;            
-        SetPhysicsProcess(false);              
+        GameState.UiOpen = true;
+        SetPhysicsProcess(false);
         Input.MouseMode = Input.MouseModeEnum.Visible;
 
         EmitSignal(SignalName.Died);
@@ -278,5 +351,49 @@ public partial class Player : CharacterBody3D
     {
         Health = Mathf.Clamp(value, 0, MaxHealth);
         EmitSignal(SignalName.HealthChanged, Health, MaxHealth);
+    }
+
+    public float DistanceTo(Node3D target)
+    {
+        if (target == null)
+        {
+            return -1f;
+        }
+
+        return GlobalPosition.DistanceTo(target.GlobalPosition);
+    }
+
+    public bool IsWithin(Node3D target, float range)
+    {
+        if (target == null)
+        {
+            return false;
+        }
+
+        float distance = GlobalPosition.DistanceTo(target.GlobalPosition);
+        if (distance <= range)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    public bool IsCloser(Node3D a, Node3D b)
+    {
+        if (a == null || b == null)
+        {
+            return false;
+        }
+
+        float distanceA = GlobalPosition.DistanceTo(a.GlobalPosition);
+        float distanceB = GlobalPosition.DistanceTo(b.GlobalPosition);
+
+        if (distanceA < distanceB)
+        {
+            return true;
+        }
+
+        return false;
     }
 }

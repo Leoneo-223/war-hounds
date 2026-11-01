@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://cuutjjxhkn03a"]
+
+[ext_resource type="Texture2D" uid="uid://bxmoekjhdbo2c" path="res://icon.svg" id="1_lobfc"]
+[ext_resource type="Script" uid="uid://co4wi7ebsf67k" path="res://Scripts/Resources/ItemData.cs" id="1_s4kgy"]
+[ext_resource type="PackedScene" uid="uid://d4myvmj8u7dno" path="res://Scenes/Items/Tools/crucible_cup_empty.tscn" id="2_lc1lo"]
+
+[resource]
+script = ExtResource("1_s4kgy")
+Id = "crucible_cup_empty"
+Name = "Empty Cup"
+Desc = "An empty cup used to hold molten metal"
+Icon = ExtResource("1_lobfc")
+WorldModel = ExtResource("2_lc1lo")
+MaxStack = 10
+Category = 4
+metadata/_custom_type_script = "uid://co4wi7ebsf67k"
