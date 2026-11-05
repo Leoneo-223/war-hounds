@@ -15,3 +15,5 @@ script = ExtResource("1_up4f5")
 mesh = SubResource("CapsuleMesh_fvkn2")
 
 [node name="Pocket" type="Node" parent="." unique_id=191003275]
+
+[node name="NavAgent" type="NavigationAgent3D" parent="." unique_id=1050091926]
