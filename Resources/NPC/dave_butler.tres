@@ -1,0 +1,34 @@
+[gd_resource type="Resource" script_class="NPCData" format=3 uid="uid://bf1d6mbmlqw0j"]
+
+[ext_resource type="Script" uid="uid://o1cfek4pw4jv" path="res://Scripts/Resources/ScheduleEntry.cs" id="1_dct56"]
+[ext_resource type="Script" uid="uid://cmrej6ynhgluq" path="res://Scripts/Resources/NPCData.cs" id="2_uertg"]
+
+[sub_resource type="Resource" id="Resource_loqfk"]
+script = ExtResource("1_dct56")
+StartHour = 6
+StartMinute = 20
+LocationId = "1776_liberty_street"
+Activity = 2
+metadata/_custom_type_script = "uid://o1cfek4pw4jv"
+
+[sub_resource type="Resource" id="Resource_up4f5"]
+script = ExtResource("1_dct56")
+StartHour = 7
+LocationId = "hardware_store_1"
+Activity = 1
+metadata/_custom_type_script = "uid://o1cfek4pw4jv"
+
+[resource]
+script = ExtResource("2_uertg")
+Id = "diy_store_worker_1"
+DisplayName = "Dave Butler"
+Job = "Cock 'n Hammer Hardware Store"
+WorkplaceId = "hardware_store_1"
+Friendliness = 0.8
+Greed = 0.3
+Sociability = 0.8
+Intelligence = 0.6
+HomeLocationId = "1776_liberty_street"
+FavoriteLocationId = "park_bench_1"
+Schedule = Array[ExtResource("1_dct56")]([SubResource("Resource_loqfk"), SubResource("Resource_up4f5")])
+metadata/_custom_type_script = "uid://cmrej6ynhgluq"

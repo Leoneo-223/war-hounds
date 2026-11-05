@@ -27,6 +27,7 @@ AmbientAPI="*uid://cmbh88h6yljhy"
 AmbientParser="*uid://dcdrqnwmpgvk4"
 AmbientFileHandler="*uid://dnh8sqjyu74hs"
 AmbientMaterialMaker="*uid://nig0lamfd3mv"
+GameClock="*uid://bmbs1l075jbkp"
 
 [display]
 

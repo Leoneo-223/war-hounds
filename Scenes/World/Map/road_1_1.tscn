@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://g3heoeudmkd0"]
+
+[ext_resource type="ArrayMesh" uid="uid://68fma3w77xxf" path="res://Models/Map/road1.obj" id="1_2xgtd"]
+[ext_resource type="Texture2D" uid="uid://bnh6yul0eamgf" path="res://Textures/citybits_texture.png" id="2_0wd7v"]
+[ext_resource type="Texture2D" uid="uid://di3ujj6i4edcf" path="res://AmbientCG/Extracted/Asphalt031_1K-JPG_NormalGL.jpg" id="3_0wd7v"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6s8i7"]
+albedo_texture = ExtResource("2_0wd7v")
+metallic_specular = 0.0
+roughness_texture = ExtResource("3_0wd7v")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_niory"]
+size = Vector3(2, 0.1, 2)
+
+[node name="road_1_1" type="Node3D" unique_id=694340279]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=2015739613]
+mesh = ExtResource("1_2xgtd")
+surface_material_override/0 = SubResource("StandardMaterial3D_6s8i7")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D" unique_id=2048136482]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D" unique_id=919143181]
+shape = SubResource("BoxShape3D_niory")
