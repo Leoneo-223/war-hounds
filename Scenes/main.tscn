@@ -70,15 +70,15 @@ material = SubResource("StandardMaterial3D_jaywg")
 [node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="NavigationRegion3D/CSGBox3D" unique_id=975418855]
 
 [node name="CSGBox3D" type="CSGBox3D" parent="NavigationRegion3D/CSGBox3D/NavigationObstacle3D" unique_id=612441820]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.9373913, 3.092268, 1.6148348)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.9373913, 3.334303, 1.6148348)
 use_collision = true
-size = Vector3(5.975342, 1.7805176, 5.2373047)
+size = Vector3(5.975342, 6.8948364, 5.2373047)
 material = SubResource("StandardMaterial3D_loqfk")
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="NavigationRegion3D/CSGBox3D/NavigationObstacle3D" unique_id=1090270547]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.06585, 2.2687078, -8.45995)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.06585, 3.9676213, -8.45995)
 use_collision = true
-size = Vector3(5.975342, 5.282715, 5.2373047)
+size = Vector3(5.975342, 8.680542, 5.2373047)
 material = SubResource("StandardMaterial3D_jjgbg")
 
 [node name="Storage" parent="NavigationRegion3D/CSGBox3D/NavigationObstacle3D" unique_id=1898311747 instance=ExtResource("4_21xkr")]
@@ -123,12 +123,14 @@ Count = 5
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.396364, 1.9617801, -10.598616)
 script = ExtResource("14_jkdf5")
 LocationId = "hardware_store_1"
+Type = 2
 metadata/_custom_type_script = "uid://kgnyl11bm3e3"
 
 [node name="1776_liberty_street" type="Marker3D" parent="Locations" unique_id=525770194]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.721017, 1.9617801, 7.4609795)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.1336546, 1.0710602, 1.9231279)
 script = ExtResource("14_jkdf5")
 LocationId = "1776_liberty_street"
+Type = 1
 metadata/_custom_type_script = "uid://kgnyl11bm3e3"
 
 [node name="Map" parent="." unique_id=91249896 instance=ExtResource("15_wsu2k")]

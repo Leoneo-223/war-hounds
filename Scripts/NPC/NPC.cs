@@ -15,16 +15,32 @@ public partial class NPC : CharacterBody3D, IInteractable
 
     public NPCActivity CurrentActivity { get; private set; } = NPCActivity.Idle;
 
-    // Set true while talking / trading so the NPC stops walking.
+    // Set true while talking / trading so the NPC stops walking and turning.
     public bool IsBusy { get; set; }
 
+    // True while the NPC is "inside" a building (invisible, no collision).
+    public bool IsInside => _inside;
+
     private ScheduleEntry _currentEntry;
+    private LocationMarker _targetMarker;
     private bool _arrived = true;
+
+    // Arrival facing (non-home markers)
+    private bool _faceOnArrival;
+    private float _arrivalYaw;
+
+    // Inside-a-building state
+    private bool _inside;
+    private uint _savedLayer, _savedMask;
 
     public override async void _Ready()
     {
         if (Data?.CharacterModel != null)
+        {
+            // Swap the placeholder capsule for the real model
+            GetNodeOrNull<MeshInstance3D>("MeshInstance3D")?.QueueFree();
             AddChild(Data.CharacterModel.Instantiate());
+        }
 
         // The navigation map isn't ready until after the first physics frame.
         await ToSignal(GetTree(), SceneTree.SignalName.PhysicsFrame);
@@ -49,6 +65,8 @@ public partial class NPC : CharacterBody3D, IInteractable
         ScheduleEntry best = null, latest = null;
         foreach (var e in Data.Schedule)
         {
+            if (e == null) continue; // skip empty slots
+
             if (latest == null || e.StartMinuteOfDay > latest.StartMinuteOfDay) latest = e;
             if (e.StartMinuteOfDay <= minute && (best == null || e.StartMinuteOfDay > best.StartMinuteOfDay))
                 best = e;
@@ -70,12 +88,17 @@ public partial class NPC : CharacterBody3D, IInteractable
         }
 
         _currentEntry = entry;
+        _targetMarker = marker;
         CurrentActivity = entry.Activity;
+        _faceOnArrival = false;
+
+        // Leaving a building: reappear where we went in (the door).
+        if (_inside) ComeOutside();
 
         if (teleport)
         {
             GlobalPosition = marker.GlobalPosition;
-            _arrived = true;
+            Arrive(snapFacing: true);
         }
         else
         {
@@ -84,15 +107,61 @@ public partial class NPC : CharacterBody3D, IInteractable
         }
     }
 
+    private void Arrive(bool snapFacing)
+    {
+        _arrived = true;
+        if (_targetMarker == null) return;
+
+        if (_targetMarker.HidesNpc)
+        {
+            GoInside();
+            return;
+        }
+
+        _arrivalYaw = _targetMarker.FacingYaw;
+        if (snapFacing)
+        {
+            Rotation = new Vector3(0, _arrivalYaw, 0);
+            _faceOnArrival = false;
+        }
+        else
+        {
+            _faceOnArrival = true;
+        }
+    }
+
+    private void GoInside()
+    {
+        if (_inside) return;
+        _inside = true;
+        _savedLayer = CollisionLayer;
+        _savedMask = CollisionMask;
+        CollisionLayer = 0;
+        CollisionMask = 0;
+        Velocity = Vector3.Zero;
+        Visible = false;
+    }
+
+    private void ComeOutside()
+    {
+        if (!_inside) return;
+        _inside = false;
+        CollisionLayer = _savedLayer;
+        CollisionMask = _savedMask;
+        Visible = true;
+    }
+
     public override void _PhysicsProcess(double delta)
     {
+        if (_inside) return; // nothing to simulate while indoors
+
         Vector3 horizontal = Vector3.Zero;
 
         if (!_arrived && !IsBusy)
         {
             if (Agent.IsNavigationFinished())
             {
-                _arrived = true;
+                Arrive(snapFacing: false);
             }
             else
             {
@@ -102,9 +171,15 @@ public partial class NPC : CharacterBody3D, IInteractable
                 {
                     dir = dir.Normalized();
                     horizontal = dir * WalkSpeed;
-                    FaceDirection(dir, (float)delta);
+                    TurnTowardsYaw(Mathf.Atan2(-dir.X, -dir.Z), (float)delta);
                 }
             }
+        }
+        else if (_arrived && _faceOnArrival && !IsBusy)
+        {
+            TurnTowardsYaw(_arrivalYaw, (float)delta);
+            if (Mathf.Abs(Mathf.Wrap(Rotation.Y - _arrivalYaw, -Mathf.Pi, Mathf.Pi)) < 0.01f)
+                _faceOnArrival = false;
         }
 
         float y = IsOnFloor() ? 0f : Velocity.Y + GetGravity().Y * (float)delta;
@@ -112,15 +187,14 @@ public partial class NPC : CharacterBody3D, IInteractable
         MoveAndSlide();
     }
 
-    private void FaceDirection(Vector3 dir, float delta)
+    private void TurnTowardsYaw(float targetYaw, float delta)
     {
-        float targetYaw = Mathf.Atan2(-dir.X, -dir.Z);
         float yaw = Mathf.LerpAngle(Rotation.Y, targetYaw, TurnSpeed * delta);
         Rotation = new Vector3(0, yaw, 0);
     }
 
     // IInteractable
-    public virtual string GetPrompt() => Data != null ? $"[E] Talk to {Data.DisplayName}" : "";
+    public virtual string GetPrompt() => Data != null ? $"Talk to {Data.DisplayName}" : "";
 
     public virtual void Interact()
     {

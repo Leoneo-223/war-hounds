@@ -1,12 +1,26 @@
 using Godot;
 using System.Collections.Generic;
 
-// Drop these in your world and give each a unique LocationId
-// (matches HomeLocationId, ScheduleEntry.LocationId, etc.).
+public enum LocationType { Other, Home, Work, Social, Outdoor }
+
 [GlobalClass]
 public partial class LocationMarker : Marker3D
 {
     [Export] public string LocationId { get; set; } = "";
+    [Export] public LocationType Type { get; set; } = LocationType.Other;
+
+    // NPCs vanish into the building when they arrive at a Home marker.
+    public bool HidesNpc => Type == LocationType.Home;
+
+    // Yaw (radians) an NPC should have to look along this marker's forward (-Z).
+    public float FacingYaw
+    {
+        get
+        {
+            Vector3 fwd = -GlobalBasis.Z;
+            return Mathf.Atan2(-fwd.X, -fwd.Z);
+        }
+    }
 
     private static readonly Dictionary<string, LocationMarker> All = new();
 
