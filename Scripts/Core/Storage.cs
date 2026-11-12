@@ -146,9 +146,9 @@ public partial class Storage : Node
     }
 
     // Moves items between two slots (they can be in different storages or the same one).
-    //  - empty target slot        -> items move there
-    //  - same item in target      -> stacks up to MaxStack, the rest stays behind
-    //  - different item in target -> the two slots swap (whole stacks only)
+    //  - empty target slot > items move there
+    //  - same item in target > stacks up to MaxStack, the rest stays behind
+    //  - different item in target > the two slots swap (whole stacks only)
     // With dryRun = true nothing changes; it only reports whether the move would work.
     // The UI uses that to decide if a slot accepts the item you are dragging.
     public static bool Transfer(Storage src, int srcSlot, Storage dst, int dstSlot, int amount, bool dryRun = false)

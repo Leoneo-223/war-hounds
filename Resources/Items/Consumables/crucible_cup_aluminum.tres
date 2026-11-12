@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://c27nioj12ufng"]
+
+[ext_resource type="Texture2D" uid="uid://bxmoekjhdbo2c" path="res://icon.svg" id="1_b0mqk"]
+[ext_resource type="PackedScene" uid="uid://b5yfip4m4kcta" path="res://Scenes/Items/Materials/crucible_cup_metal.tscn" id="2_8exod"]
+[ext_resource type="Script" uid="uid://co4wi7ebsf67k" path="res://Scripts/Resources/ItemData.cs" id="3_7kwbd"]
+
+[resource]
+script = ExtResource("3_7kwbd")
+Id = "crucible_cup_aluminum"
+Name = "Cup with Aluminum"
+Desc = "A cup filled with molten aluminum"
+Icon = ExtResource("1_b0mqk")
+WorldModel = ExtResource("2_8exod")
+MaxStack = 10
+Category = 5
+metadata/_custom_type_script = "uid://co4wi7ebsf67k"

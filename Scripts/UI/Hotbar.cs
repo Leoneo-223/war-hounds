@@ -1,8 +1,5 @@
 using Godot;
 
-// Attach to VBoxContainer (or any node above the slots).
-// Mirrors the Inventory into your Slot1..Slot10 nodes and shows
-// the selected item's name in a label.
 public partial class Hotbar : Node
 {
     // Color of the selected slot's background.
@@ -15,8 +12,6 @@ public partial class Hotbar : Node
 
     public override void _Ready()
     {
-        // Find every node named Slot* anywhere below this one.
-        // Tree order is preserved, so Slot1 is index 0, and so on.
         Godot.Collections.Array<Node> found = FindChildren("Slot*", "", true, false);
         _slots = new Node[found.Count];
         for (int i = 0; i < found.Count; i++)
@@ -24,8 +19,6 @@ public partial class Hotbar : Node
             _slots[i] = found[i];
         }
 
-        // The Inventory may not exist yet (the Player might load after the HUD),
-        // so wait one frame before connecting to it.
         CallDeferred(nameof(Hook));
     }
 

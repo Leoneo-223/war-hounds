@@ -1,23 +1,19 @@
 using Godot;
 
-// One draggable slot. Created from code by StorageUI, so it needs no scene.
-// It draws itself (background, icon, count) and handles drag and drop
-// using Godot's built-in _GetDragData / _CanDropData / _DropData.
-// Hovering an item shows a tooltip with its name, category and description.
 public partial class SlotUI : Control
 {
-    public Storage Source;   // which storage this slot shows
-    public int Index;        // which slot of that storage
+    public Storage Source;
+    public int Index;
 
     [Export] public TextureRect _icon;
-    public Texture2D Background;   // set by StorageUI; null = plain dark square
+    public Texture2D Background;
     private Label _count;
-    private Label _nameFallback;   // shown if the item has no icon yet
+    private Label _nameFallback; // shown if not set
 
     public override void _Ready()
     {
         CustomMinimumSize = new Vector2(64, 64);
-        MouseFilter = MouseFilterEnum.Stop;   // this node must receive the mouse
+        MouseFilter = MouseFilterEnum.Stop;
 
         // Children ignore the mouse, otherwise they would steal drags and drops.
         Control bg;
@@ -105,13 +101,9 @@ public partial class SlotUI : Control
             _count.Text = "";
         }
 
-        // Must be non-empty for the tooltip to show at all. The text itself is only
-        // used as a fallback, because _MakeCustomTooltip below builds the real one.
         TooltipText = itemName;
     }
 
-    // Builds the hover tooltip from the item in this slot. Godot calls this
-    // each time the cursor rests on the slot, so it is always up to date.
     public override GodotObject _MakeCustomTooltip(string forText)
     {
         if (Source == null)
@@ -161,8 +153,7 @@ public partial class SlotUI : Control
         return panel;
     }
 
-    // Called by Godot when the player starts dragging from this slot.
-    // Returning an empty Variant means "nothing to drag".
+
     public override Variant _GetDragData(Vector2 atPosition)
     {
         ItemData item = Source.Items[Index];

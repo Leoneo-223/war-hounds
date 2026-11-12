@@ -1,13 +1,9 @@
 [gd_scene format=3 uid="uid://crmhfuuhb2eyt"]
 
-[ext_resource type="PackedScene" uid="uid://g3heoeudmkd0" path="res://Scenes/World/Map/road_1_1.tscn" id="1_ci6au"]
-
 [node name="Map" type="Node3D" unique_id=91249896]
 
 [node name="Buildings" type="Node3D" parent="." unique_id=1418702639]
 
 [node name="Roads" type="Node3D" parent="." unique_id=1876840046]
-
-[node name="road_1_1" parent="." unique_id=694340279 instance=ExtResource("1_ci6au")]
 
 [node name="Base" type="Node3D" parent="." unique_id=1935521646]

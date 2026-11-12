@@ -1,11 +1,5 @@
 using Godot;
 
-// A separate world object that holds fuel. The Crucible gets a reference to it
-// through the Inspector, so it can be moved or swapped in the scene freely.
-//
-// E on the tank:
-//   holding a refill item (and the tank isn't full) -> uses one up and adds fuel
-//   anything else                                    -> opens/closes the valve
 public partial class PropaneTank : StaticBody3D, IInteractable
 {
     [Export] public string TankName = "Propane Tank";
@@ -95,8 +89,6 @@ public partial class PropaneTank : StaticBody3D, IInteractable
         ValveOpen = !ValveOpen;
     }
 
-    // Takes up to 'amount' of fuel and returns how much was actually given.
-    // Gives nothing while the valve is closed, and less than asked when the tank runs dry.
     public float Consume(float amount)
     {
         if (!ValveOpen || Fuel <= 0f || amount <= 0f)

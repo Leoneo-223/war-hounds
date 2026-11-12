@@ -1,8 +1,6 @@
 using Godot;
 using System.Collections.Generic;
 
-// The drag-and-drop window: the container on one side, the player's inventory on the other.
-// One instance lives in the game (CanvasLayer). Crates, racks and machines call Open().
 public partial class StorageUI : CanvasLayer
 {
     public static StorageUI Instance { get; private set; }
@@ -104,7 +102,7 @@ public partial class StorageUI : CanvasLayer
             slot.Index = i;
             slot.Background = SlotTexture;
 
-            grid.AddChild(slot);    // _Ready runs here and builds the slot visuals
+            grid.AddChild(slot); // _Ready runs here and builds the slot visuals
             _slotUIs.Add(slot);
         }
     }

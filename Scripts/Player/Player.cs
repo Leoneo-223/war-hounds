@@ -10,26 +10,25 @@ public partial class Player : CharacterBody3D
     [Export] public float JumpVelocity = 7f;
 
     [ExportGroup("Camera")]
-    [Export] public float MouseSensitivity = 0.1f;   // degrees per pixel
+    [Export] public float MouseSensitivity = 0.1f;
 
     [ExportGroup("Height")]
     [Export] public float StandHeight = 1.85f;
     [Export] public float CrouchHeight = 1.38f;
-    [Export] public float HeadOffset = 0.25f;        // how far below the top the camera sits
+    [Export] public float HeadOffset = 0.25f;
 
     [ExportGroup("Head Bob")]
     [Export] public bool BobEnabled = true;
-    [Export] public float BobFrequency = 2.2f;       // steps per meter travelled
-    [Export] public float BobAmplitudeY = 0.06f;     // vertical movement (meters)
-    [Export] public float BobAmplitudeX = 0.03f;     // side-to-side movement (meters)
-    [Export] public float BobSmoothing = 12f;        // how fast the bob fades in/out
-
+    [Export] public float BobFrequency = 2.2f;
+    [Export] public float BobAmplitudeY = 0.06f;
+    [Export] public float BobAmplitudeX = 0.03f;
+    [Export] public float BobSmoothing = 12f;
     [ExportGroup("Speed FOV")]
     [Export] public bool FovEffectEnabled = true;
-    [Export] public float WalkFovBoost = 1f;         // degrees added when walking
-    [Export] public float RunFovBoost = 3f;          // degrees added when running
-    [Export] public float SprintFovBoost = 9f;       // degrees added when sprinting
-    [Export] public float FovSmoothing = 6f;         // how fast the FOV changes
+    [Export] public float WalkFovBoost = 1f;
+    [Export] public float RunFovBoost = 3f;
+    [Export] public float SprintFovBoost = 9f;
+    [Export] public float FovSmoothing = 6f;
 
     [ExportGroup("Health")]
     [Export] public int MaxHealth = 100;

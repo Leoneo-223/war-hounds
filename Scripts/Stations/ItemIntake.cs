@@ -1,26 +1,19 @@
 using Godot;
 
-// Attach to an Area3D that is a direct child of a Station. It is the "mouth" of the machine:
-// any dropped or thrown item that touches it is offered to the station.
-// If the station takes it, the world item shrinks or disappears.
-// If the station refuses it, the item just stays where it is.
-//
-// It also hurts the player while they stand inside the area.
-//
-// Area3D settings: Collision Layer = nothing, Collision Mask = layers 1 and 2
+// Area3D settings are Collision Layer = nothing, Collision Mask = layers 1 and 2
 // (layer 2 is where ItemPickup puts itself, layer 1 is where the Player is).
 public partial class ItemIntake : Area3D
 {
     [ExportGroup("Player Damage")]
     [Export] public bool HurtsPlayer = true;
-    [Export] public int DamagePerTick = 10;          // 10 damage every 0.5s = dead in 5 seconds
+    [Export] public int DamagePerTick = 10;
     [Export] public float TickInterval = 0.5f;
-    [Export] public bool OnlyWhileWorking = false;   // true = only hurts while the station is running
+    [Export] public bool OnlyWhileWorking = false;
 
     private Station _station;
     private float _timer;
     private float _damageTimer;
-    private Player _player;   // null while the player is outside the area
+    private Player _player; // null while the player is outside the area
 
     public bool PlayerInside
     {
@@ -48,7 +41,7 @@ public partial class ItemIntake : Area3D
         if (p != null)
         {
             _player = p;
-            _damageTimer = 0f;   // first hit lands right after TickInterval
+            _damageTimer = 0f; // first hit lands right after TickInterval
         }
     }
 

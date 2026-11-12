@@ -3,9 +3,6 @@ using Godot.Collections;
 using System;
 using System.Text;
 
-// Idle    = empty or loading, can start
-// Working = running a recipe
-// Done    = finished, the result is waiting to be taken (the station decides how)
 public enum StationState { Idle, Working, Done }
 
 // Base class for every station (crucible, fabricator, packing bench...).
@@ -13,9 +10,6 @@ public enum StationState { Idle, Working, Done }
 // It does NOT hand over the result by itself. When a recipe finishes, the station
 // goes to Done and remembers what it made (CompletedRecipe). The subclass decides
 // when and how to deliver: call Deliver() / SpawnPickup(), then ClearResult().
-//
-// Loading:     physically drop or throw items onto the station's ItemIntake.
-// Interaction: E = start / stop (subclasses can override Interact for other actions)
 public abstract partial class Station : StaticBody3D, IInteractable
 {
     [Export] public string StationName = "Station";

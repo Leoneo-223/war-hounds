@@ -1,17 +1,9 @@
 using Godot;
 
-// The first station. Loading, recipes, timer and state come from Station.
-// This class adds what is specific to a crucible: it burns propane while it works,
-// and when a recipe finishes it holds the result (CompletedRecipe) until you deliver it.
 public partial class Crucible : Station
 {
-    // The tank sitting next to it. Drag the PropaneTank node into this slot.
     [Export] public PropaneTank Tank;
-
-    // Fuel used per second while running. The default 0.5 means an 8 second recipe uses 4.
     [Export] public float BurnRate = 0.5f;
-
-    // Optional: a Node3D holding flame particles and/or a light. It is shown only while working.
     [Export] public Node3D FlameEffects;
 
     // FOR TESTING ONLY: when on, a finished recipe is delivered as a pickup right away.
@@ -21,10 +13,8 @@ public partial class Crucible : Station
     // Amount of cups the crucible can produce
     [Export] public int CupAmount;
 
-    // Empty cup (to replace with full one)
     [Export] public ItemData CrucibleCupEmpty;
 
-    // Full cup variants (aluminum, in future - gold and other materials)
     [ExportGroup("OUTPUTS")]
     [Export] public ItemData CrucibleCupAluminum;
 

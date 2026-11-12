@@ -1,8 +1,6 @@
 using Godot;
 using Godot.Collections;
 
-// Data for one thing a station can make. Create these as .tres files and add them
-// to a station's Recipes list. No logic here, stations read it.
 [GlobalClass]
 public partial class Recipe : Resource
 {

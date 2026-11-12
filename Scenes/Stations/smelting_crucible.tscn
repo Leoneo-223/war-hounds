@@ -5,7 +5,7 @@
 [ext_resource type="Material" uid="uid://bgoyjfvpvylwl" path="res://Materials/dark_metal.tres" id="2_fin1d"]
 [ext_resource type="Resource" uid="uid://cuutjjxhkn03a" path="res://Resources/Items/Tools/crucible_cup_emptry.tres" id="2_i28cj"]
 [ext_resource type="Script" uid="uid://ccfl0377o24u7" path="res://Scripts/Stations/Recipe.cs" id="2_s87o7"]
-[ext_resource type="Resource" uid="uid://c27nioj12ufng" path="res://Resources/Items/Materials/Melts/crucible_cup_aluminum.tres" id="3_d80ji"]
+[ext_resource type="Resource" uid="uid://c27nioj12ufng" path="res://Resources/Items/Consumables/crucible_cup_aluminum.tres" id="3_d80ji"]
 [ext_resource type="Script" uid="uid://bwpl8tfw3jgvr" path="res://Scripts/Core/Storage.cs" id="4_thgw4"]
 [ext_resource type="Resource" uid="uid://dqpdyols2eotf" path="res://Resources/Recipies/aluminum_melt.tres" id="5_i28cj"]
 [ext_resource type="Script" uid="uid://8iykpk2qu8r3" path="res://Scripts/Stations/ItemIntake.cs" id="5_nstte"]

@@ -1,20 +1,10 @@
 using Godot;
 
-// Attach to the root of your HUD scene (PlayerHud).
-// Shows the interaction prompt and makes the crosshair react when hovering something.
 public partial class Hud : CanvasLayer
 {
-    // Label that shows "[E] Pick up Metal Pipe". Drag it in via the Inspector.
     [Export] public Label Prompt;
-
-    // If off, the Prompt label keeps the text you typed in the editor
-    // and is only shown/hidden. If on, the text comes from the item.
     [Export] public bool UseItemName = false;
-
-    // Your crosshair node (the TextureRect with the PNG). Drag it in.
     [Export] public Control Crosshair;
-
-    // How much the crosshair grows while you look at something interactable.
     [Export] public float HoverScale = 1.4f;
 
     private bool _hovering;

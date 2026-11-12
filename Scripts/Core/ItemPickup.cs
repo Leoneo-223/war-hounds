@@ -1,10 +1,9 @@
 using Godot;
 
-// Root script of Pickup.tscn (RigidBody3D and CollisionShape3D).
 // One generic scene is reused for every item, you only change the Item field.
 public partial class ItemPickup : RigidBody3D, IInteractable
 {
-    // Which item this is. Set in the Inspector, or by code when dropped.
+    // Which item this is.
     [Export] public ItemData Item;
 
     // How many items are in this pile.

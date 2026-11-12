@@ -1,21 +1,16 @@
 using Godot;
 
-// Attach to a RayCast3D that is a child of the player's Camera3D.
-// Each physics frame it checks what the player is looking at and shows its prompt.
-// Pressing E triggers Interact() on it.
 public partial class Interactor : RayCast3D
 {
-    // The HUD node (the one with Hud.cs). Drag it in via the Inspector.
     [Export] public Hud Hud;
 
     private IInteractable _current;
 
     public override void _Ready()
     {
-        CollisionMask |= 1u << 1;   // keep layer 1 and add layer 2
+        CollisionMask |= 1u << 1;
 
-        // The ray starts inside the player's capsule, so make sure it can never
-        // hit the player itself. Walk up the tree to find the player body.
+        // Make sure the player never gets hit by the raycast
         Node n = GetParent();
         while (n != null)
         {

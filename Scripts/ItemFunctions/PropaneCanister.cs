@@ -62,8 +62,6 @@ public partial class PropaneCanister : Node3D
             Node3D explosion = ExplosionScene.Instantiate<Node3D>();
             GetTree().CurrentScene.AddChild(explosion);
             explosion.GlobalPosition = _body.GlobalPosition;
-
-
         }
 
         _body.QueueFree();

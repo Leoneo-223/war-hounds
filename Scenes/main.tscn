@@ -1,9 +1,7 @@
 [gd_scene format=3 uid="uid://dy0bj13vvtdef"]
 
 [ext_resource type="PackedScene" uid="uid://bsgk4kmypw01i" path="res://Player/Player.tscn" id="1_jjgbg"]
-[ext_resource type="PackedScene" uid="uid://dejd2ial52m8x" path="res://Scenes/Core/npc.tscn" id="2_6iyac"]
 [ext_resource type="PackedScene" uid="uid://d3q0ikgu5ji7w" path="res://Scenes/Core/item_pickup.tscn" id="2_8gbba"]
-[ext_resource type="Resource" uid="uid://bf1d6mbmlqw0j" path="res://Resources/NPC/dave_butler.tres" id="3_fdnlq"]
 [ext_resource type="Resource" uid="uid://c2a7xbs5mox5y" path="res://Resources/Items/Materials/aluminum_foil.tres" id="4_6bp64"]
 [ext_resource type="PackedScene" uid="uid://o5j0rd456dw1" path="res://Scenes/Storage/large_storage_rack.tscn" id="4_21xkr"]
 [ext_resource type="Resource" uid="uid://dvj8j7qyost0m" path="res://Resources/Items/Consumables/popane_canister.tres" id="4_ynf5e"]
@@ -54,11 +52,6 @@ shadow_enabled = true
 [node name="Player" parent="." unique_id=993695542 instance=ExtResource("1_jjgbg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5118613, 1.4447414, 0)
 
-[node name="Dave" parent="." unique_id=791374841 node_paths=PackedStringArray("Waypoints") instance=ExtResource("2_6iyac")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4806182, 3.5313444)
-Data = ExtResource("3_fdnlq")
-Waypoints = [null, null]
-
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=1792515561]
 navigation_mesh = SubResource("NavigationMesh_fvkn2")
 
@@ -99,21 +92,21 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.693371, 1.044049, 1.7339187
 Tank = NodePath("../PropaneTank")
 
 [node name="ItemPickup" parent="NavigationRegion3D/CSGBox3D" unique_id=1009425510 instance=ExtResource("2_8gbba")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8389902, 6.7146378)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.026856, 2.2775717, 6.6852884)
 Item = ExtResource("4_6bp64")
-Count = 10
+Count = 5
 
 [node name="ItemPickup2" parent="NavigationRegion3D/CSGBox3D" unique_id=1300578253 instance=ExtResource("2_8gbba")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4122915, 2.0655975, 6.7146378)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.8206534, 1.504179, 6.6852884)
 Item = ExtResource("4_ynf5e")
-Count = 20
+Count = 3
 
 [node name="ItemPickup3" parent="NavigationRegion3D/CSGBox3D" unique_id=652894549 instance=ExtResource("2_8gbba")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8389902, 6.7146378)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09537172, 2.2775717, 6.6852884)
 Item = ExtResource("5_hptm8")
 
 [node name="ItemPickup4" parent="NavigationRegion3D/CSGBox3D" unique_id=1196230704 instance=ExtResource("2_8gbba")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2574751, 2.8389902, 6.7146378)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.61447, 2.2775717, 7.788579)
 Item = ExtResource("6_d1ilt")
 Count = 5
 
