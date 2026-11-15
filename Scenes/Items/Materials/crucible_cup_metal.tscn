@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://b5yfip4m4kcta"]
 
-[ext_resource type="ArrayMesh" uid="uid://pspa67tqh8y" path="res://Models/Items/crucible_cup.obj" id="1_fk705"]
-[ext_resource type="Material" uid="uid://bgoyjfvpvylwl" path="res://Materials/dark_metal.tres" id="2_ecfox"]
-[ext_resource type="Material" uid="uid://cg8byp5hc8alx" path="res://Materials/molten_metal.tres" id="3_hgoop"]
+[ext_resource type="ArrayMesh" uid="uid://pspa67tqh8y" path="res://Assets/Models/Items/crucible_cup.obj" id="1_fk705"]
+[ext_resource type="Material" uid="uid://bgoyjfvpvylwl" path="res://Assets/Materials/dark_metal.tres" id="2_ecfox"]
+[ext_resource type="Material" uid="uid://cg8byp5hc8alx" path="res://Assets/Materials/molten_metal.tres" id="3_hgoop"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_fvkn2"]
 top_radius = 0.08886719

@@ -5,6 +5,8 @@
 [ext_resource type="Script" uid="uid://ta64ygdq1jc8" path="res://Scripts/Core/Interactor.cs" id="3_ddoul"]
 [ext_resource type="PackedScene" uid="uid://d3q0ikgu5ji7w" path="res://Scenes/Core/item_pickup.tscn" id="4_6ysni"]
 [ext_resource type="Script" uid="uid://xgu5ucrer56r" path="res://Scripts/Player/Inventory.cs" id="4_8g4oa"]
+[ext_resource type="Script" uid="uid://tcwtrtfs8krk" path="res://Scripts/Player/DevKit.cs" id="5_6ysni"]
+[ext_resource type="Resource" uid="uid://c7t1l4x2sumao" path="res://Resources/Items/Components/Test/test_barrel.tres" id="6_vlldt"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_fvkn2"]
 
@@ -29,6 +31,12 @@ shape = SubResource("CapsuleShape3D_q3lat")
 script = ExtResource("4_8g4oa")
 HoldPoint = NodePath("../Pivot/Camera3D/HoldPoint")
 PickupScene = ExtResource("4_6ysni")
+
+[node name="DevKit" type="Node" parent="." unique_id=161447959 node_paths=PackedStringArray("SpawnPoint")]
+script = ExtResource("5_6ysni")
+Parts = Array[Object]([ExtResource("6_vlldt")])
+PickupScene = ExtResource("4_6ysni")
+SpawnPoint = NodePath("../Pivot/Camera3D/HoldPoint")
 
 [node name="Pivot" type="Node3D" parent="." unique_id=1467040323]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5787425, 0)

@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dyj7q4w0knqj6"
+path="res://.godot/imported/interior_garage_1.obj-cb79cd52d95e52575d3e7069f0744808.mesh"
+
+[deps]
+
+files=["res://.godot/imported/interior_garage_1.obj-cb79cd52d95e52575d3e7069f0744808.mesh"]
+
+source_file="res://Assets/Models/Map/Buildings/interior_garage_1.obj"
+dest_files=["res://.godot/imported/interior_garage_1.obj-cb79cd52d95e52575d3e7069f0744808.mesh", "res://.godot/imported/interior_garage_1.obj-cb79cd52d95e52575d3e7069f0744808.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

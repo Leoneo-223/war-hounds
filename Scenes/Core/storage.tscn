@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://d004eirx2mc5i"]
 
-[ext_resource type="Script" uid="uid://bpqu2x8r2t5ds" path="res://Scripts/Core/StorageCrate.cs" id="1_desf2"]
-[ext_resource type="Script" uid="uid://bwpl8tfw3jgvr" path="res://Scripts/Core/Storage.cs" id="2_cpn7m"]
+[ext_resource type="Script" uid="uid://bpqu2x8r2t5ds" path="res://Scripts/Storage/StorageCrate.cs" id="1_desf2"]
+[ext_resource type="Script" uid="uid://bwpl8tfw3jgvr" path="res://Scripts/Storage/Storage.cs" id="2_cpn7m"]
 [ext_resource type="PackedScene" uid="uid://ddtvyayly1brx" path="res://Scenes/UI/storage_ui.tscn" id="3_cpn7m"]
 
 [node name="Storage" type="StaticBody3D" unique_id=1898311747 node_paths=PackedStringArray("Contents")]

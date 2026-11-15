@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://c25ngc1f1u736"]
 
-[ext_resource type="ArrayMesh" uid="uid://bdig6q2gw6wr" path="res://Models/Items/plank_1.obj" id="1_jfmkg"]
-[ext_resource type="Texture2D" uid="uid://c7qbcsu6opvlh" path="res://AmbientCG/Extracted/Planks030B_1K-JPG_Displacement.jpg" id="2_ap1r6"]
+[ext_resource type="ArrayMesh" uid="uid://bdig6q2gw6wr" path="res://Assets/Models/Items/plank_1.obj" id="1_jfmkg"]
+[ext_resource type="Texture2D" uid="uid://c7qbcsu6opvlh" path="res://Misc/AmbientCG/Extracted/Planks030B_1K-JPG_Displacement.jpg" id="2_ap1r6"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fvkn2"]
 albedo_color = Color(0.34284207, 0.17312714, 1.4439226e-07, 1)

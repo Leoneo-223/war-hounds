@@ -9,6 +9,9 @@ public partial class LocationMarker : Marker3D
     [Export] public string LocationId { get; set; } = "";
     [Export] public LocationType Type { get; set; } = LocationType.Other;
 
+    // NPCs currently "inside" this building (filled in by NPC.cs). Used by HomeDoor.
+    public readonly List<NPC> Inside = new();
+
     // NPCs vanish into the building when they arrive at a Home marker.
     public bool HidesNpc => Type == LocationType.Home;
 

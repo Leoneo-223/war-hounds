@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://di7djb3jedu0p" path="res://Scripts/Stations/PropaneTank.cs" id="1_uap25"]
 [ext_resource type="Resource" uid="uid://dvj8j7qyost0m" path="res://Resources/Items/Consumables/popane_canister.tres" id="2_uap25"]
-[ext_resource type="ArrayMesh" uid="uid://be0mtvu13pfdv" path="res://Models/Stations/propane_tank_big.obj" id="3_fq85n"]
-[ext_resource type="Material" uid="uid://bgoyjfvpvylwl" path="res://Materials/dark_metal.tres" id="4_ilydr"]
+[ext_resource type="ArrayMesh" uid="uid://be0mtvu13pfdv" path="res://Assets/Models/Stations/propane_tank_big.obj" id="3_fq85n"]
+[ext_resource type="Material" uid="uid://bgoyjfvpvylwl" path="res://Assets/Materials/dark_metal.tres" id="4_ilydr"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jaywg"]
 metallic = 0.5

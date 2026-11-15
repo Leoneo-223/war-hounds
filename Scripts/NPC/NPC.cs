@@ -13,6 +13,12 @@ public partial class NPC : CharacterBody3D, IInteractable
     [Export] public NavigationAgent3D Agent;
     [Export] public Godot.Collections.Array<Marker3D> Waypoints = new();
 
+    [ExportGroup("DOORS")]
+    // How long (seconds) an NPC stays outside after answering a knock.
+    [Export] public float DoorAnswerSeconds = 20f;
+
+    public bool IsAnsweringDoor { get; private set; }
+
     public NPCActivity CurrentActivity { get; private set; } = NPCActivity.Idle;
 
     // Set true while talking / trading so the NPC stops walking and turning.
@@ -32,6 +38,7 @@ public partial class NPC : CharacterBody3D, IInteractable
     // Inside-a-building state
     private bool _inside;
     private uint _savedLayer, _savedMask;
+    private LocationMarker _insideMarker;
 
     public override async void _Ready()
     {
@@ -52,6 +59,7 @@ public partial class NPC : CharacterBody3D, IInteractable
 
     public override void _ExitTree()
     {
+        _insideMarker?.Inside.Remove(this);
         if (GameClock.Instance != null)
             GameClock.Instance.MinuteChanged -= OnMinuteChanged;
     }
@@ -91,6 +99,9 @@ public partial class NPC : CharacterBody3D, IInteractable
         _targetMarker = marker;
         CurrentActivity = entry.Activity;
         _faceOnArrival = false;
+
+        // Already inside the right building (e.g. Idle -> Sleep, both at home): stay put.
+        if (_inside && marker == _insideMarker) return;
 
         // Leaving a building: reappear where we went in (the door).
         if (_inside) ComeOutside();
@@ -134,6 +145,9 @@ public partial class NPC : CharacterBody3D, IInteractable
     {
         if (_inside) return;
         _inside = true;
+        _insideMarker = _targetMarker;
+        if (_insideMarker != null && !_insideMarker.Inside.Contains(this))
+            _insideMarker.Inside.Add(this);
         _savedLayer = CollisionLayer;
         _savedMask = CollisionMask;
         CollisionLayer = 0;
@@ -146,9 +160,47 @@ public partial class NPC : CharacterBody3D, IInteractable
     {
         if (!_inside) return;
         _inside = false;
+        _insideMarker?.Inside.Remove(this);
         CollisionLayer = _savedLayer;
         CollisionMask = _savedMask;
         Visible = true;
+    }
+
+    // Called by HomeDoor when the player knocks and this NPC is picked to answer.
+    public void AnswerDoor(Node3D player)
+    {
+        if (!_inside || IsAnsweringDoor) return;
+
+        ComeOutside(); // reappear at the door marker
+        IsAnsweringDoor = true;
+
+        if (player != null)
+        {
+            Vector3 dir = player.GlobalPosition - GlobalPosition;
+            dir.Y = 0;
+            if (dir.LengthSquared() > 0.0001f)
+                Rotation = new Vector3(0, Mathf.Atan2(-dir.X, -dir.Z), 0);
+        }
+
+        GetTree().CreateTimer(DoorAnswerSeconds).Timeout += FinishAnsweringDoor;
+    }
+
+    private void FinishAnsweringDoor()
+    {
+        if (!IsAnsweringDoor) return;
+
+        // Don't vanish mid-conversation: check again in a moment.
+        if (IsBusy)
+        {
+            GetTree().CreateTimer(2.0).Timeout += FinishAnsweringDoor;
+            return;
+        }
+
+        IsAnsweringDoor = false;
+
+        // Still meant to be home? Go back in. (If the schedule moved on, he just walks off.)
+        if (_arrived && _targetMarker != null && _targetMarker.HidesNpc)
+            GoInside();
     }
 
     public override void _PhysicsProcess(double delta)
@@ -157,7 +209,7 @@ public partial class NPC : CharacterBody3D, IInteractable
 
         Vector3 horizontal = Vector3.Zero;
 
-        if (!_arrived && !IsBusy)
+        if (!_arrived && !IsBusy && !IsAnsweringDoor)
         {
             if (Agent.IsNavigationFinished())
             {
@@ -175,7 +227,7 @@ public partial class NPC : CharacterBody3D, IInteractable
                 }
             }
         }
-        else if (_arrived && _faceOnArrival && !IsBusy)
+        else if (_arrived && _faceOnArrival && !IsBusy && !IsAnsweringDoor)
         {
             TurnTowardsYaw(_arrivalYaw, (float)delta);
             if (Mathf.Abs(Mathf.Wrap(Rotation.Y - _arrivalYaw, -Mathf.Pi, Mathf.Pi)) < 0.01f)

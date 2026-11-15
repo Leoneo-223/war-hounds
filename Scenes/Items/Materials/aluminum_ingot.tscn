@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://qam5h3hsmic"]
 
-[ext_resource type="ArrayMesh" uid="uid://c7splujmum4es" path="res://Models/Items/aluminium_ingot.obj" id="1_rm3gd"]
-[ext_resource type="Texture2D" uid="uid://djgiluxpfarc7" path="res://AmbientCG/Extracted/Metal055A_1K-JPG_Color.jpg" id="2_jwety"]
+[ext_resource type="ArrayMesh" uid="uid://c7splujmum4es" path="res://Assets/Models/Items/aluminium_ingot.obj" id="1_rm3gd"]
+[ext_resource type="Texture2D" uid="uid://djgiluxpfarc7" path="res://Misc/AmbientCG/Extracted/Metal055A_1K-JPG_Color.jpg" id="2_jwety"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fvkn2"]
 albedo_color = Color(0.7581918, 0.7581918, 0.7581917, 1)

@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://b7bww3jo2mrxy"]
 
 [ext_resource type="PackedScene" uid="uid://d004eirx2mc5i" path="res://Scenes/Core/storage.tscn" id="1_h1dub"]
-[ext_resource type="ArrayMesh" uid="uid://cjxdv5dbfj8fn" path="res://Models/Storage/medium_storage_rack.obj" id="2_h1dub"]
-[ext_resource type="Material" uid="uid://bgoyjfvpvylwl" path="res://Materials/dark_metal.tres" id="3_6xpt7"]
-[ext_resource type="Material" uid="uid://drqrrlqmspvt" path="res://Materials/lightbrown_wood.tres" id="4_xo7e1"]
+[ext_resource type="ArrayMesh" uid="uid://cjxdv5dbfj8fn" path="res://Assets/Models/Storage/medium_storage_rack.obj" id="2_h1dub"]
+[ext_resource type="Material" uid="uid://bgoyjfvpvylwl" path="res://Assets/Materials/dark_metal.tres" id="3_6xpt7"]
+[ext_resource type="Material" uid="uid://drqrrlqmspvt" path="res://Assets/Materials/lightbrown_wood.tres" id="4_xo7e1"]
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_h1dub"]
 points = PackedVector3Array(0.98968256, 1.5949275, 0.55, -0.98115075, -1.3378316, -0.55, 0.98115075, -1.3378316, -0.55, -0.98968256, -1.3505275, 0.55, -0.98115075, 1.5822316, -0.55, 0.98968256, -1.3505275, 0.55, -0.98968256, 1.5949275, 0.55, 0.98115075, 1.5822316, -0.55)

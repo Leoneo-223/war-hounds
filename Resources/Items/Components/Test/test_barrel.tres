@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="PartData" format=3 uid="uid://c7t1l4x2sumao"]
+
+[ext_resource type="Script" uid="uid://dt7qa5io14r7n" path="res://Scripts/Weapons/Resources/PartData.cs" id="1_3jb1d"]
+[ext_resource type="Texture2D" uid="uid://bxmoekjhdbo2c" path="res://icon.svg" id="1_nptnc"]
+[ext_resource type="PackedScene" uid="uid://de36bi103ipdu" path="res://Scenes/Items/Components/test_barrel.tscn" id="2_2f3af"]
+
+[resource]
+script = ExtResource("1_3jb1d")
+PartType = 1
+Id = "test_barrel_part"
+Name = "Test Barrel Part"
+Icon = ExtResource("1_nptnc")
+WorldModel = ExtResource("2_2f3af")
+MaxStack = 20
+Category = 3
+metadata/_custom_type_script = "uid://dt7qa5io14r7n"

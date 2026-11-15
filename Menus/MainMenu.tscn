@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://bxissr54a0blg"]
 
-[ext_resource type="FontFile" uid="uid://gmtxr84omygs" path="res://Fonts/GLF-Alofon-Bold.otf" id="1_3g7qx"]
-[ext_resource type="FontFile" uid="uid://dq1aty4xq8pah" path="res://Fonts/GLF-Alofon-UltraBold.otf" id="2_7ihqj"]
-[ext_resource type="FontFile" uid="uid://cojqfrxxcj051" path="res://Fonts/GLF-Alofon-Light.ttf" id="3_n6o36"]
+[ext_resource type="FontFile" uid="uid://gmtxr84omygs" path="res://Misc/Fonts/GLF-Alofon-Bold.otf" id="1_3g7qx"]
+[ext_resource type="FontFile" uid="uid://dq1aty4xq8pah" path="res://Misc/Fonts/GLF-Alofon-UltraBold.otf" id="2_7ihqj"]
+[ext_resource type="FontFile" uid="uid://cojqfrxxcj051" path="res://Misc/Fonts/GLF-Alofon-Light.ttf" id="3_n6o36"]
 
 [sub_resource type="Theme" id="Theme_fvkn2"]
 default_font = ExtResource("1_3g7qx")

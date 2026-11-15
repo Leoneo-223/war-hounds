@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://d4myvmj8u7dno"]
 
-[ext_resource type="ArrayMesh" uid="uid://pspa67tqh8y" path="res://Models/Items/crucible_cup.obj" id="1_fgg6a"]
-[ext_resource type="Material" uid="uid://bgoyjfvpvylwl" path="res://Materials/dark_metal.tres" id="2_uacr3"]
+[ext_resource type="ArrayMesh" uid="uid://pspa67tqh8y" path="res://Assets/Models/Items/crucible_cup.obj" id="1_fgg6a"]
+[ext_resource type="Material" uid="uid://bgoyjfvpvylwl" path="res://Assets/Materials/dark_metal.tres" id="2_uacr3"]
 
 [node name="CrucibleCupEmpty" type="Node3D" unique_id=1258626624]
 

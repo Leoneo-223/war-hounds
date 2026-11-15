@@ -5,9 +5,7 @@
 [ext_resource type="Resource" uid="uid://c2a7xbs5mox5y" path="res://Resources/Items/Materials/aluminum_foil.tres" id="4_6bp64"]
 [ext_resource type="PackedScene" uid="uid://o5j0rd456dw1" path="res://Scenes/Storage/large_storage_rack.tscn" id="4_21xkr"]
 [ext_resource type="Resource" uid="uid://dvj8j7qyost0m" path="res://Resources/Items/Consumables/popane_canister.tres" id="4_ynf5e"]
-[ext_resource type="PackedScene" uid="uid://b7bww3jo2mrxy" path="res://Scenes/Storage/medium_storage_rack.tscn" id="5_6bp64"]
 [ext_resource type="Resource" uid="uid://8q6w6xhusytm" path="res://Resources/Items/Materials/aluminum_ingot.tres" id="5_hptm8"]
-[ext_resource type="PackedScene" uid="uid://bt280t8i0vfkd" path="res://Scenes/Storage/small_storage_rack.tscn" id="6_344ge"]
 [ext_resource type="Resource" uid="uid://cuutjjxhkn03a" path="res://Resources/Items/Tools/crucible_cup_emptry.tres" id="6_d1ilt"]
 [ext_resource type="PackedScene" uid="uid://0c1udupnlsxf" path="res://Scenes/Stations/smelting_crucible.tscn" id="8_ynf5e"]
 [ext_resource type="PackedScene" uid="uid://bkj8fvb2ya558" path="res://Scenes/Stations/propane_tank.tscn" id="9_hptm8"]
@@ -62,6 +60,9 @@ material = SubResource("StandardMaterial3D_jaywg")
 
 [node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="NavigationRegion3D/CSGBox3D" unique_id=975418855]
 
+[node name="Storage" parent="NavigationRegion3D/CSGBox3D/NavigationObstacle3D" unique_id=1898311747 instance=ExtResource("4_21xkr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.16496849, 1.5108662, 11.407077)
+
 [node name="CSGBox3D" type="CSGBox3D" parent="NavigationRegion3D/CSGBox3D/NavigationObstacle3D" unique_id=612441820]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.9373913, 3.334303, 1.6148348)
 use_collision = true
@@ -74,22 +75,18 @@ use_collision = true
 size = Vector3(5.975342, 8.680542, 5.2373047)
 material = SubResource("StandardMaterial3D_jjgbg")
 
-[node name="Storage" parent="NavigationRegion3D/CSGBox3D/NavigationObstacle3D" unique_id=1898311747 instance=ExtResource("4_21xkr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.8683867, 1.4567132, 12.396257)
-
-[node name="Storage2" parent="NavigationRegion3D/CSGBox3D/NavigationObstacle3D" unique_id=1417701328 instance=ExtResource("5_6bp64")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5546831, 1.4567132, 12.350307)
-
-[node name="Storage3" parent="NavigationRegion3D/CSGBox3D/NavigationObstacle3D" unique_id=139368097 instance=ExtResource("6_344ge")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.780025, 1.4880261, 12.446819)
-
 [node name="PropaneTank" parent="NavigationRegion3D/CSGBox3D/NavigationObstacle3D" unique_id=970793741 instance=ExtResource("9_hptm8")]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 8.756698, 0.97187614, 4.310396)
+TankName = "Assgas"
+MaxFuel = null
+ValveOpen = null
 RefillAmount = 20.0
 
 [node name="SmeltingCrucible" parent="NavigationRegion3D/CSGBox3D/NavigationObstacle3D" unique_id=659818339 node_paths=PackedStringArray("Tank") instance=ExtResource("8_ynf5e")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.693371, 1.044049, 1.7339187)
 Tank = NodePath("../PropaneTank")
+BurnRate = null
+AutoDeliverForTesting = null
 
 [node name="ItemPickup" parent="NavigationRegion3D/CSGBox3D" unique_id=1009425510 instance=ExtResource("2_8gbba")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.026856, 2.2775717, 6.6852884)
@@ -128,3 +125,7 @@ metadata/_custom_type_script = "uid://kgnyl11bm3e3"
 
 [node name="Map" parent="." unique_id=91249896 instance=ExtResource("15_wsu2k")]
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 20)
+
+[node name="Label3D" type="Label3D" parent="." unique_id=2094843277]
+transform = Transform3D(-1.3113416e-07, 0, -2.9999998, 0, 3, 0, 2.9999998, 0, -1.3113416e-07, 8.756698, 3.9718761, 3.59472)
+text = "SMELTING CRUCIBLE & GAS TANK"

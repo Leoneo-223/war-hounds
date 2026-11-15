@@ -6,10 +6,9 @@ public enum ItemCategory
     Consumable,
     Weapon,
     Ammo,
-    Attachment,
+    Component,
     Tool,
     Material,
-    Component,
     KeyItem,
     Miscellaneous,
     Clothing

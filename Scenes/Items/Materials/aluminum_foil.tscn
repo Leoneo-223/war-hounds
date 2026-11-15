@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://dooyfcl0ynb8p"]
 
-[ext_resource type="ArrayMesh" uid="uid://ds4psg7p5vebl" path="res://Models/Items/aluminum_foil.obj" id="1_546j7"]
-[ext_resource type="Material" uid="uid://lqqwtc627s3k" path="res://AmbientCG/Extracted/Metal055A_1K-JPG.tres" id="2_eqneq"]
-[ext_resource type="Material" uid="uid://c7k1e56dqlxq6" path="res://AmbientCG/Extracted/Paper005_2K-JPG.tres" id="3_tm3ep"]
+[ext_resource type="ArrayMesh" uid="uid://ds4psg7p5vebl" path="res://Assets/Models/Items/aluminum_foil.obj" id="1_546j7"]
+[ext_resource type="Material" uid="uid://lqqwtc627s3k" path="res://Misc/AmbientCG/Extracted/Metal055A_1K-JPG.tres" id="2_eqneq"]
+[ext_resource type="Material" uid="uid://c7k1e56dqlxq6" path="res://Misc/AmbientCG/Extracted/Paper005_2K-JPG.tres" id="3_tm3ep"]
 
 [node name="Plank1" type="Node3D" unique_id=6968137]
 

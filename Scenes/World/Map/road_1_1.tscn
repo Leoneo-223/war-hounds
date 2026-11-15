@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://g3heoeudmkd0"]
 
-[ext_resource type="ArrayMesh" uid="uid://68fma3w77xxf" path="res://Models/Map/road1.obj" id="1_2xgtd"]
-[ext_resource type="Texture2D" uid="uid://bnh6yul0eamgf" path="res://Textures/citybits_texture.png" id="2_0wd7v"]
-[ext_resource type="Texture2D" uid="uid://di3ujj6i4edcf" path="res://AmbientCG/Extracted/Asphalt031_1K-JPG_NormalGL.jpg" id="3_0wd7v"]
+[ext_resource type="ArrayMesh" path="res://Models/Map/road1.obj" id="1_2xgtd"]
+[ext_resource type="Texture2D" uid="uid://bnh6yul0eamgf" path="res://Assets/Textures/citybits_texture.png" id="2_0wd7v"]
+[ext_resource type="Texture2D" uid="uid://di3ujj6i4edcf" path="res://Misc/AmbientCG/Extracted/Asphalt031_1K-JPG_NormalGL.jpg" id="3_0wd7v"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6s8i7"]
 albedo_texture = ExtResource("2_0wd7v")

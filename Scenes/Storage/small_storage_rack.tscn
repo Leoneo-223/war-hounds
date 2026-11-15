@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bt280t8i0vfkd"]
 
 [ext_resource type="PackedScene" uid="uid://d004eirx2mc5i" path="res://Scenes/Core/storage.tscn" id="1_387dt"]
-[ext_resource type="ArrayMesh" uid="uid://bcp81eep5jvgr" path="res://Models/Storage/small_storage_rack.obj" id="2_kejuk"]
+[ext_resource type="ArrayMesh" uid="uid://bcp81eep5jvgr" path="res://Assets/Models/Storage/small_storage_rack.obj" id="2_kejuk"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kejuk"]
 albedo_color = Color(0.41215247, 0.41215247, 0.41215247, 1)

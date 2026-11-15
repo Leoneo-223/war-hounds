@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://bcp81eep5jvgr"
+path="res://.godot/imported/small_storage_rack.obj-60eee19837776ec61d2f139cd207edd1.mesh"
+
+[deps]
+
+files=["res://.godot/imported/small_storage_rack.obj-60eee19837776ec61d2f139cd207edd1.mesh"]
+
+source_file="res://Assets/Models/Storage/small_storage_rack.obj"
+dest_files=["res://.godot/imported/small_storage_rack.obj-60eee19837776ec61d2f139cd207edd1.mesh", "res://.godot/imported/small_storage_rack.obj-60eee19837776ec61d2f139cd207edd1.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

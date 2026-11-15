@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://1seoglb6o6e"
+path="res://.godot/imported/work_station.obj-b7de11a1d8019c59e6a7139626b24b69.mesh"
+
+[deps]
+
+files=["res://.godot/imported/work_station.obj-b7de11a1d8019c59e6a7139626b24b69.mesh"]
+
+source_file="res://Assets/Models/Stations/work_station.obj"
+dest_files=["res://.godot/imported/work_station.obj-b7de11a1d8019c59e6a7139626b24b69.mesh", "res://.godot/imported/work_station.obj-b7de11a1d8019c59e6a7139626b24b69.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

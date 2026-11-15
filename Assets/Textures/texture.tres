@@ -1,0 +1,7 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://w5cm47vasq8o"]
+
+[ext_resource type="Texture2D" uid="uid://df3rw0hd7u355" path="res://Assets/Models/Map2/citybits_texture.png" id="1_24kyp"]
+
+[resource]
+albedo_texture = ExtResource("1_24kyp")
+metallic_specular = 0.0

@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://de36bi103ipdu"]
+
+[ext_resource type="Script" uid="uid://bgvcmajha52fd" path="res://Scripts/Weapons/Part.cs" id="1_bf005"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fvkn2"]
+albedo_color = Color(0.43134022, 0.43134025, 0.43134025, 1)
+metallic = 1.0
+metallic_specular = 1.0
+roughness = 0.5
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_fvkn2"]
+height = 6.0
+
+[node name="Barrel" type="Node3D" unique_id=1670102513]
+script = ExtResource("1_bf005")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=529496872]
+transform = Transform3D(0.05, 0, 0, 0, -2.1855695e-09, -0.05, 0, 0.05, -2.1855695e-09, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_fvkn2")
+mesh = SubResource("CylinderMesh_fvkn2")

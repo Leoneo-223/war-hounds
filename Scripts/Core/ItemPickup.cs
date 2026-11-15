@@ -11,11 +11,27 @@ public partial class ItemPickup : RigidBody3D, IInteractable
 
     public override void _Ready()
     {
-        // The pickup scene has no visuals of its own.
-        // We spawn the item's model as a child so the same scene works for all items.
         if (Item != null && Item.WorldModel != null)
         {
-            AddChild(Item.WorldModel.Instantiate());
+            Node3D model = Item.WorldModel.Instantiate<Node3D>();
+
+            AddChild(model);
+
+            foreach (Node child in model.FindChildren("*", "MeshInstance3D", true, false))
+            {
+                MeshInstance3D meshInstance = (MeshInstance3D)child;
+
+                if (meshInstance.Mesh == null)
+                    continue;
+
+                CollisionShape3D collision = new CollisionShape3D();
+
+                collision.Shape = meshInstance.Mesh.CreateConvexShape();
+
+                AddChild(collision);
+
+                collision.GlobalTransform = meshInstance.GlobalTransform;
+            }
         }
 
         CollisionLayer = 1u << 1;

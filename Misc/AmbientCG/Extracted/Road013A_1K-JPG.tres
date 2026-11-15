@@ -1,0 +1,20 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://cocbfte4goxr6"]
+
+[ext_resource type="Texture2D" uid="uid://e61xgu0krchu" path="res://Assets/Models/Map2/citybits_texture.png" id="1_m1w12"]
+[ext_resource type="Texture2D" uid="uid://3rqfd7d16coe" path="res://Misc/AmbientCG/Extracted/Road013A_1K-JPG_AmbientOcclusion.jpg" id="AmbientOcclusion"]
+[ext_resource type="Texture2D" uid="uid://b2pn80e8lundc" path="res://Misc/AmbientCG/Extracted/Road013A_1K-JPG_Displacement.jpg" id="Displacement"]
+[ext_resource type="Texture2D" uid="uid://b4dk3exelx8rl" path="res://Misc/AmbientCG/Extracted/Road013A_1K-JPG_NormalGL.jpg" id="NormalGL"]
+
+[resource]
+albedo_color = Color(0.15487596, 0.154876, 0.15487596, 1)
+albedo_texture = ExtResource("1_m1w12")
+metallic_specular = 0.2
+roughness_texture_channel = 4
+normal_enabled = true
+normal_texture = ExtResource("NormalGL")
+ao_enabled = true
+ao_texture = ExtResource("AmbientOcclusion")
+ao_texture_channel = 4
+heightmap_enabled = true
+heightmap_scale = 1.0
+heightmap_texture = ExtResource("Displacement")

@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://c7splujmum4es"
+path="res://.godot/imported/aluminium_ingot.obj-38acb35abeffae460e1f6b3a1659eb69.mesh"
+
+[deps]
+
+files=["res://.godot/imported/aluminium_ingot.obj-38acb35abeffae460e1f6b3a1659eb69.mesh"]
+
+source_file="res://Assets/Models/Items/aluminium_ingot.obj"
+dest_files=["res://.godot/imported/aluminium_ingot.obj-38acb35abeffae460e1f6b3a1659eb69.mesh", "res://.godot/imported/aluminium_ingot.obj-38acb35abeffae460e1f6b3a1659eb69.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

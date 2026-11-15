@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://wo0r0pxmp1ed"]
 
 [ext_resource type="Script" uid="uid://2q7ijk8ycos3" path="res://Scripts/World/Explosion.cs" id="1_euata"]
-[ext_resource type="AudioStream" uid="uid://dyvanmpcl3opw" path="res://Sounds/explosion1.mp3" id="2_i6qe2"]
+[ext_resource type="AudioStream" uid="uid://dyvanmpcl3opw" path="res://Assets/Sounds/explosion1.mp3" id="2_i6qe2"]
 
 [sub_resource type="Curve" id="Curve_c0lde"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.694704, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
