@@ -37,7 +37,7 @@ transform = Transform3D(-1.7538937e-08, -0.91597116, 0.40124404, -4.0038376e-08,
 fov = 60.0
 
 [node name="PartSpawn" type="Marker3D" parent="." unique_id=434694832]
-transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, 2.1999998, 1.4926962)
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, 2.2, 0)
 
 [node name="PartListUI" type="Control" parent="." unique_id=738183842 node_paths=PackedStringArray("PartList")]
 layout_mode = 3

@@ -67,6 +67,37 @@ public partial class Inventory : Storage
         RemoveFromSlot(Selected);
     }
 
+    // How many of this item the player has in total.
+    public int GetTotalCount(ItemData item)
+    {
+        int total = 0;
+
+        for (int i = 0; i < SlotCount; i++)
+        {
+            if (Items[i] == item)
+            {
+                total += Counts[i];
+            }
+        }
+
+        return total;
+    }
+
+    // Takes one of this item out of the inventory. Returns false if there is none.
+    public bool RemoveOne(ItemData item)
+    {
+        for (int i = 0; i < SlotCount; i++)
+        {
+            if (Items[i] == item)
+            {
+                RemoveFromSlot(i, 1);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     // Swaps the item in the selected slot for another one (for example empty cup -> full cup).
     public bool ReplaceSelected(ItemData newItem)
     {

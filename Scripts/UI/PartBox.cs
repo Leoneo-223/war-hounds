@@ -11,15 +11,20 @@ public partial class PartBox : VBoxContainer
 
 	public PartData Data { get; private set; }
 
-	public void Setup(PartData data)
+	public override void _Ready()
+	{
+		GuiInput += _OnGUIInput;
+	}
+
+	public void Setup(PartData data, int count)
 	{
 		Data = data;
 		Icon.Texture = data.Icon;
-		NameLabel.Text = data.Name;
+		NameLabel.Text = $"{data.Name} x{count}";
 		DescLabel.Text = data.Desc;
 	}
 
-	// Connected to gui_input in the Node dock.
+	// Runs when the mouse does something on this row.
 	private void _OnGUIInput(InputEvent @event)
 	{
 		if (@event is InputEventMouseButton click && click.Pressed && click.ButtonIndex == MouseButton.Left)

@@ -19,11 +19,11 @@ public partial class PartListUI : Control
 		}
 	}
 
-	public void AddPart(PartData data)
+	public void AddPart(PartData data, int count = 1)
 	{
 		var box = PartBoxScene.Instantiate<PartBox>();
 		PartList.AddChild(box);
-		box.Setup(data);
+		box.Setup(data, count);
 		box.Clicked += OnPartClicked;
 	}
 
