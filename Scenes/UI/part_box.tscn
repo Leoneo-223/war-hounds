@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://da3akabr5jkhp" path="res://Scripts/UI/PartBox.cs" id="1_30dom"]
 [ext_resource type="Texture2D" uid="uid://bxmoekjhdbo2c" path="res://icon.svg" id="1_dcpqr"]
 
-[node name="PartBox" type="VBoxContainer" unique_id=2135238382 node_paths=PackedStringArray("Icon", "NameLabel", "DescLabel")]
+[node name="PartBox" type="VBoxContainer" unique_id=1824891310 node_paths=PackedStringArray("Icon", "NameLabel", "DescLabel")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -20,7 +20,7 @@ DescLabel = NodePath("MarginContainer/MarginContainer/HBoxContainer/MarginContai
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ColorRect" type="ColorRect" parent="MarginContainer" unique_id=1748115595]
+[node name="ColorRect" type="ColorRect" parent="MarginContainer" unique_id=1878134931]
 layout_mode = 2
 color = Color(0, 0, 0, 0.19607843)
 
@@ -60,3 +60,5 @@ layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 0.7058824)
 theme_override_font_sizes/font_size = 11
 text = "Part Description"
+
+[connection signal="gui_input" from="." to="." method="_OnGUIInput"]

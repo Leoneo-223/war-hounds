@@ -1,13 +1,15 @@
 using Godot;
-using System;
 
+// Attach this to the VBoxContainer root.
 public partial class PartBox : VBoxContainer
 {
+	[Signal] public delegate void ClickedEventHandler(PartData data);
+
 	[Export] public TextureRect Icon;
 	[Export] public Label NameLabel;
 	[Export] public Label DescLabel;
 
-	public PartData Data { get; private set; } // Anyone can get the data, only this class can set it
+	public PartData Data { get; private set; }
 
 	public void Setup(PartData data)
 	{
@@ -16,5 +18,13 @@ public partial class PartBox : VBoxContainer
 		NameLabel.Text = data.Name;
 		DescLabel.Text = data.Desc;
 	}
-}
 
+	// Connected to gui_input in the Node dock.
+	private void _OnGUIInput(InputEvent @event)
+	{
+		if (@event is InputEventMouseButton click && click.Pressed && click.ButtonIndex == MouseButton.Left)
+		{
+			EmitSignal(SignalName.Clicked, Data);
+		}
+	}
+}

@@ -5,6 +5,8 @@ public partial class WorkBench : StaticBody3D, IInteractable
 {
     [Export] public Camera3D WorkBenchCamera;
     [Export] public PartListUI WorkBenchUI;
+    [Export] public Marker3D PartSpawn;
+    [Export] public PackedScene PickupScene;
 
     private Camera3D _previousCamera;
     private bool _inWorkBench;
@@ -12,6 +14,7 @@ public partial class WorkBench : StaticBody3D, IInteractable
     public override void _Ready()
     {
         WorkBenchUI.Visible = false;
+        WorkBenchUI.PartSelected += OnPartSelected;
     }
 
     public virtual string GetPrompt()
@@ -21,9 +24,6 @@ public partial class WorkBench : StaticBody3D, IInteractable
 
     public virtual void Interact()
     {
-        // If theres any reason why the player can't acess, put it here
-        // None for now
-
         Enter();
     }
 
@@ -46,9 +46,7 @@ public partial class WorkBench : StaticBody3D, IInteractable
         foreach (var item in Inventory.Instance.GetItemsByCategory(ItemCategory.Component))
         {
             if (item is PartData part)
-            {
                 WorkBenchUI.AddPart(part);
-            }
         }
     }
 
@@ -61,7 +59,15 @@ public partial class WorkBench : StaticBody3D, IInteractable
         GameState.UiOpen = false;
     }
 
-    // if the player is in and ESC is pressed, exit the bench
+    private void OnPartSelected(PartData data)
+    {
+        GD.Print("Selected part");
+        var pickup = PickupScene.Instantiate<ItemPickup>();
+        pickup.Item = data;
+        AddChild(pickup);
+        pickup.GlobalPosition = PartSpawn.GlobalPosition;
+    }
+
     public override void _UnhandledInput(InputEvent @event)
     {
         if (_inWorkBench && @event is InputEventKey key && key.Pressed && !key.Echo && key.Keycode == Key.Escape)

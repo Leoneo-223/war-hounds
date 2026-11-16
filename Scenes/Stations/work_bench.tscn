@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://doxj5sqo2gbvc" path="res://Scripts/Stations/WorkBench/WorkBench.cs" id="1_cawyf"]
 [ext_resource type="ArrayMesh" uid="uid://1seoglb6o6e" path="res://Assets/Models/Stations/work_station.obj" id="1_mml7c"]
 [ext_resource type="Material" uid="uid://w5cm47vasq8o" path="res://Assets/Textures/texture.tres" id="2_cawyf"]
+[ext_resource type="PackedScene" uid="uid://d3q0ikgu5ji7w" path="res://Scenes/Core/item_pickup.tscn" id="2_lnh3n"]
 [ext_resource type="Script" uid="uid://v56vqw3swpit" path="res://Scripts/UI/PartListUI.cs" id="3_a2kx7"]
 [ext_resource type="PackedScene" uid="uid://e2gfdqqtvhqh" path="res://Scenes/UI/part_box.tscn" id="5_a2kx7"]
 
@@ -11,11 +12,13 @@ points = PackedVector3Array(1.1, 2.065, 2.1049998, -1.1, 2.065, 2.1049998, 1.1, 
 
 [sub_resource type="Theme" id="Theme_fvkn2"]
 
-[node name="work_bench" type="StaticBody3D" unique_id=1452319664 node_paths=PackedStringArray("WorkBenchCamera", "WorkBenchUI")]
+[node name="work_bench" type="StaticBody3D" unique_id=1452319664 node_paths=PackedStringArray("WorkBenchCamera", "WorkBenchUI", "PartSpawn")]
 transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 0, 0, 0)
 script = ExtResource("1_cawyf")
 WorkBenchCamera = NodePath("Pivot/Camera3D")
 WorkBenchUI = NodePath("PartListUI")
+PartSpawn = NodePath("PartSpawn")
+PickupScene = ExtResource("2_lnh3n")
 
 [node name="Storage" type="Node" parent="." unique_id=971614152]
 
