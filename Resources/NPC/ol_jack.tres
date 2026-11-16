@@ -1,0 +1,35 @@
+[gd_resource type="Resource" script_class="NPCData" format=3 uid="uid://fktnwbiemvp5"]
+
+[ext_resource type="PackedScene" uid="uid://dejd2ial52m8x" path="res://Scenes/Core/npc.tscn" id="1_1ffnr"]
+[ext_resource type="Script" uid="uid://o1cfek4pw4jv" path="res://Scripts/Resources/ScheduleEntry.cs" id="2_qqsec"]
+[ext_resource type="Script" uid="uid://cmrej6ynhgluq" path="res://Scripts/Resources/NPCData.cs" id="3_hnmos"]
+
+[sub_resource type="Resource" id="Resource_fdnlq"]
+script = ExtResource("2_qqsec")
+StartHour = 6
+StartMinute = 20
+LocationId = "ol_jack_farm"
+Activity = 1
+metadata/_custom_type_script = "uid://o1cfek4pw4jv"
+
+[sub_resource type="Resource" id="Resource_jkdf5"]
+script = ExtResource("2_qqsec")
+metadata/_custom_type_script = "uid://o1cfek4pw4jv"
+
+[resource]
+script = ExtResource("3_hnmos")
+Id = "ol_jack"
+DisplayName = "Ol' Jack"
+Age = 67
+Job = "Farmer"
+WorkplaceId = "ol_jack_industries"
+Friendliness = 0.0
+Aggression = 1.0
+Greed = 0.3
+Sociability = 0.0
+Intelligence = 0.84
+HomeLocationId = "ol_jack_farm"
+FavoriteLocationId = "ms_jack_grave"
+Schedule = Array[ExtResource("2_qqsec")]([SubResource("Resource_fdnlq"), SubResource("Resource_jkdf5")])
+CharacterModel = ExtResource("1_1ffnr")
+metadata/_custom_type_script = "uid://cmrej6ynhgluq"

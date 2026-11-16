@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="PartData" format=3 uid="uid://hkuasf23gsb7"]
+
+[ext_resource type="Script" uid="uid://dt7qa5io14r7n" path="res://Scripts/Weapons/Resources/PartData.cs" id="1_n7cl0"]
+[ext_resource type="Texture2D" uid="uid://vxubr33mhd5w" path="res://Sprites/Items/glock_19_barrel.png" id="1_p20wq"]
+[ext_resource type="PackedScene" uid="uid://i26qwccpcueg" path="res://Scenes/Items/Components/Glock19/glock_19_barrel.tscn" id="2_yrd83"]
+
+[resource]
+script = ExtResource("1_n7cl0")
+PartType = 1
+Id = "glock_19_barrel"
+Name = "Cock 19 Barrel"
+Desc = "The barrel for the C19"
+Icon = ExtResource("1_p20wq")
+WorldModel = ExtResource("2_yrd83")
+MaxStack = 20
+Category = 3
+metadata/_custom_type_script = "uid://dt7qa5io14r7n"

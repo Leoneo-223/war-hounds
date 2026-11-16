@@ -1,8 +1,10 @@
 [gd_scene format=3 uid="uid://nl85k78kfs6i"]
 
 [ext_resource type="Material" uid="uid://bgoyjfvpvylwl" path="res://Assets/Materials/dark_metal.tres" id="1_0x2qx"]
+[ext_resource type="Script" uid="uid://he7p424h0v45" path="res://Scripts/NPC/HomeDoor.cs" id="1_7c14r"]
 
-[node name="Door" type="Node3D" unique_id=3890098]
+[node name="Door" type="StaticBody3D" unique_id=1104834721]
+script = ExtResource("1_7c14r")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=1475327728]
 use_collision = true

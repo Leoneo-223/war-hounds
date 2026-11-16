@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://dkqo3dc5f8hsy"]
+
+[ext_resource type="Script" uid="uid://bgvcmajha52fd" path="res://Scripts/Weapons/Part.cs" id="1_mrisg"]
+[ext_resource type="ArrayMesh" uid="uid://bmhev2vgqc01n" path="res://Assets/Models/Weapons/Glock19/Parts/glock_19_mag.obj" id="1_qck4k"]
+
+[node name="glock_19_magazine" type="Node3D" unique_id=1680373005]
+script = ExtResource("1_mrisg")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=359819403]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+mesh = ExtResource("1_qck4k")

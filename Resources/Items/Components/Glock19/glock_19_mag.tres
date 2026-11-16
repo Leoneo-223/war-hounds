@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="PartData" format=3 uid="uid://cyg6hvi6niiqd"]
+
+[ext_resource type="Script" uid="uid://dt7qa5io14r7n" path="res://Scripts/Weapons/Resources/PartData.cs" id="1_q5vag"]
+[ext_resource type="Texture2D" uid="uid://x3irivyeyh0i" path="res://Sprites/Items/glock_19_mag.png" id="1_q8j6i"]
+[ext_resource type="PackedScene" uid="uid://dkqo3dc5f8hsy" path="res://Scenes/Items/Components/Glock19/glock_19_magazine.tscn" id="2_5g1v6"]
+
+[resource]
+script = ExtResource("1_q5vag")
+Id = "glock_19_mag"
+Name = "Cock 19 Magazine"
+Desc = "The 12 round magazine for the C19"
+Icon = ExtResource("1_q8j6i")
+WorldModel = ExtResource("2_5g1v6")
+MaxStack = 20
+Category = 3
+metadata/_custom_type_script = "uid://dt7qa5io14r7n"

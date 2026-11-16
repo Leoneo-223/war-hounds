@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="PartData" format=3 uid="uid://6lnofxa6vpsc"]
+
+[ext_resource type="Texture2D" uid="uid://b3qtumwlpw0lm" path="res://Sprites/Items/glock_19_slide.png" id="1_bdpbi"]
+[ext_resource type="Script" uid="uid://dt7qa5io14r7n" path="res://Scripts/Weapons/Resources/PartData.cs" id="1_rngsr"]
+[ext_resource type="PackedScene" uid="uid://dhv6flrhchy1c" path="res://Scenes/Items/Components/Glock19/glock_19_slide.tscn" id="2_lbpuh"]
+
+[resource]
+script = ExtResource("1_rngsr")
+Id = "glock_19_slide"
+Name = "Cock 19 Slide"
+Desc = "The slide for the C19"
+Icon = ExtResource("1_bdpbi")
+WorldModel = ExtResource("2_lbpuh")
+MaxStack = 20
+Category = 3
+metadata/_custom_type_script = "uid://dt7qa5io14r7n"

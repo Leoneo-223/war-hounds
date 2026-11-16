@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="PartData" format=3 uid="uid://ybfk3xyj0nw6"]
+
+[ext_resource type="Texture2D" uid="uid://dcbfhfylhui15" path="res://Sprites/Items/glock_19_base.png" id="1_jgaem"]
+[ext_resource type="Script" uid="uid://dt7qa5io14r7n" path="res://Scripts/Weapons/Resources/PartData.cs" id="1_k4mie"]
+[ext_resource type="PackedScene" uid="uid://bi6letcbfxcja" path="res://Scenes/Items/Components/Glock19/glock_19_base.tscn" id="2_lyqm6"]
+
+[resource]
+script = ExtResource("1_k4mie")
+Id = "glock_19_base"
+Name = "Cock 19 Base"
+Desc = "The base for the C19"
+Icon = ExtResource("1_jgaem")
+WorldModel = ExtResource("2_lyqm6")
+MaxStack = 20
+Category = 3
+metadata/_custom_type_script = "uid://dt7qa5io14r7n"

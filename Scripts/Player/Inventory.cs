@@ -1,4 +1,5 @@
 using Godot;
+using System.Collections.Generic;
 
 // The player's inventory. It is a Storage (arrays, Add, Remove...) plus
 // slot selection, dropping, and showing the held item's model.
@@ -89,6 +90,21 @@ public partial class Inventory : Storage
 
         RemoveFromSlot(Selected, 1);
         return true;
+    }
+
+    public List<ItemData> GetItemsByCategory(ItemCategory category)
+    {
+        var result = new List<ItemData>();
+
+        for (int i = 0; i < SlotCount; i++)
+        {
+            if (Items[i] != null && Items[i].Category == category)
+            {
+                result.Add(Items[i]);
+            }
+        }
+
+        return result;
     }
 
     public override void _UnhandledInput(InputEvent e)

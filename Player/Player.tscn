@@ -6,7 +6,11 @@
 [ext_resource type="PackedScene" uid="uid://d3q0ikgu5ji7w" path="res://Scenes/Core/item_pickup.tscn" id="4_6ysni"]
 [ext_resource type="Script" uid="uid://xgu5ucrer56r" path="res://Scripts/Player/Inventory.cs" id="4_8g4oa"]
 [ext_resource type="Script" uid="uid://tcwtrtfs8krk" path="res://Scripts/Player/DevKit.cs" id="5_6ysni"]
-[ext_resource type="Resource" uid="uid://c7t1l4x2sumao" path="res://Resources/Items/Components/Test/test_barrel.tres" id="6_vlldt"]
+[ext_resource type="Script" uid="uid://dt7qa5io14r7n" path="res://Scripts/Weapons/Resources/PartData.cs" id="6_vlldt"]
+[ext_resource type="Resource" uid="uid://hkuasf23gsb7" path="res://Resources/Items/Components/Glock19/glock_19_barrel.tres" id="7_s1rgi"]
+[ext_resource type="Resource" uid="uid://cyg6hvi6niiqd" path="res://Resources/Items/Components/Glock19/glock_19_mag.tres" id="8_v0k0e"]
+[ext_resource type="Resource" uid="uid://ybfk3xyj0nw6" path="res://Resources/Items/Components/Glock19/glock_19_base.tres" id="9_5wa8t"]
+[ext_resource type="Resource" uid="uid://6lnofxa6vpsc" path="res://Resources/Items/Components/Glock19/glock_19_slide.tres" id="10_p7tob"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_fvkn2"]
 
@@ -34,7 +38,7 @@ PickupScene = ExtResource("4_6ysni")
 
 [node name="DevKit" type="Node" parent="." unique_id=161447959 node_paths=PackedStringArray("SpawnPoint")]
 script = ExtResource("5_6ysni")
-Parts = Array[Object]([ExtResource("6_vlldt")])
+Parts = Array[ExtResource("6_vlldt")]([ExtResource("7_s1rgi"), ExtResource("8_v0k0e"), ExtResource("9_5wa8t"), ExtResource("10_p7tob")])
 PickupScene = ExtResource("4_6ysni")
 SpawnPoint = NodePath("../Pivot/Camera3D/HoldPoint")
 

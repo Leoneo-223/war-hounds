@@ -9,7 +9,7 @@
 [ext_resource type="Resource" uid="uid://cuutjjxhkn03a" path="res://Resources/Items/Tools/crucible_cup_emptry.tres" id="6_d1ilt"]
 [ext_resource type="PackedScene" uid="uid://0c1udupnlsxf" path="res://Scenes/Stations/smelting_crucible.tscn" id="8_ynf5e"]
 [ext_resource type="PackedScene" uid="uid://bkj8fvb2ya558" path="res://Scenes/Stations/propane_tank.tscn" id="9_hptm8"]
-[ext_resource type="Script" uid="uid://kgnyl11bm3e3" path="res://Scripts/World/LocationMarker.cs" id="14_jkdf5"]
+[ext_resource type="PackedScene" uid="uid://oabdxq3d23fy" path="res://Scenes/Stations/work_bench.tscn" id="11_d1ilt"]
 [ext_resource type="PackedScene" uid="uid://crmhfuuhb2eyt" path="res://Scenes/map.tscn" id="15_wsu2k"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_jjgbg"]
@@ -78,15 +78,11 @@ material = SubResource("StandardMaterial3D_jjgbg")
 [node name="PropaneTank" parent="NavigationRegion3D/CSGBox3D/NavigationObstacle3D" unique_id=970793741 instance=ExtResource("9_hptm8")]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 8.756698, 0.97187614, 4.310396)
 TankName = "Assgas"
-MaxFuel = null
-ValveOpen = null
 RefillAmount = 20.0
 
 [node name="SmeltingCrucible" parent="NavigationRegion3D/CSGBox3D/NavigationObstacle3D" unique_id=659818339 node_paths=PackedStringArray("Tank") instance=ExtResource("8_ynf5e")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.693371, 1.044049, 1.7339187)
 Tank = NodePath("../PropaneTank")
-BurnRate = null
-AutoDeliverForTesting = null
 
 [node name="ItemPickup" parent="NavigationRegion3D/CSGBox3D" unique_id=1009425510 instance=ExtResource("2_8gbba")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.026856, 2.2775717, 6.6852884)
@@ -109,22 +105,11 @@ Count = 5
 
 [node name="Locations" type="Node3D" parent="." unique_id=1515903728]
 
-[node name="hardware_store_1" type="Marker3D" parent="Locations" unique_id=119255531]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.396364, 1.9617801, -10.598616)
-script = ExtResource("14_jkdf5")
-LocationId = "hardware_store_1"
-Type = 2
-metadata/_custom_type_script = "uid://kgnyl11bm3e3"
-
-[node name="1776_liberty_street" type="Marker3D" parent="Locations" unique_id=525770194]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.1336546, 1.0710602, 1.9231279)
-script = ExtResource("14_jkdf5")
-LocationId = "1776_liberty_street"
-Type = 1
-metadata/_custom_type_script = "uid://kgnyl11bm3e3"
-
 [node name="Map" parent="." unique_id=91249896 instance=ExtResource("15_wsu2k")]
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 20)
+
+[node name="work_bench" parent="Map" unique_id=1452319664 instance=ExtResource("11_d1ilt")]
+transform = Transform3D(-0.06532243, 0, 0.075716436, 0, 0.1, 0, -0.075716436, 0, -0.06532243, 0.9653921, 0.124405324, -3.2693627)
 
 [node name="Label3D" type="Label3D" parent="." unique_id=2094843277]
 transform = Transform3D(-1.3113416e-07, 0, -2.9999998, 0, 3, 0, 2.9999998, 0, -1.3113416e-07, 8.756698, 3.9718761, 3.59472)
