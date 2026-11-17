@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="GunData" format=3 uid="uid://cfwvofj15kabe"]
+
+[ext_resource type="Resource" uid="uid://6lnofxa6vpsc" path="res://Resources/Items/Components/Glock19/glock_19_slide.tres" id="1_neont"]
+[ext_resource type="Script" uid="uid://dd32vwycdjj8m" path="res://Scripts/Weapons/Resources/GunData.cs" id="1_vtf8a"]
+[ext_resource type="Resource" uid="uid://ybfk3xyj0nw6" path="res://Resources/Items/Components/Glock19/glock_19_base.tres" id="2_tn32b"]
+[ext_resource type="Resource" uid="uid://cyg6hvi6niiqd" path="res://Resources/Items/Components/Glock19/glock_19_mag.tres" id="3_nresu"]
+[ext_resource type="Resource" uid="uid://hkuasf23gsb7" path="res://Resources/Items/Components/Glock19/glock_19_barrel.tres" id="4_1yeim"]
+[ext_resource type="Texture2D" uid="uid://bxmoekjhdbo2c" path="res://icon.svg" id="5_fuc60"]
+[ext_resource type="PackedScene" uid="uid://c1aqi2ooaic0c" path="res://Scenes/Items/Weapons/glock_19.tscn" id="6_neont"]
+
+[resource]
+script = ExtResource("1_vtf8a")
+Unlocked = true
+GunParts = Array[Object]([ExtResource("1_neont"), ExtResource("2_tn32b"), ExtResource("3_nresu"), ExtResource("4_1yeim")])
+Id = "glock_19"
+Name = "Cock 19"
+Desc = "9mm pistol"
+Icon = ExtResource("5_fuc60")
+WorldModel = ExtResource("6_neont")
+Category = 1
+metadata/_custom_type_script = "uid://dd32vwycdjj8m"

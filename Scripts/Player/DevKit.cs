@@ -4,9 +4,19 @@ using Godot.Collections;
 // Dev tools: press F1-F9 to spawn the matching part as a pickup.
 public partial class DevKit : Node
 {
-    [Export] public Array<PartData> Parts = new();
     [Export] public PackedScene PickupScene;
     [Export] public Node3D SpawnPoint;
+
+    [ExportGroup("WEAPONS & PARTS")]
+    [Export] public GunData StartGlock;
+    [Export] public Array<PartData> Parts = new();
+
+    public override void _Ready()
+    {
+        SaveManager.Data.UnlockGun(StartGlock);
+        SaveManager.SaveGame();
+        GD.Print("Glock unlocked!");
+    }
 
     public override void _UnhandledInput(InputEvent @event)
     {

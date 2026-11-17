@@ -70,7 +70,7 @@ public partial class Player : CharacterBody3D
         _pivot = GetNode<Node3D>("Pivot");
         _camera = GetNode<Camera3D>("Pivot/Camera3D");
 
-        _baseFov = _camera.Fov;   // uses whatever FOV the camera has in the scene
+        _baseFov = _camera.Fov;
 
         _shape = _collision.Shape as CapsuleShape3D;
         if (_shape == null)
@@ -108,51 +108,51 @@ public partial class Player : CharacterBody3D
         }
     }
 
-    // TEST ONLY: H = take 25 damage, J = heal 25. Delete when done.
-    public override void _UnhandledInput(InputEvent e)
-    {
-        InputEventKey k = e as InputEventKey;
-        if (k != null && k.Pressed && !k.Echo)
-        {
-            if (k.PhysicalKeycode == Key.H)
-            {
-                Damage(25);
-            }
-
-            if (k.PhysicalKeycode == Key.J)
-            {
-                Heal(25);
-            }
-        }
-    }
-
     public override void _PhysicsProcess(double delta)
     {
         float d = (float)delta;
+
+        if (GameState.UiOpen)
+        {
+            Vector3 velocity = Velocity;
+
+            velocity.X = 0;
+            velocity.Z = 0;
+
+            if (!IsOnFloor())
+            {
+                velocity += GetGravity() * 2f * d;
+            }
+
+            Velocity = velocity;
+            MoveAndSlide();
+            return;
+        }
+
         CapsuleShape3D shape = _shape;
 
-        Vector3 velocity = Velocity;
+        Vector3 velocityNormal = Velocity;
 
         // Gravity
         if (!IsOnFloor())
         {
-            velocity += GetGravity() * 2f * d;
-            _landingVelocity = -velocity.Y;
+            velocityNormal += GetGravity() * 2f * d;
+            _landingVelocity = -velocityNormal.Y;
         }
 
         // Jump (Space), only on the frame it is pressed
         bool jumpDown = KeyDown(Key.Space);
         if (jumpDown && !_jumpWasDown && IsOnFloor())
         {
-            velocity.Y = JumpVelocity;
+            velocityNormal.Y = JumpVelocity;
         }
         _jumpWasDown = jumpDown;
 
         bool crouching = KeyDown(Key.Ctrl) || KeyDown(Key.C);
         bool walking = KeyDown(Key.Alt);
-        bool sprinting = KeyDown(Key.Shift) && KeyDown(Key.W);   // only sprint while moving forward
+        bool sprinting = KeyDown(Key.Shift) && KeyDown(Key.W);
 
-        // Only stand up if there's room. This doesn't force a crouch while standing.
+        // Only stand up if there's room
         bool wantCrouch = crouching;
         if (!wantCrouch && shape.Height < StandHeight - 0.01f)
         {
@@ -168,11 +168,21 @@ public partial class Player : CharacterBody3D
         {
             targetHeight = CrouchHeight;
         }
+
         shape.Height = Mathf.Lerp(shape.Height, targetHeight, 0.1f);
 
-        // Keep the capsule's bottom at the player's feet so it only grows upward
-        _collision.Position = new Vector3(_collision.Position.X, shape.Height / 2f, _collision.Position.Z);
-        _mesh.Position = new Vector3(_mesh.Position.X, shape.Height / 2f, _mesh.Position.Z);
+        // Keep capsule bottom at player's feet
+        _collision.Position = new Vector3(
+            _collision.Position.X,
+            shape.Height / 2f,
+            _collision.Position.Z
+        );
+
+        _mesh.Position = new Vector3(
+            _mesh.Position.X,
+            shape.Height / 2f,
+            _mesh.Position.Z
+        );
 
         if (IsOnFloor())
         {
@@ -183,66 +193,64 @@ public partial class Player : CharacterBody3D
             }
 
             _speed = RunSpeed;
+
             if (crouching)
-            {
                 _speed = CrouchSpeed;
-            }
             else if (walking)
-            {
                 _speed = WalkSpeed;
-            }
             else if (sprinting)
-            {
                 _speed = SprintSpeed;
-            }
         }
 
-        // Keep the mesh and head matched to the shape
+        // Keep mesh and head matched to shape
         CapsuleMesh capsule = _mesh.Mesh as CapsuleMesh;
         if (capsule != null)
         {
             capsule.Height = shape.Height;
         }
-        _pivot.Position = new Vector3(_pivot.Position.X, shape.Height - HeadOffset, _pivot.Position.Z);
 
-        // Movement
+        _pivot.Position = new Vector3(
+            _pivot.Position.X,
+            shape.Height - HeadOffset,
+            _pivot.Position.Z
+        );
+
+        // Movement input
         Vector2 input = Vector2.Zero;
-        if (KeyDown(Key.D))
-        {
-            input.X += 1;
-        }
-        if (KeyDown(Key.A))
-        {
-            input.X -= 1;
-        }
-        if (KeyDown(Key.S))
-        {
-            input.Y += 1;
-        }
-        if (KeyDown(Key.W))
-        {
-            input.Y -= 1;
-        }
+
+        if (KeyDown(Key.D)) input.X += 1;
+        if (KeyDown(Key.A)) input.X -= 1;
+        if (KeyDown(Key.S)) input.Y += 1;
+        if (KeyDown(Key.W)) input.Y -= 1;
+
         input = input.LimitLength(1f);
 
-        Vector3 direction = (Transform.Basis * new Vector3(input.X, 0, input.Y)).Normalized();
+        Vector3 direction = (
+            Transform.Basis * new Vector3(input.X, 0, input.Y)
+        ).Normalized();
 
         if (direction != Vector3.Zero)
         {
-            velocity.X = direction.X * _speed;
-            velocity.Z = direction.Z * _speed;
+            velocityNormal.X = direction.X * _speed;
+            velocityNormal.Z = direction.Z * _speed;
         }
         else
         {
-            velocity.X = Mathf.MoveToward(velocity.X, 0, _speed);
-            velocity.Z = Mathf.MoveToward(velocity.Z, 0, _speed);
+            velocityNormal.X = Mathf.MoveToward(
+                velocityNormal.X, 0, _speed
+            );
+
+            velocityNormal.Z = Mathf.MoveToward(
+                velocityNormal.Z, 0, _speed
+            );
         }
 
-        Velocity = velocity;
+        Velocity = velocityNormal;
         MoveAndSlide();
 
         UpdateCamera(d);
     }
+
 
     private void UpdateCamera(float d)
     {

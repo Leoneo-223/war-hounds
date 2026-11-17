@@ -21,11 +21,15 @@ public partial class WorkBench : StaticBody3D, IInteractable
     private ItemPickup _heldItem;
     private Plane _grabPlane;
     private Vector3 _localGrab;
+    private GunData _selectedGun;
+    private PlayerData _playerData;
 
     public override void _Ready()
     {
+        _playerData = SaveManager.Data;
+
         WorkBenchUI.Visible = false;
-        WorkBenchUI.PartSelected += OnPartSelected;
+        WorkBenchUI.ItemSelected += OnItemSelected;
     }
 
     public virtual string GetPrompt()
@@ -52,12 +56,13 @@ public partial class WorkBench : StaticBody3D, IInteractable
         _inWorkBench = true;
         GameState.UiOpen = true;
 
-        RefreshList();
+        ShowGunList();
     }
 
     public void Exit()
     {
         DropItem();
+        ReturnItems();
 
         _previousCamera.MakeCurrent();
         Input.MouseMode = Input.MouseModeEnum.Captured;
@@ -66,37 +71,73 @@ public partial class WorkBench : StaticBody3D, IInteractable
         GameState.UiOpen = false;
     }
 
-    // Rebuilds the list from the inventory, one row per part with its count.
-    private void RefreshList()
+    private void ShowGunList()
     {
         WorkBenchUI.ClearParts();
 
-        var shown = new List<PartData>();
-
-        foreach (var item in Inventory.Instance.GetItemsByCategory(ItemCategory.Component))
+        foreach (var gun in _playerData.UnlockedGuns)
         {
-            if (item is PartData part && !shown.Contains(part))
-            {
-                shown.Add(part);
-                WorkBenchUI.AddPart(part, Inventory.Instance.CountOf(part));
-            }
+            WorkBenchUI.AddPart(gun);
         }
     }
 
-    private void OnPartSelected(PartData data)
+    private void ShowGunParts(GunData gun)
     {
-        // Take one out of the inventory. If there is none left, do nothing.
-        if (!Inventory.Instance.RemoveOne(data))
+        _selectedGun = gun;
+
+        WorkBenchUI.ClearParts();
+
+        foreach (var part in gun.GunParts)
         {
+            int count = Inventory.Instance.CountOf(part);
+
+            if (count > 0)
+                WorkBenchUI.AddPart(part, count);
+        }
+    }
+
+    // Rebuilds the list from the inventory, one row per part with its count.
+    // private void RefreshList()
+    // {
+    //     WorkBenchUI.ClearParts();
+    // 
+    //     var shown = new List<PartData>();
+    // 
+    //     foreach (var item in Inventory.Instance.GetItemsByCategory(ItemCategory.Component))
+    //     {
+    //         if (item is PartData part && !shown.Contains(part))
+    //         {
+    //             shown.Add(part);
+    //             WorkBenchUI.AddPart(part, Inventory.Instance.CountOf(part));
+    //         }
+    //     }
+    // }
+
+    private void OnItemSelected(ItemData data)
+    {
+        // Player selected a gun
+        if (data is GunData gun)
+        {
+            ShowGunParts(gun);
             return;
         }
 
-        var pickup = PickupScene.Instantiate<ItemPickup>();
-        pickup.Item = data;
-        AddChild(pickup);
-        pickup.GlobalPosition = PartSpawn.GlobalPosition;
+        // Player selected a part
+        if (data is PartData part)
+        {
+            if (_selectedGun == null)
+                return;
 
-        RefreshList();
+            if (!Inventory.Instance.RemoveOne(part))
+                return;
+
+            var pickup = PickupScene.Instantiate<ItemPickup>();
+
+            pickup.Item = part;
+
+            AddChild(pickup);
+            pickup.GlobalPosition = PartSpawn.GlobalPosition;
+        }
     }
 
     // Runs before the UI sees the input, so a HUD node that blocks clicks can't hide them.
