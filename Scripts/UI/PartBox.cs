@@ -11,6 +11,8 @@ public partial class PartBox : VBoxContainer
 
 	public PartData Data { get; private set; }
 
+	private ulong _lastClickFrame;
+
 	public override void _Ready()
 	{
 		GuiInput += _OnGUIInput;
@@ -29,6 +31,15 @@ public partial class PartBox : VBoxContainer
 	{
 		if (@event is InputEventMouseButton click && click.Pressed && click.ButtonIndex == MouseButton.Left)
 		{
+			// One click only counts once, even if gui_input is connected twice.
+			ulong frame = Engine.GetProcessFrames();
+
+			if (frame == _lastClickFrame)
+			{
+				return;
+			}
+
+			_lastClickFrame = frame;
 			EmitSignal(SignalName.Clicked, Data);
 		}
 	}

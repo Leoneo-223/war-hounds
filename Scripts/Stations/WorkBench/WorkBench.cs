@@ -1,4 +1,5 @@
 using Godot;
+using System;
 using System.Collections.Generic;
 
 // This should not inherit Station as its a different kind, one where the player interacts with
@@ -9,12 +10,17 @@ public partial class WorkBench : StaticBody3D, IInteractable
     [Export] public Marker3D PartSpawn;
     [Export] public PackedScene PickupScene;
 
-    // How fast WASD turns a held part (radians per second).
     [Export] public float RotateSpeed = 2.5f;
+    [Export] public float FollowSpeed = 20f;
+    [Export] public float DepthStep = 0.05f;
+
+    [Export] public Vector3 HoldAreaSize = new Vector3(1.2f, 1f, 0.8f);
 
     private Camera3D _previousCamera;
     private bool _inWorkBench;
     private ItemPickup _heldItem;
+    private Plane _grabPlane;
+    private Vector3 _localGrab;
 
     public override void _Ready()
     {
@@ -93,6 +99,42 @@ public partial class WorkBench : StaticBody3D, IInteractable
         RefreshList();
     }
 
+    // Runs before the UI sees the input, so a HUD node that blocks clicks can't hide them.
+    public override void _Input(InputEvent @event)
+    {
+        if (!_inWorkBench)
+        {
+            return;
+        }
+
+        if (@event is InputEventMouseButton click && click.Pressed)
+        {
+            if (click.ButtonIndex == MouseButton.Left)
+            {
+                // A click on the parts panel belongs to the UI, so leave it alone.
+                var hovered = GetViewport().GuiGetHoveredControl();
+
+                if (hovered != null && WorkBenchUI.IsAncestorOf(hovered))
+                {
+                    return;
+                }
+
+                TryGrab();
+            }
+
+            // Mouse wheel pushes the held part away or pulls it closer.
+            if (click.ButtonIndex == MouseButton.WheelUp)
+            {
+                PushHeldItem(DepthStep);
+            }
+
+            if (click.ButtonIndex == MouseButton.WheelDown)
+            {
+                PushHeldItem(-DepthStep);
+            }
+        }
+    }
+
     public override void _UnhandledInput(InputEvent @event)
     {
         if (!_inWorkBench)
@@ -105,15 +147,9 @@ public partial class WorkBench : StaticBody3D, IInteractable
             Exit();
             GetViewport().SetInputAsHandled();
         }
-
-        // Clicks on the UI never get here, only clicks on the 3D scene do.
-        if (@event is InputEventMouseButton click && click.Pressed && click.ButtonIndex == MouseButton.Left)
-        {
-            TryGrab();
-        }
     }
 
-    public override void _Process(double delta)
+    public override void _PhysicsProcess(double delta)
     {
         if (!IsInstanceValid(_heldItem))
         {
@@ -128,7 +164,7 @@ public partial class WorkBench : StaticBody3D, IInteractable
         }
 
         MoveHeldItem();
-        RotateHeldItem((float)delta);
+        RotateHeldItem();
     }
 
     // Looks for a part under the mouse and picks it up.
@@ -155,62 +191,130 @@ public partial class WorkBench : StaticBody3D, IInteractable
         }
 
         _heldItem = pickup;
+
+        // Remember the exact spot we clicked, so it stays under the mouse while dragging.
+        Vector3 hitPoint = result["position"].AsVector3();
+        _localGrab = pickup.GlobalBasis.Inverse() * (pickup.GlobalPosition - hitPoint);
+
+        // An upright plane facing the camera: mouse up/down raises and lowers, left/right moves sideways.
+        Vector3 forward = -WorkBenchCamera.GlobalBasis.Z;
+        forward.Y = 0f;
+        _grabPlane = new Plane(forward.Normalized(), hitPoint);
+
+        // The part stays a normal physics body, so it can't go through walls or other parts.
+        _heldItem.Sleeping = false;
+        _heldItem.ContinuousCd = true;
+        _heldItem.GravityScale = 0f;
         _heldItem.LinearVelocity = Vector3.Zero;
         _heldItem.AngularVelocity = Vector3.Zero;
-        _heldItem.FreezeMode = RigidBody3D.FreezeModeEnum.Kinematic;
-        _heldItem.Freeze = true;   // we move it ourselves while it is held
     }
 
-    // Lets go of the held part so physics takes over again.
+    // Lets go of the held part so gravity takes over again.
     private void DropItem()
     {
         if (IsInstanceValid(_heldItem))
         {
-            _heldItem.Freeze = false;
+            _heldItem.GravityScale = 1f;
+            _heldItem.LinearVelocity = Vector3.Zero;
+            _heldItem.AngularVelocity = Vector3.Zero;
         }
 
         _heldItem = null;
     }
 
-    // Keeps the part under the mouse, at the height of PartSpawn.
+    // Flies the part towards the mouse. Physics stops it at walls and other parts.
     private void MoveHeldItem()
     {
         Vector2 mouse = GetViewport().GetMousePosition();
         Vector3 from = WorkBenchCamera.ProjectRayOrigin(mouse);
         Vector3 direction = WorkBenchCamera.ProjectRayNormal(mouse);
 
-        var plane = new Plane(Vector3.Up, PartSpawn.GlobalPosition.Y);
-        Vector3? hit = plane.IntersectsRay(from, direction);
+        Vector3? hit = _grabPlane.IntersectsRay(from, direction);
 
-        if (hit != null)
+        if (hit == null)
         {
-            _heldItem.GlobalPosition = hit.Value;
+            return;
+        }
+
+        Vector3 target = hit.Value + _heldItem.GlobalBasis * _localGrab;
+
+        Vector3 local = PartSpawn.ToLocal(target);
+        local.X = Mathf.Clamp(local.X, -HoldAreaSize.X / 2f, HoldAreaSize.X / 2f);
+        local.Y = Mathf.Clamp(local.Y, -HoldAreaSize.Y / 2f, HoldAreaSize.Y / 2f);
+        local.Z = Mathf.Clamp(local.Z, -HoldAreaSize.Z / 2f, HoldAreaSize.Z / 2f);
+        target = PartSpawn.ToGlobal(local);
+
+        Vector3 velocity = (target - _heldItem.GlobalPosition) * FollowSpeed;
+        _heldItem.LinearVelocity = velocity.LimitLength(10f);
+    }
+
+    // Puts every part that is on the bench back into the inventory.
+    private void ReturnItems()
+    {
+        foreach (Node child in GetChildren())
+        {
+            if (child is ItemPickup pickup && pickup.Item != null)
+            {
+                // Add() returns how many did NOT fit.
+                int leftover = Inventory.Instance.Add(pickup.Item, pickup.Count);
+
+                if (leftover <= 0)
+                {
+                    pickup.QueueFree();
+                }
+                else
+                {
+                    pickup.Count = leftover;
+                }
+            }
         }
     }
 
-    // A and D turn the part left and right, W and S tilt it.
-    private void RotateHeldItem(float delta)
+    private void RotateHeldItem()
     {
-        float amount = RotateSpeed * delta;
+        Vector3 spin = Vector3.Zero;
 
         if (Input.IsPhysicalKeyPressed(Key.A))
         {
-            _heldItem.GlobalRotate(Vector3.Up, amount);
+            spin += Vector3.Up;
         }
 
         if (Input.IsPhysicalKeyPressed(Key.D))
         {
-            _heldItem.GlobalRotate(Vector3.Up, -amount);
+            spin -= Vector3.Up;
         }
 
         if (Input.IsPhysicalKeyPressed(Key.W))
         {
-            _heldItem.GlobalRotate(WorkBenchCamera.GlobalBasis.X, -amount);
+            spin -= WorkBenchCamera.GlobalBasis.X;
         }
 
         if (Input.IsPhysicalKeyPressed(Key.S))
         {
-            _heldItem.GlobalRotate(WorkBenchCamera.GlobalBasis.X, amount);
+            spin += WorkBenchCamera.GlobalBasis.X;
         }
+
+        if (Input.IsPhysicalKeyPressed(Key.Q))
+        {
+            spin -= WorkBenchCamera.GlobalBasis.Z;
+        }
+
+        if (Input.IsPhysicalKeyPressed(Key.E))
+        {
+            spin += WorkBenchCamera.GlobalBasis.Z;
+        }
+
+        _heldItem.AngularVelocity = spin * RotateSpeed;
+    }
+
+    // Moves the plane the part slides on, which pushes the part away or pulls it closer.
+    private void PushHeldItem(float amount)
+    {
+        if (!IsInstanceValid(_heldItem))
+        {
+            return;
+        }
+
+        _grabPlane = new Plane(_grabPlane.Normal, _grabPlane.D + amount);
     }
 }
