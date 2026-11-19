@@ -10,17 +10,29 @@
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_cawyf"]
 points = PackedVector3Array(1.1, 2.065, 2.1049998, -1.1, 2.065, 2.1049998, 1.1, 1.9648925, 2.1049998, 1.1, 2.065, -2.095, -1.1, 1.9648925, 2.1049998, -1.1, 2.065, -2.095, 0.999863, -0.035, 2.0046866, 1.1, 1.9648925, -2.095, -1.0000783, -0.035, 2.0046866, -1.1, 1.9648925, -2.095, 0.999863, -0.035, -1.9950979, -1.0000783, -0.035, -1.9950979)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_fvkn2"]
+size = Vector3(1, 0.13624218, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_fvkn2"]
+size = Vector3(1, 0.13964844, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jaywg"]
+transparency = 1
+albedo_color = Color(0.63375676, 0.6337568, 0.63375676, 0.19607843)
+emission_enabled = true
+
 [sub_resource type="Theme" id="Theme_fvkn2"]
 
-[node name="work_bench" type="StaticBody3D" unique_id=1452319664 node_paths=PackedStringArray("WorkBenchCamera", "WorkBenchUI", "PartSpawn")]
+[node name="work_bench" type="StaticBody3D" unique_id=1452319664 node_paths=PackedStringArray("WorkBenchCamera", "WorkBenchUI", "PartSpawn", "AssemblyZone")]
 transform = Transform3D(-6.556708e-09, 0, -0.14999999, 0, 0.14999999, 0, 0.14999999, 0, -6.556708e-09, 0, 0, 0)
 script = ExtResource("1_cawyf")
 WorkBenchCamera = NodePath("Pivot/Camera3D")
 WorkBenchUI = NodePath("WorkBenchUI")
 PartSpawn = NodePath("PartSpawn")
 PickupScene = ExtResource("2_lnh3n")
+AssemblyZone = NodePath("BuldZone")
 RotateSpeed = 3.5
-HoldAreaSize = Vector3(1, 2.5, 3)
+HoldAreaSize = Vector3(1, 2.5, 4)
 
 [node name="Storage" type="Node" parent="." unique_id=971614152]
 
@@ -39,7 +51,20 @@ transform = Transform3D(-2.710117e-07, -6.116729, 2.6514304, -1.07107596e-07, 2.
 fov = 45.0
 
 [node name="PartSpawn" type="Marker3D" parent="." unique_id=434694832]
-transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, 2.2, 0)
+transform = Transform3D(0.9999999, 0, 3.5527137e-15, 0, 0.9999999, 0, -3.5527137e-15, 0, 0.9999999, 0, 2.2, 1)
+
+[node name="BuldZone" type="Area3D" parent="." unique_id=1636230334]
+transform = Transform3D(1, 0, 7.1054274e-15, 0, 1, 0, -7.1054274e-15, 0, 1, -3.5527137e-15, 2.062865, -1)
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BuldZone" unique_id=1868167471]
+transform = Transform3D(1, 0, 2.046363e-12, 0, 1, 0, -2.046363e-12, 0, 1, 0, 0.08, 0)
+shape = SubResource("BoxShape3D_fvkn2")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="BuldZone" unique_id=1982455166]
+transform = Transform3D(1, 0, 4.4764192e-13, 0, 1, 0, -4.4764192e-13, 0, 1, 0, 0.08, 0)
+mesh = SubResource("BoxMesh_fvkn2")
+surface_material_override/0 = SubResource("StandardMaterial3D_jaywg")
 
 [node name="WorkBenchUI" type="Control" parent="." unique_id=738183842 node_paths=PackedStringArray("PartList")]
 layout_mode = 3

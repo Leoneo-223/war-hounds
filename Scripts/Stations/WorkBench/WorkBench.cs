@@ -9,6 +9,7 @@ public partial class WorkBench : StaticBody3D, IInteractable
     [Export] public PartListUI WorkBenchUI;
     [Export] public Marker3D PartSpawn;
     [Export] public PackedScene PickupScene;
+    [Export] public Area3D AssemblyZone;
 
     [Export] public float RotateSpeed = 2.5f;
     [Export] public float FollowSpeed = 20f;
@@ -30,6 +31,11 @@ public partial class WorkBench : StaticBody3D, IInteractable
 
         WorkBenchUI.Visible = false;
         WorkBenchUI.ItemSelected += OnItemSelected;
+
+        if (AssemblyZone != null)
+        {
+            AssemblyZone.BodyEntered += OnZoneBodyEntered;
+        }
     }
 
     public virtual string GetPrompt()
@@ -69,6 +75,7 @@ public partial class WorkBench : StaticBody3D, IInteractable
         WorkBenchUI.Visible = false;
         _inWorkBench = false;
         GameState.UiOpen = false;
+        _selectedGun = null;
     }
 
     private void ShowGunList()
@@ -137,6 +144,8 @@ public partial class WorkBench : StaticBody3D, IInteractable
 
             AddChild(pickup);
             pickup.GlobalPosition = PartSpawn.GlobalPosition;
+
+            ShowGunParts(_selectedGun);
         }
     }
 
@@ -201,6 +210,7 @@ public partial class WorkBench : StaticBody3D, IInteractable
         if (!Input.IsMouseButtonPressed(MouseButton.Left))
         {
             DropItem();
+            CheckAssembly();
             return;
         }
 
@@ -309,6 +319,75 @@ public partial class WorkBench : StaticBody3D, IInteractable
                 }
             }
         }
+    }
+
+    private void OnZoneBodyEntered(Node3D body)
+    {
+        CheckAssembly();
+    }
+
+    // If every part of the selected gun is inside the assembly zone, build the gun.
+    private void CheckAssembly()
+    {
+        GD.Print("Debug: gun = ", _selectedGun?.Name, ", bodies in zone = ", AssemblyZone?.GetOverlappingBodies().Count);
+
+        if (_selectedGun == null || AssemblyZone == null || _selectedGun.GunParts == null || _selectedGun.GunParts.Count == 0)
+        {
+            return;
+        }
+
+        var found = new List<ItemPickup>();
+
+        foreach (var part in _selectedGun.GunParts)
+        {
+            var pickup = FindPartInZone(part, found);
+
+            if (pickup == null)
+            {
+                GD.Print("Debug: missing ", part.Name);
+                return;   // still missing a part
+            }
+
+            found.Add(pickup);
+        }
+
+        BuildGun(found);
+    }
+
+    // Looks in the zone for this part. Skips the ones we already counted.
+    private ItemPickup FindPartInZone(PartData part, List<ItemPickup> alreadyUsed)
+    {
+        foreach (var body in AssemblyZone.GetOverlappingBodies())
+        {
+            if (body is ItemPickup pickup && pickup != _heldItem && pickup.Item == part && !alreadyUsed.Contains(pickup))
+            {
+                return pickup;
+            }
+        }
+
+        return null;
+    }
+
+    // Uses up the parts and gives the player the finished gun.
+    private void BuildGun(List<ItemPickup> parts)
+    {
+        foreach (var part in parts)
+        {
+            part.QueueFree();
+        }
+
+        // Add() returns how many did NOT fit.
+        if (Inventory.Instance.Add(_selectedGun, 1) > 0)
+        {
+            // Inventory is full, so leave the gun on the bench.
+            var gunPickup = PickupScene.Instantiate<ItemPickup>();
+            gunPickup.Item = _selectedGun;
+            AddChild(gunPickup);
+            gunPickup.GlobalPosition = PartSpawn.GlobalPosition;
+        }
+
+        _selectedGun = null;
+        ShowGunList();
     }
 
     private void RotateHeldItem()
